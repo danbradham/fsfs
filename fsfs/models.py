@@ -197,7 +197,7 @@ class Entry(object):
 
     @property
     def exists(self):
-        return os.path.isdir(self.data.path)
+        return os.path.isdir(self.path) and os.path.isdir(self.data.path)
 
     def delete(self, remove_root=False):
         super(Entry, self).delete()

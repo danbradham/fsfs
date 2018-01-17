@@ -6,6 +6,22 @@ from fstrings import f
 import fsfs
 
 
+def safe_eval(string):
+    '''
+    Evaluate a string in an empty namespace without __builtins__. Prevents
+    imports and dubious scenarious like eval("super") == <type 'super'>.
+    '''
+
+    namespace = {'__builtins__': {}}
+
+    try:
+        return eval(string, namespace)
+    except NameError:
+        return eval(repr(string), namespace)
+    except:
+        raise
+
+
 @click.group()
 def cli():
     '''fsfs command line tools'''
@@ -89,9 +105,7 @@ def write(root, pairs):
     data = {}
     for k, v in pairs:
         try:
-            data[k] = eval(v)
-        except NameError:
-            data[k] = eval(repr(v))
+            data[k] = safe_eval(v)
         except:
             raise click.UsageError(
                 'Wrap complex values in quotes: -k key "value"\n'
@@ -105,7 +119,7 @@ def write(root, pairs):
         fsfs.write(root, **data)
     except Exception as e:
         click.echo('Failed to write data: ')
-        click.echo(pairs)
+        click.echo(dict(pairs))
         click.echo(e.message)
     else:
         click.echo(f('Wrote data to {root}'))
