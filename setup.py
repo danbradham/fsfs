@@ -7,16 +7,20 @@ from setuptools import setup, find_packages
 
 
 if sys.argv[-1] == 'cheeseit!':
-    check_call('nosetests -v')
-    check_call('python setup.py sdist bdist_wheel')
-    check_call('twine upload dist/*')
-    shutil.rmtree('dist')
-    sys.exit()
+    try:
+        check_call('nosetests -v --with-doctests --doctest-extension=.rst')
+        check_call('python setup.py sdist bdist_wheel')
+        check_call('twine upload dist/*')
+    finally:
+        shutil.rmtree('dist')
+        sys.exit()
 elif sys.argv[-1] == 'testit!':
-    check_call('nosetests -v')
-    check_call('python setup.py sdist bdist_wheel upload -r pypitest')
-    shutil.rmtree('dist')
-    sys.exit()
+    try:
+        check_call('nosetests -v --with-doctests --doctest-extension=.rst')
+        check_call('python setup.py sdist bdist_wheel upload -r pypitest')
+    finally:
+        shutil.rmtree('dist')
+        sys.exit()
 
 
 def get_info(pyfile):
