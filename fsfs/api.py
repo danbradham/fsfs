@@ -6,6 +6,7 @@ __all__ = [
     'UP',
     'get_policy',
     'set_policy',
+    'set_default_policy',
     'get_data_decoder',
     'set_data_decoder',
     'get_data_encoder',
@@ -138,7 +139,7 @@ def set_data_file(data_file):
     The default policy's data_root is ".data"
     '''
 
-    get_policy().set_data_root(data_root)
+    get_policy().set_data_file(data_file)
 
 
 def get_data_file():

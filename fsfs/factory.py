@@ -78,7 +78,7 @@ class EntryFactory(object):
 
         >>> fsfs.set_entry_factory(factory)
         >>> fsfs.tag('tmp/project', 'project')
-        >>> entry = fsfs.get_entry('tmp/entry')
+        >>> entry = fsfs.get_entry('tmp/project')
         >>> assert type(entry.obj()) is Project
 
     '''

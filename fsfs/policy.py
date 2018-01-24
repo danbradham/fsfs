@@ -3,9 +3,17 @@ from __future__ import absolute_import, division, print_function
 
 __all__ = [
     '_global_policy',
-    'DefaultFactory',
     'FsFsPolicy',
-    'DefaultFsFsPolicy',
+    'JsonEncoder',
+    'JsonDecoder',
+    'YamlEncoder',
+    'YamlDecoder',
+    'DefaultPolicy',
+    'DefaultEncoder',
+    'DefaultDecoder',
+    'DefaultRoot',
+    'DefaultFile',
+    'DefaultFactory',
 ]
 
 from functools import partial
@@ -16,7 +24,7 @@ from fsfs._compat import callable
 class FsFsPolicy(object):
     '''fsfs uses a global policy to specify the behavior of Entry creation,
     data encoding/decoding, and Entry discovery. the default global policy is
-    DefaultFsFsPolicy which sets the following policy attributes.
+    DefaultPolicy which sets the following policy attributes.
 
     Attributes:
         data_encoder: partial(yaml.safe_dump, default_flow_style=False)
@@ -118,6 +126,8 @@ try:
     DefaultDecoder = YamlDecoder
     DefaultEncoder = YamlEncoder
 except ImportError:
+    YamlEncoder = None
+    YamlDecoder = None
     DefaultDecoder = JsonDecoder
     DefaultEncoder = JsonEncoder
 
@@ -129,11 +139,11 @@ DefaultFile = 'data'
 DefaultFactory = factory.SimpleEntryFactory()
 
 # Default Policy
-DefaultFsFsPolicy = FsFsPolicy(
+DefaultPolicy = FsFsPolicy(
     data_encoder=DefaultEncoder,
     data_decoder=DefaultDecoder,
     data_root=DefaultRoot,
     data_file=DefaultFile,
     entry_factory=DefaultFactory,
 )
-_global_policy = DefaultFsFsPolicy
+_global_policy = DefaultPolicy

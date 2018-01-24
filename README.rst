@@ -9,12 +9,9 @@ Take a peek at how it looks from Python:
 .. code-block:: python
 
     >>> import fsfs
-    >>> fsfs.write('tmp/project_dir', start_frame=100, end_frame=100)
+    >>> fsfs.write('tmp/project_dir', start_frame=100, end_frame=200)
     >>> fsfs.read('tmp/project_dir')
-    {
-        'start_frame': 100,
-        'end_frame': 200
-    }
+    {'end_frame': 200, 'start_frame': 100}
     >>> import shutil; shutil.rmtree('tmp')
 
 and from the command line:
@@ -70,6 +67,14 @@ Installation
     $ pip install git+git://github.com/danbradham/fsfs.git
 
 
+Testing
+=======
+
+.. code-block::
+
+    $ nosetests -v --with-doctest --doctest-extension=.rst
+
+
 Guide
 =====
 
@@ -98,7 +103,7 @@ Read the data back from your folder:
 .. code-block::
 
     >>> fsfs.read('tmp/my_super_project')
-    '24fps'
+    {'framerate': '24fps'}
 
 Folders that are tagged or have data stored with them are considered `Entry`'s
 by *fsfs* and *fsfs* provides a class by the same name for interacting with
@@ -114,13 +119,13 @@ use it to change our data.
 .. code-block::
 
     # Get an Entry object
-    >>> entry = fsfs.one('project')
+    >>> entry = fsfs.one('.', 'project')
 
     # Check some properties and read our data
     >>> entry.name
     'my_super_project'
-    >>> entry.path
-    'tmp/my_super_project'
+    >>> entry.path  # doctest: +ELLIPSIS
+    '...tmp/my_super_project'
     >>> entry.tags
     ['project']
     >>> entry.read()
@@ -129,7 +134,7 @@ use it to change our data.
     # Write some new data
     >>> entry.write(status='active')
     >>> entry.read()
-    {'framerate': '24fps', 'status':'active'}
+    {'status': 'active', 'framerate': '24fps'}
 
 We used `fsfs.one` to retrieve the first `Entry` tagged `project`. Since we've
 only created one folder tagged `project`, we're guaranteed to get an `Entry`
@@ -138,7 +143,7 @@ generator yielding all `Entry`'s with the tag 'project' like so:
 
 .. code-block::
 
-    >>> for entry in fsfs.search('project'):
+    >>> for entry in fsfs.search('.', 'project'):
     ...     entry.name
     'my_super_project'
 
@@ -219,7 +224,7 @@ default `Entry`.
 
 .. code-block::
 
-    >>> entry = fsfs.one('project')
+    >>> entry = fsfs.one('.', 'project')
     >>> entry.special_method()
     'Hello from your special method!'
 
@@ -243,7 +248,7 @@ proxy's obj method.
 
 .. code-block::
 
-    >>> entry.tag(entry, 'project')
+    >>> entry.tag('project')
     >>> assert type(entry.obj()) is Project
 
 
