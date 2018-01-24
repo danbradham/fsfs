@@ -6,7 +6,7 @@ __author__ = 'Dan Bradham'
 __email__ = 'danielbradham@gmail.com'
 __url__ = 'http://github.com/fsfs.git'
 __version__ = '0.1.0'
-__license__ = 'MIT'
+__license__ = 'N/A Yet'
 __description__ = 'tag filesystem locations and store metadata'
 
 from fsfs.api import *
