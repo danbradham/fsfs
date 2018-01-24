@@ -339,8 +339,6 @@ def test_entryfactory():
     # Relinked when moved
     assert samefile(entry.path, 'tmp/entry')
     os.rename(entry.path, 'tmp/supercool')
-    print(entry.path)
-    print(util.unipath('tmp/supercool'))
     entry.read()  # Triggers entry project to relink entry
     assert samefile(entry.path, 'tmp/supercool')
 

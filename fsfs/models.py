@@ -66,9 +66,7 @@ def relink_uuid(entry):
             signals.EntryMissing.send(entry, exc)
             raise exc
 
-    print(root, data.uuid)
     match = api.one_uuid(root, data.uuid, depth=level + 1)
-    print(match)
 
     # Search top-level parent entry
     if not match:
