@@ -1,59 +1,196 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, absolute_import
+
 __all__ = [
     'DOWN',
     'UP',
-    'DATA_ENCODER',
-    'DATA_DECODER',
-    'DATA_ROOT',
-    'DATA_FILE',
+    'get_policy',
+    'set_policy',
+    'get_data_decoder',
+    'set_data_decoder',
+    'get_data_encoder',
+    'set_data_encoder',
+    'get_data_root',
+    'set_data_root',
+    'get_data_file',
+    'set_data_file',
+    'get_entry_factory',
+    'set_entry_factory',
     'get_entry',
     'InvalidTag',
-    'is_match',
-    'one',
-    'read',
-    'search',
+    'validate_tag',
+    'make_tag_path',
+    'get_tags',
     'tag',
     'untag',
-    'validate_tag',
+    'read',
     'write',
-    'make_tag_path',
+    'read_blob',
+    'write_blob',
+    'read_file',
+    'write_file',
+    'search_uuid',
+    'one_uuid',
+    'search',
+    'one',
+    'is_match',
 ]
+
 import os
 import json
 import string
-import threading
-import yaml
-from functools import partial
-from scandir import walk
+import errno
+from scandir import walk, scandir
 from fsfs import util
-
-# 2 to 3 compat
-try:
-    basestring
-except NameError:
-    basestring = str, bytes
 
 
 DOWN = 0
 UP = 1
-DATA_ENCODER = partial(yaml.safe_dump, default_flow_style=False)
-DATA_DECODER = yaml.load
-DATA_ROOT = '.data'
-DATA_FILE = 'data'
-_LOCAL = threading.local()
 
 
-def get_cache():
-    '''Get thread local cache.'''
+def get_policy():
+    '''Get the global FsFsPolicy object
 
-    if not hasattr(_LOCAL, 'cache'):
-        _LOCAL.cache = {}
-    return _LOCAL.cache
+    See also:
+        :class:`fsfs.policy.FsFsPolicy`
+    '''
+    from fsfs import policy
+    return policy._global_policy
 
 
-class InvalidTag(Exception):
-    pass
+def set_policy(policy):
+    '''Set the global FsFsPolicy object.
+
+    See also:
+        :class:`fsfs.policy.FsFsPolicy`
+    '''
+    from fsfs import policy
+    policy._global_policy = policy
+
+
+def set_default_policy():
+    '''Set the global FsFsPolicy to it's default values.
+
+    See also:
+        :class:`fsfs.policy.DefaultPolicy`
+    '''
+    from fsfs import policy
+    policy.DefaultPolicy.set_data_encoder(policy.DefaultEncoder)
+    policy.DefaultPolicy.set_data_decoder(policy.DefaultDecoder)
+    policy.DefaultPolicy.set_data_root(policy.DefaultRoot)
+    policy.DefaultPolicy.set_data_file(policy.DefaultFile)
+    policy.DefaultPolicy.set_entry_factory(policy.DefaultFactory)
+
+
+def set_data_encoder(data_encoder):
+    '''Set the global policy's data_encoder.
+
+    Expects a callable like `json.dumps` or `yaml.dump`
+    The default policy uses `yaml.safe_dump` with default_flow_style=False
+    '''
+
+    get_policy().set_data_encoder(data_encoder)
+
+
+def get_data_encoder():
+    '''Get the global policy's data_encoder'''
+
+    return get_policy().get_data_encoder()
+
+
+def set_data_decoder(data_decoder):
+    '''Set the global policy's data_encoder.
+
+    Expects a callable like `json.loads` or `yaml.load`
+    The default policy uses `yaml.safe_load`
+    '''
+
+
+    get_policy().set_data_decoder(data_decoder)
+
+
+def get_data_decoder():
+    '''Get the global policy's data_decoder'''
+
+    return get_policy().get_data_decoder()
+
+
+def set_data_root(data_root):
+    '''Set the global policy's data_root. The data_root is the name of the
+    directory that stores metadata for an Entry
+
+    The default policy's data_root is ".data"
+    '''
+
+    get_policy().set_data_root(data_root)
+
+
+def get_data_root():
+    '''Get the global policy's data_root'''
+
+    return get_policy().get_data_root()
+
+
+def set_data_file(data_file):
+    '''Set the global policy's data_file. The data_file is the name of the
+    file in the data_root that stores the actual encoded metadata for an Entry
+
+    The default policy's data_root is ".data"
+    '''
+
+    get_policy().set_data_root(data_root)
+
+
+def get_data_file():
+    '''Get the global policy's data_file'''
+
+    return get_policy().get_data_file()
+
+
+def set_entry_factory(entry_factory):
+    '''Set the global policy's entry_factory. The entry_factory is used to
+    create Entry instances returned by `get_entry`, `search`, and `one`.
+
+    The default entry_factory is :func:`fsfs.policy.default_entry_factory`.
+    It stores Entry object's in a cache for quick lookup and generates the
+    default implementation of Entry.
+
+    Provide your own entry_factory to have fsfs yield your own Entry subclasses
+
+    See also:
+        :func:`fsfs.policy.default_entry_factory`
+    '''
+
+    get_policy().set_entry_factory(entry_factory)
+
+
+def get_entry_factory():
+    '''Get the global policy's entry_factory'''
+
+    return get_policy().get_entry_factory()
+
+
+def encode_data(data):
+    '''Uses the global policy's data_encoder to encode_data.
+
+    Same as:
+        get_data_encoder()(data)
+    '''
+
+    return get_data_encoder()(data)
+
+
+def decode_data(data):
+    '''Uses the global policy's data_decoder to decode_data.
+
+    Same as:
+        get_data_decoder()(data)
+    '''
+
+    return get_data_decoder()(data)
+
+
+class InvalidTag(Exception): pass
 
 
 def validate_tag(tag):
@@ -76,34 +213,23 @@ def make_tag_path(root, tag):
         tag (str): tag str
 
     Returns:
-        str: {root}/{DATA_ROOT}/tag_{tag}
+        str: {root}/{get_data_path()}/tag_{tag}
     '''
 
-    return util.unipath(root, DATA_ROOT, 'tag_' + tag)
+    return util.unipath(root, get_data_root(), 'tag_' + tag)
 
 
 def get_entry(root):
-    '''Get entry from cache
+    '''Get an Entry instance.
 
     Arguments:
         root (str): Directory
 
     Returns:
-        :class:`models.Entry`: retrieved from cache
+        Entry: created by the global policy's entry_factory
     '''
 
-    cache = get_cache()
-    if root in cache:
-        return cache[root]
-
-    from fsfs import models
-    return cache.setdefault(root, models.Entry(root))
-
-
-def clear_cache():
-    '''Clear entry cache'''
-
-    get_cache().clear()
+    return get_entry_factory()(root)
 
 
 def read(root, *keys):
@@ -137,6 +263,74 @@ def write(root, **data):
     entry.write(**data)
 
 
+def read_blob(root, *keys):
+    '''Get the full path to a blob or blobs stored in the directory metadata
+
+    Arguments:
+        root (str): Directory containing metadata
+        *keys (List[str]): list of blob keys to retrieve. If no keys are passed
+            return all key, blob path pairs.
+
+    Returns:
+        dict: key, blob path pairs if no keys or multiple keys are provided
+        or
+        blob path: full path to a file storing the blob if one key is provided
+    '''
+
+    entry = get_entry(root)
+    return entry.read_blob(*keys)
+
+
+def write_blob(root, key, data):
+    '''Write binary blob to the directory metadata
+
+    Arguments:
+        root (str): Directory to write to
+        key (str): Key used to store blob
+        data (str or bytes): binary data
+
+    Returns:
+        None
+    '''
+
+    entry = get_entry(root)
+    entry.write_blob(key, data)
+
+
+def read_file(root, *keys):
+    '''Get the full path to a file or files stored in the directory metadata
+
+    Arguments:
+        root (str): Directory containing metadata
+        *keys (List[str]): list of file keys to retrieve. If no keys are passed
+            return all key, file path pairs.
+
+    Returns:
+        dict: key, file path pairs if no keys or multiple keys are provided
+        or
+        file path: full path to a file storing the file if one key is provided
+    '''
+
+    entry = get_entry(root)
+    return entry.read_file(*keys)
+
+
+def write_file(root, key, file):
+    '''Write metadata to directory
+
+    Arguments:
+        root (str): Directory to write to
+        key (str): Key used to store file
+        file (str): Full path to a file
+
+    Returns:
+        None
+    '''
+
+    entry = get_entry(root)
+    entry.write_file(key, file)
+
+
 def delete(root, remove_root=False):
     '''Delete a directory's metadata and tags.
 
@@ -152,6 +346,27 @@ def delete(root, remove_root=False):
     entry.delete(root, remove_root)
 
 
+def get_tags(root):
+    '''Get the directory's tags
+
+    Arguments:
+        root (str): Directory to get tags from
+
+    Returns:
+        list: List of tags
+    '''
+
+    tags = []
+    try:
+        for entry in scandir(util.unipath(root, get_data_root())):
+            if entry.name.startswith('tag_'):
+                tags.append(entry.name.replace('tag_', ''))
+    except OSError as e:
+        if e.errno != errno.ESRCH:
+            raise
+    return tags
+
+
 def tag(root, *tags):
     '''Tag a directory as an Entry with the provided tags.
 
@@ -159,10 +374,11 @@ def tag(root, *tags):
         root (str): Directory to tag
         *tags (List[str]): Tags to add to directory like: 'asset' or 'project'
     '''
+    if not tags:
+        raise Exception('Must provide at least one tag.')
 
-    for tag in tags:
-        tag_path = make_tag_path(root, tag)
-        util.touch(tag_path)
+    entry = get_entry(util.unipath(root))
+    entry.tag(*tags)
 
 
 def untag(root, *tags):
@@ -172,11 +388,11 @@ def untag(root, *tags):
         root (str): Directory to remove tags from
         *tags (List[str]): Tags to remove like: 'asset' or 'project'
     '''
+    if not tags:
+        raise Exception('Must provide at least one tag.')
 
-    for tag in tags:
-        tag_path = make_tag_path(root, tag)
-        if os.path.isfile(tag_path):
-            os.remove(tag_path)
+    entry = get_entry(util.unipath(root))
+    entry.untag(*tags)
 
 
 def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
@@ -190,6 +406,8 @@ def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
         root (str): Directory to search
         *tags (str): Tags to match
         direction (int): Direction to search (fsfs.UP or fsfs.DOWN)
+        depth (int): Maximum depth of search
+        skip_root (bool): Skip search in root directory
 
     Returns:
         generator: yielding :class:`models.Entry` matches
@@ -201,7 +419,8 @@ def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
     if direction == DOWN:
 
         level = 0
-        for root, _, _ in walk(root):
+        for root, subdirs, _ in walk(root):
+            subdirs[:] = [d for d in subdirs if not d == get_data_root()]
 
             level += 1
             if depth and level > depth:
@@ -268,7 +487,7 @@ def is_match(root, *tags):
     '''
 
     if not tags:
-        return os.path.isdir(util.unipath(root, DATA_ROOT))
+        return os.path.isdir(util.unipath(root, get_data_root()))
 
     match = True
     for tag in tags:
@@ -277,3 +496,81 @@ def is_match(root, *tags):
             match = False
 
     return match
+
+
+def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
+    '''Like search but finds a uuid file instead of a tags. Used to relink
+    moved entries.
+
+    Arguments:
+        root (str): Directory to search
+        uuid (str): UUID to match
+        direction (int): Direction to search (fsfs.UP or fsfs.DOWN)
+        depth (int): Maximum depth of search
+        skip_root (bool): Skip search in root directory
+
+    Returns:
+        generator yielding (root, data_root, uuid_file)
+    '''
+
+    if direction == DOWN:
+
+        level = 0
+        for root, subdirs, _ in walk(root):
+            subdirs[:] = [d for d in subdirs if not d == get_data_root()]
+
+            level += 1
+            if depth and level > depth:
+                break
+
+            if skip_root and level == 1:
+                continue
+
+            root = util.unipath(root)
+            data_root = util.unipath(root, get_data_root())
+            uuid_file = util.unipath(root, get_data_root(), 'uuid_' + uuid)
+            if os.path.isfile(uuid_file):
+                yield root, data_root, uuid_file
+
+    if direction == UP:
+
+        level = 0
+        next_root = util.unipath(root)
+        while True:
+
+            root = next_root
+
+            level += 1
+            if depth and level > depth:
+                break
+
+            if skip_root and level == 1:
+                next_root = os.path.dirname(root)
+                continue
+
+            data_root = util.unipath(root, get_data_root())
+            uuid_path = util.unipath(root, get_data_root(), 'uuid_' + uuid)
+            if os.path.isfile(uuid_path):
+                yield root, data_root, uuid_file
+
+            next_root = os.path.dirname(root)
+            if next_root == root:
+                break
+
+
+def one_uuid(*args, **kwargs):
+    '''Return first result from search_uuid.
+
+    See also:
+        :func:`fsfs.api.search_uuid`
+
+    Returns:
+        tuple: (root, data_root, uuid_file)
+    '''
+
+    matches = search_uuid(*args, **kwargs)
+    try:
+        return matches.next()
+    except StopIteration:  # no result
+        return
+

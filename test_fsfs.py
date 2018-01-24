@@ -5,11 +5,29 @@ import json
 import os
 import shutil
 from random import choice, randint, sample
-from nose.tools import assert_raises
+from nose.tools import assert_raises, with_setup
+from functools import partial
 from fstrings import f
 import fsfs
+from fsfs import util
 
+samefile = shutil._samefile
 TEST_ROOT = 'tmp'
+
+
+def setup_module():
+    if os.path.exists(TEST_ROOT):
+        shutil.rmtree(TEST_ROOT)
+
+    os.makedirs(TEST_ROOT)
+
+
+def teardown_module():
+    if os.path.exists(TEST_ROOT):
+        shutil.rmtree(TEST_ROOT)
+
+
+test_func_setup = partial(with_setup, setup_module, teardown_module)
 
 
 class ProjectFaker():
@@ -119,39 +137,28 @@ class ProjectFaker():
 fake = ProjectFaker(root=TEST_ROOT)
 
 
-def setup_module():
-    if os.path.exists(TEST_ROOT):
-        shutil.rmtree(TEST_ROOT)
-
-    os.makedirs(TEST_ROOT)
-
-
-def teardown_module():
-    shutil.rmtree(TEST_ROOT)
-
-
 def test_tag():
-    '''Test tag and untag'''
+    '''tag and untag'''
 
     asset_path = fake.asset_path()
     tag_path = fsfs.make_tag_path(asset_path, 'asset')
 
-    # Test fresh tag
+    # fresh tag
     fsfs.tag(asset_path, 'asset')
     assert os.path.isfile(tag_path)
 
-    # Test tag already exists, should do nothing
+    # tag already exists, should do nothing
     fsfs.tag(asset_path, 'asset')
     assert os.path.isfile(tag_path)
 
-    # Test remove tag, tag should be gone, data root should still be there
+    # remove tag, tag should be gone, data root should still be there
     fsfs.untag(asset_path, 'asset')
     assert not os.path.isfile(tag_path)
-    assert os.path.isdir(os.path.join(asset_path, fsfs.DATA_ROOT))
+    assert os.path.isdir(os.path.join(asset_path, fsfs.get_data_root()))
 
 
 def test_search_down():
-    '''Test search down'''
+    '''search down'''
 
     project = fake.project()
     project_path = fake.project_path(project=project)
@@ -188,7 +195,7 @@ def test_search_down():
 
     first_result = fsfs.one(project_path)
     assert first_result.name == project
-    assert first_result.path == project_path
+    assert samefile(first_result.path, project_path)
     assert 'project' in first_result.tags
 
     asset_search = fsfs.search(project_path, 'asset')
@@ -198,12 +205,12 @@ def test_search_down():
     hero_result = list(hero_search)
     assert len(hero_result) == 1
     assert hero_result[0].name == hero
-    assert hero_result[0].path == hero_path
+    assert samefile(hero_result[0].path, hero_path)
     assert ['asset', 'hero'] == hero_result[0].tags
 
 
 def test_search_up():
-    '''Test search up'''
+    '''search up'''
 
     project = fake.project()
     project_path = fake.project_path(project=project)
@@ -226,14 +233,14 @@ def test_search_up():
 
     project_result = fsfs.one(shot_path, 'project', fsfs.UP)
     assert project_result.name == project
-    assert project_result.path == project_path
+    assert samefile(project_result.path, project_path)
 
     no_result = fsfs.one(shot_path, 'unused', fsfs.UP)
     assert no_result is None
 
 
 def test_read_write():
-    '''Test entry read and write.'''
+    '''Entry read and write.'''
 
     project_path = fake.project_path()
     fsfs.tag(project_path, 'project')
@@ -270,7 +277,7 @@ def test_read_write():
 
 
 def test_validate_tag():
-    '''Test tag validation'''
+    '''tag validation'''
 
     invalid_chars = '!@#$%^&*()+={[}]|\?/><,:;"\'~`'
     for char in invalid_chars:
@@ -279,3 +286,63 @@ def test_validate_tag():
     valid_names = ['.is-valid', 'is_valid', 'is-valid', 'isvalid']
     for name in valid_names:
         assert fsfs.validate_tag(name)
+
+
+# Custom EntryFactory with two Registered Types
+CustomFactory = fsfs.EntryFactory()
+
+
+class Project(CustomFactory.Entry):
+
+    def project_method(self):
+        pass
+
+
+class Asset(CustomFactory.Entry):
+
+    def asset_method(self):
+        pass
+
+
+@test_func_setup()
+def test_entryfactory():
+    '''Custom EntryFactory'''
+
+    fsfs.set_entry_factory(CustomFactory)
+    entry = fsfs.get_entry('tmp/entry')
+
+    # Factory returns cache entry obj
+    assert entry is fsfs.get_entry('tmp/entry')
+
+    # No tag == default entry
+    assert type(entry) == CustomFactory.EntryProxy
+    assert type(entry.obj()) == CustomFactory.Entry
+
+    # Add project tag, now we get a Project instance
+    entry.tag('project')
+    assert type(entry) == CustomFactory.EntryProxy
+    assert type(entry.obj()) == CustomFactory.get_type('project')
+    assert hasattr(entry, 'project_method')
+
+    # Remove project tag
+    entry.untag('project')
+    assert type(entry) == CustomFactory.EntryProxy
+    assert type(entry.obj()) == CustomFactory.Entry
+    assert not hasattr(entry, 'project_method')
+
+    # Add asset tag now we get asset methods
+    entry.tag('asset')
+    assert type(entry) == CustomFactory.EntryProxy
+    assert type(entry.obj()) == CustomFactory.get_type('asset')
+    assert hasattr(entry, 'asset_method')
+
+    # Relinked when moved
+    assert samefile(entry.path, 'tmp/entry')
+    os.rename(entry.path, 'tmp/supercool')
+    print(entry.path)
+    print(util.unipath('tmp/supercool'))
+    entry.read()  # Triggers entry project to relink entry
+    assert samefile(entry.path, 'tmp/supercool')
+
+    # Restore DefaultFactory
+    fsfs.set_entry_factory(fsfs.DefaultFactory)

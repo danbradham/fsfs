@@ -46,7 +46,7 @@ setup(
     author_email=info['email'],
     description=info['description'],
     long_description=long_description,
-    install_requires=['click', 'fstrings', 'scandir'],
+    install_requires=['click', 'fstrings', 'scandir', 'pyyaml'],
     packages=find_packages(),
     package_data={
         '': ['LICENSE', 'README.rst'],

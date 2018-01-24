@@ -5,9 +5,14 @@ __title__ = 'fsfs'
 __author__ = 'Dan Bradham'
 __email__ = 'danielbradham@gmail.com'
 __url__ = 'http://github.com/fsfs.git'
-__version__ = '0.0.4'
-__license__ = 'NO LICENSE'
+__version__ = '0.1.0'
+__license__ = 'MIT'
 __description__ = 'tag filesystem locations and store metadata'
 
 from fsfs.api import *
 from fsfs.models import *
+from fsfs.policy import *
+from fsfs.util import *
+from fsfs.types import *
+from fsfs.factory import *
+from fsfs import signal, signals
