@@ -9,21 +9,20 @@ class File(object):
     setup a file-like object without actually opening it.
 
     Examples:
+        open, read, and close a File.
 
-        open, read, and close a File:
+        >>> f = File('tmpfile', 'rb')
+        >>> f.open()
+        >>> f.read()
+        >>> f.close()
+        >>> assert f.closed == True
 
-            f = File('tmpfile', 'rb')
-            f.open()
-            f.read()
-            f.close()
-            assert f.closed == True
+        use File as a context manager.
 
-        use File as a context manager:
-
-            f = File('tmpfile', 'rb')
-            with f.open():
-                pass
-            assert f.closed == True
+        >>> f = File('tmpfile', 'rb')
+        >>> with f.open():
+        ...     pass
+        >>> assert f.closed == True
     '''
 
     def __init__(self, name, mode):

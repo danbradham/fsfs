@@ -63,7 +63,9 @@ def copy_file(src, dest, buffer_size=DEFAULT_BUFFER):
         https://stackoverflow.com/questions/22078621/python-how-to-copy-files-fast/28129677#28129677
 
     Arguments:
-        src (str):
+        src (str): source file to copy
+        dest (str): destination file path
+        buffer_size (int): Number of bytes to buffer
     '''
 
     if shutil._samefile(src, dest):

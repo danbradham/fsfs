@@ -5,7 +5,7 @@ __all__ = [
     'Channel',
     'Signal',
     'channel',
-    'get_channel'
+    'get_channel',
     'set_channel',
     'set_channel_to_default',
     'chain',
@@ -93,11 +93,23 @@ class Channel(object):
         return list(OrderedDict.fromkeys(channels))
 
     def forward(self, channel):
+        '''Forwards signals to another channel
+
+        Arguments:
+            channel (Channel): Channel to forward to
+        '''
+
         if channel in self._channels:
             return
         self._channels.append(channel)
 
     def unforward(self, channel):
+        '''Stops forwarding signals to another channel
+
+        Arguments:
+            channel (Channel): Channel to stop forwarding signals to
+        '''
+
         if channel not in self._channels:
             return
         self._channels.remove(channel)
@@ -385,30 +397,62 @@ def channel(channel):
 
 
 def send(identifier, *args, **kwargs):
+    '''Send signal on global channel
+
+    Arguments:
+        identifier (str): signal identifier
+        channel (Channel): Channel to send on, defaults to global channel
+    '''
 
     channel = kwargs.pop('channel', get_channel())
     return channel.send(identifier, *args, **kwargs)
 
 
 def chain(identifier, *args, **kwargs):
+    '''Chain signal subscribers on global channel
+
+    Arguments:
+        identifier (str): signal identifier
+        channel (Channel): Channel to send on, defaults to global channel
+    '''
 
     channel = kwargs.pop('channel', get_channel())
     return channel.chain(identifier, *args, **kwargs)
 
 
 def route(identifier, *args, **kwargs):
+    '''Connect function to signal via decorator
+
+    Arguments:
+        identifier (str): signal identifier
+        channel (Channel): Channel to send on, defaults to global channel
+    '''
 
     channel = kwargs.pop('channel', get_channel())
     return channel.route(identifier, *args, **kwargs)
 
 
 def connect(identifier, obj, priority=DEFAULT_PRIORITY, **kwargs):
+    '''Connect function to signal
+
+    Arguments:
+        identifier (str): signal identifier
+        channel (Channel): Channel to send on, defaults to global channel
+        priority (int): Priority of subscriber
+    '''
 
     channel = kwargs.pop('channel', get_channel())
     channel.connect(identifier, obj, priority)
 
 
 def disconnect(identifier, obj, **kwargs):
+    '''Disconnect function to signal
+
+    Arguments:
+        identifier (str): signal identifier
+        channel (Channel): Channel to send on, defaults to global channel
+        priority (int): Priority of subscriber
+    '''
 
     channel = kwargs.pop('channel', get_channel())
     channel.disconnect(identifier, obj)

@@ -35,7 +35,7 @@ def get_info(pyfile):
     return info
 
 
-info = get_info('fsfs/__init__.py')
+info = get_info('./fsfs/__init__.py')
 
 with open('README.rst', 'r') as f:
     long_description = f.read()

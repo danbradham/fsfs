@@ -221,7 +221,11 @@ def make_tag_path(root, tag):
 
 
 def get_entry(root):
-    '''Get an Entry instance.
+    '''Get an Entry instance. This is the only way you should get Entry
+    objects. This uses the global EntryFactory to retrieve an Entry object.
+    Both fsfs.SimpleEntryFactory and fsfs.EntryFactory maintain a cache of
+    Entry instances, so this function will always return the same Entry
+    instance given the same path.
 
     Arguments:
         root (str): Directory
@@ -264,18 +268,15 @@ def write(root, **data):
     entry.write(**data)
 
 
-def read_blob(root, *keys):
-    '''Get the full path to a blob or blobs stored in the directory metadata
+def read_blob(root, key):
+    '''Get a File object for the specified blob in the directory metadata
 
     Arguments:
         root (str): Directory containing metadata
-        *keys (List[str]): list of blob keys to retrieve. If no keys are passed
-            return all key, blob path pairs.
+        key (str): Name of blob to retrieve
 
     Returns:
-        dict: key, blob path pairs if no keys or multiple keys are provided
-        or
-        blob path: full path to a file storing the blob if one key is provided
+        File: used to open and read the blob
     '''
 
     entry = get_entry(root)
@@ -299,17 +300,14 @@ def write_blob(root, key, data):
 
 
 def read_file(root, *keys):
-    '''Get the full path to a file or files stored in the directory metadata
+    '''Get a File object for the specified file in the directory metadata
 
     Arguments:
         root (str): Directory containing metadata
-        *keys (List[str]): list of file keys to retrieve. If no keys are passed
-            return all key, file path pairs.
+        key (str): Name of file to retrieve
 
     Returns:
-        dict: key, file path pairs if no keys or multiple keys are provided
-        or
-        file path: full path to a file storing the file if one key is provided
+        File: used to open and read the file
     '''
 
     entry = get_entry(root)
@@ -317,7 +315,7 @@ def read_file(root, *keys):
 
 
 def write_file(root, key, file):
-    '''Write metadata to directory
+    '''Write file to the directory metadata
 
     Arguments:
         root (str): Directory to write to

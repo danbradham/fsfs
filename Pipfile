@@ -8,8 +8,11 @@ name = "pypi"
 [packages]
 
 scandir = "*"
-PyYAML = "*"
+pyyaml = "*"
 nose = "*"
 fstrings = "*"
 click = "*"
 scrim = "*"
+sphinx = "*"
+"sphinx-rtd-theme" = "*"
+"sphinxcontrib-napoleon" = "*"
