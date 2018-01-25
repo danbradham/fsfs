@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fsfs &mdash; fsfs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="fsfs 0.1.0 documentation" href="#"/>
+        <link rel="next" title="Guide" href="guide.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> fsfs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fsfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">fsfs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>fsfs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="fsfs">
+<h1>fsfs<a class="headerlink" href="#fsfs" title="Permalink to this headline">¶</a></h1>
+<p>Read from and write data to folders on your file system.</p>
+<hr class="docutils" />
+<p>Take a peek at how it looks from Python:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; import fsfs
+<span class="gp">&gt;</span>&gt;&gt; fsfs.write<span class="o">(</span><span class="s1">&#39;tmp/project_dir&#39;</span>, <span class="nv">start_frame</span><span class="o">=</span><span class="m">100</span>, <span class="nv">end_frame</span><span class="o">=</span><span class="m">200</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; fsfs.read<span class="o">(</span><span class="s1">&#39;tmp/project_dir&#39;</span><span class="o">)</span>
+<span class="go">{&#39;end_frame&#39;: 200, &#39;start_frame&#39;: 100}</span>
+<span class="gp">&gt;</span>&gt;&gt; import shutil<span class="p">;</span> shutil.rmtree<span class="o">(</span><span class="s1">&#39;tmp&#39;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>and from the command line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir tmp/project_dir
+<span class="gp">$</span> <span class="nb">cd</span> tmp/project_dir
+<span class="gp">$</span> fsfs write -k start_frame <span class="m">100</span> -k end_frame <span class="m">200</span>
+<span class="gp">$</span> fsfs <span class="nb">read</span>
+<span class="go">{</span>
+<span class="go">    &#39;start_frame&#39;: 100,</span>
+<span class="go">    &#39;end_frame&#39;: 200</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="features">
+<h1>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first">Read from and write data to folders</p>
+<blockquote>
+<div><ul class="simple">
+<li>pluggable data encoding with default implementations for json and yaml</li>
+<li>supports blobs and files</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Tag and Untag folders allowing quick lookup</p>
+</li>
+<li><p class="first">Folders wrapped in <cite>Entry</cite> objects allows ORM-like patterns</p>
+</li>
+<li><p class="first">Uses a factory to create <cite>Entry</cite> objects</p>
+</li>
+<li><p class="first">Generates UUIDs for each folder you touch with <em>fsfs</em></p>
+<blockquote>
+<div><ul class="simple">
+<li>Allows <em>fsfs</em> to react to file system changes outside your program</li>
+<li>Allows <em>fsfs</em> to relink <cite>Entry</cite> models</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="why-use-fsfs-instead-of-a-database">
+<h1>Why use <em>fsfs</em> instead of a database<a class="headerlink" href="#why-use-fsfs-instead-of-a-database" title="Permalink to this headline">¶</a></h1>
+<p>Certain types of creative projects rely heavily on binary files output from
+content creation software and close management of the file system they reside
+in. In these cases maintaining a separate database to track your files and
+locations can be tedious and can easily become out of sync.</p>
+<p>This is exactly the problem <em>fsfs</em> is designed to address. <em>fsfs</em> stores your
+data alongside your files, so when your files are reorganized their associated
+data comes along for the ride.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install git+git://github.com/danbradham/fsfs.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> nosetests -v --with-doctest --doctest-extension<span class="o">=</span>.rst
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspiration">
+<h1>Inspiration<a class="headerlink" href="#inspiration" title="Permalink to this headline">¶</a></h1>
+<p><em>fsfs</em> is directly inspired by Abstract Factory’s
+<a class="reference external" href="https://github.com/abstractfactory/openmetadata">openmetadata</a>. The core
+concept of fsfs is the same as openmetadata and the api is similar. However,
+fsfs follows a different design pattern allowing you to store data in any
+format you like, and does not follow the openmetadata specification. fsfs
+comes with encoders for json and yaml out of the box, and allows the storing
+of blobs and files.</p>
+<div class="toctree-wrapper compound">
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">fsfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#getting-to-know-the-entry-object">Getting to know the <cite>Entry</cite> object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#customizing-fsfs">Customizing <em>fsfs</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#advanced-provide-your-own-entry-models">Advanced: Provide your own <cite>Entry</cite> models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.api">fsfs.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.cli">fsfs.cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.factory">fsfs.factory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.lockfile">fsfs.lockfile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.models">fsfs.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.policy">fsfs.policy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.signal">fsfs.signal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.signals">fsfs.signals module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.types">fsfs.types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fsfs.util">fsfs.util module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="guide.html" class="btn btn-neutral float-right" title="Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Dan Bradham.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

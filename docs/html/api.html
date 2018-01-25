@@ -1,0 +1,1920 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Documentation &mdash; fsfs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="fsfs 0.1.0 documentation" href="index.html"/>
+        <link rel="prev" title="Guide" href="guide.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> fsfs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">fsfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.api">fsfs.api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.cli">fsfs.cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.factory">fsfs.factory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.lockfile">fsfs.lockfile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.models">fsfs.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.policy">fsfs.policy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.signal">fsfs.signal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.signals">fsfs.signals module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.types">fsfs.types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.util">fsfs.util module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">fsfs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-fsfs.api">
+<span id="fsfs-api-module"></span><h2>fsfs.api module<a class="headerlink" href="#module-fsfs.api" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fsfs.api.get_policy">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global FsFsPolicy object</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_policy">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_policy</code><span class="sig-paren">(</span><em>policy</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global FsFsPolicy object.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_default_policy">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_default_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_default_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global FsFsPolicy to it’s default values.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.DefaultPolicy</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_data_decoder">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_data_decoder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global policy’s data_decoder</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_data_decoder">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_data_decoder</code><span class="sig-paren">(</span><em>data_decoder</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global policy’s data_encoder.</p>
+<p>Expects a callable like <cite>json.loads</cite> or <cite>yaml.load</cite>
+The default policy uses <cite>yaml.safe_load</cite></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_data_encoder">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_data_encoder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_data_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global policy’s data_encoder</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_data_encoder">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_data_encoder</code><span class="sig-paren">(</span><em>data_encoder</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_data_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global policy’s data_encoder.</p>
+<p>Expects a callable like <cite>json.dumps</cite> or <cite>yaml.dump</cite>
+The default policy uses <cite>yaml.safe_dump</cite> with default_flow_style=False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_data_root">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_data_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global policy’s data_root</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_data_root">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_data_root</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global policy’s data_root. The data_root is the name of the
+directory that stores metadata for an Entry</p>
+<p>The default policy’s data_root is “.data”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_data_file">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_data_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_data_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global policy’s data_file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_data_file">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_data_file</code><span class="sig-paren">(</span><em>data_file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_data_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global policy’s data_file. The data_file is the name of the
+file in the data_root that stores the actual encoded metadata for an Entry</p>
+<p>The default policy’s data_root is “.data”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_entry_factory">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_entry_factory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_entry_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the global policy’s entry_factory</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.set_entry_factory">
+<code class="descclassname">fsfs.api.</code><code class="descname">set_entry_factory</code><span class="sig-paren">(</span><em>entry_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_entry_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global policy’s entry_factory. The entry_factory is used to
+create Entry instances returned by <cite>get_entry</cite>, <cite>search</cite>, and <cite>one</cite>.</p>
+<p>The default entry_factory is <code class="xref py py-func docutils literal"><span class="pre">fsfs.policy.default_entry_factory()</span></code>.
+It stores Entry object’s in a cache for quick lookup and generates the
+default implementation of Entry.</p>
+<p>Provide your own entry_factory to have fsfs yield your own Entry subclasses</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal"><span class="pre">fsfs.policy.default_entry_factory()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_entry">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_entry</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an Entry instance. This is the only way you should get Entry
+objects. This uses the global EntryFactory to retrieve an Entry object.
+Both fsfs.SimpleEntryFactory and fsfs.EntryFactory maintain a cache of
+Entry instances, so this function will always return the same Entry
+instance given the same path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> (<em>str</em>) – Directory</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">created by the global policy’s entry_factory</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#fsfs.models.Entry" title="fsfs.models.Entry">Entry</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="exception">
+<dt id="fsfs.api.InvalidTag">
+<em class="property">exception </em><code class="descclassname">fsfs.api.</code><code class="descname">InvalidTag</code><a class="headerlink" href="#fsfs.api.InvalidTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.validate_tag">
+<code class="descclassname">fsfs.api.</code><code class="descname">validate_tag</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.validate_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys can only contain letters, numbers and these characters: .-_</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.make_tag_path">
+<code class="descclassname">fsfs.api.</code><code class="descname">make_tag_path</code><span class="sig-paren">(</span><em>root</em>, <em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.make_tag_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag name to tag filepath</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory</li>
+<li><strong>tag</strong> (<em>str</em>) – tag str</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">{root}/{get_data_path()}/tag_{tag}</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_tags">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_tags</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the directory’s tags</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> (<em>str</em>) – Directory to get tags from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of tags</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.tag">
+<code class="descclassname">fsfs.api.</code><code class="descname">tag</code><span class="sig-paren">(</span><em>root</em>, <em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag a directory as an Entry with the provided tags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to tag</li>
+<li><strong>*tags</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Tags to add to directory like: ‘asset’ or ‘project’</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.untag">
+<code class="descclassname">fsfs.api.</code><code class="descname">untag</code><span class="sig-paren">(</span><em>root</em>, <em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.untag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a tag from a directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to remove tags from</li>
+<li><strong>*tags</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Tags to remove like: ‘asset’ or ‘project’</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.read">
+<code class="descclassname">fsfs.api.</code><code class="descname">read</code><span class="sig-paren">(</span><em>root</em>, <em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read metadata from directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory containing metadata</li>
+<li><strong>*keys</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – list of keys to retrieve. If no keys are passed
+return all key, value pairs.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">key, value pairs stored at root</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.write">
+<code class="descclassname">fsfs.api.</code><code class="descname">write</code><span class="sig-paren">(</span><em>root</em>, <em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write metadata to directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to write to</li>
+<li><strong>**data</strong> (<em>dict</em>) – key, value pairs to write</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.read_blob">
+<code class="descclassname">fsfs.api.</code><code class="descname">read_blob</code><span class="sig-paren">(</span><em>root</em>, <em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.read_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a File object for the specified blob in the directory metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory containing metadata</li>
+<li><strong>key</strong> (<em>str</em>) – Name of blob to retrieve</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">used to open and read the blob</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fsfs.types.File" title="fsfs.types.File">File</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.write_blob">
+<code class="descclassname">fsfs.api.</code><code class="descname">write_blob</code><span class="sig-paren">(</span><em>root</em>, <em>key</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.write_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write binary blob to the directory metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to write to</li>
+<li><strong>key</strong> (<em>str</em>) – Key used to store blob</li>
+<li><strong>data</strong> (<em>str</em><em> or </em><em>bytes</em>) – binary data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.read_file">
+<code class="descclassname">fsfs.api.</code><code class="descname">read_file</code><span class="sig-paren">(</span><em>root</em>, <em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.read_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a File object for the specified file in the directory metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory containing metadata</li>
+<li><strong>key</strong> (<em>str</em>) – Name of file to retrieve</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">used to open and read the file</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fsfs.types.File" title="fsfs.types.File">File</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.write_file">
+<code class="descclassname">fsfs.api.</code><code class="descname">write_file</code><span class="sig-paren">(</span><em>root</em>, <em>key</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.write_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write file to the directory metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to write to</li>
+<li><strong>key</strong> (<em>str</em>) – Key used to store file</li>
+<li><strong>file</strong> (<em>str</em>) – Full path to a file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.search_uuid">
+<code class="descclassname">fsfs.api.</code><code class="descname">search_uuid</code><span class="sig-paren">(</span><em>root</em>, <em>uuid</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like search but finds a uuid file instead of a tags. Used to relink
+moved entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
+<li><strong>uuid</strong> (<em>str</em>) – UUID to match</li>
+<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
+<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
+<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">generator yielding (root, data_root, uuid_file)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.one_uuid">
+<code class="descclassname">fsfs.api.</code><code class="descname">one_uuid</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.one_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return first result from search_uuid.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#fsfs.api.search_uuid" title="fsfs.api.search_uuid"><code class="xref py py-func docutils literal"><span class="pre">fsfs.api.search_uuid()</span></code></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(root, data_root, uuid_file)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.search">
+<code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>tags=None</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search a root directory yielding Entry objects that match tags. A tag
+is a string containing letters, numbers or any of these characters: .-_</p>
+<p>You can specify a direction to search (fsfs.UP or fsfs.DOWN) and a maximum
+search depth. If no tag arguments are passed search yields all Entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
+<li><strong>*tags</strong> (<em>str</em>) – Tags to match</li>
+<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
+<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
+<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.one">
+<code class="descclassname">fsfs.api.</code><code class="descname">one</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return first result from search.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#fsfs.api.search" title="fsfs.api.search"><code class="xref py py-func docutils literal"><span class="pre">fsfs.api.search()</span></code></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#fsfs.models.Entry" title="fsfs.models.Entry"><code class="xref py py-class docutils literal"><span class="pre">fsfs.models.Entry</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.is_match">
+<code class="descclassname">fsfs.api.</code><code class="descname">is_match</code><span class="sig-paren">(</span><em>root</em>, <em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.is_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the root directory matches all of the tags provided. If no
+tags are provided check if the DATA_ROOT directory exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to check</li>
+<li><strong>tags</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Tags to check</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.cli">
+<span id="fsfs-cli-module"></span><h2>fsfs.cli module<a class="headerlink" href="#module-fsfs.cli" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fsfs.cli.safe_eval">
+<code class="descclassname">fsfs.cli.</code><code class="descname">safe_eval</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.cli.safe_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a string in an empty namespace without __builtins__. Prevents
+imports and dubious scenarious like eval(“super”) == &lt;type ‘super’&gt;.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.factory">
+<span id="fsfs-factory-module"></span><h2>fsfs.factory module<a class="headerlink" href="#module-fsfs.factory" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="fsfs.factory.RegistrationError">
+<em class="property">exception </em><code class="descclassname">fsfs.factory.</code><code class="descname">RegistrationError</code><a class="headerlink" href="#fsfs.factory.RegistrationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.factory.SimpleEntryFactory">
+<em class="property">class </em><code class="descclassname">fsfs.factory.</code><code class="descname">SimpleEntryFactory</code><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SimpleEntryFactory returns only the base implementation of Entry.</p>
+<dl class="method">
+<dt id="fsfs.factory.SimpleEntryFactory.on_entry_deleted">
+<code class="descname">on_entry_deleted</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.on_entry_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes entry from cache when it’s deleted…</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.SimpleEntryFactory.on_entry_missing">
+<code class="descname">on_entry_missing</code><span class="sig-paren">(</span><em>entry</em>, <em>exc</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.on_entry_missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes entry from cache if it’s missing…</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.SimpleEntryFactory.on_entry_relinked_or_moved">
+<code class="descname">on_entry_relinked_or_moved</code><span class="sig-paren">(</span><em>entry</em>, <em>old_path</em>, <em>new_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.on_entry_relinked_or_moved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates cache when entry is relinked or moved…</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.SimpleEntryFactory.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects this factory to all necessary signals. Called when this
+factory is set as the policy’s entry_factory using
+<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.SimpleEntryFactory.teardown">
+<code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects this factory to all necessary signals. Called when
+another factory is set as the policy’s entry_factory using
+<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.factory.EntryFactory">
+<em class="property">class </em><code class="descclassname">fsfs.factory.</code><code class="descname">EntryFactory</code><a class="headerlink" href="#fsfs.factory.EntryFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>EntryFactory that allows you to create Entry subclasses that handle
+directories with specific tags. You could register an Entry subclass to
+handle directories with the tag “project” for example and provide
+additional methods. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fsfs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">EntryFactory</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">Entry</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">project_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello from project method&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">set_entry_factory</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;tmp/project&#39;</span><span class="p">,</span> <span class="s1">&#39;project&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">get_entry</span><span class="p">(</span><span class="s1">&#39;tmp/project&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">obj</span><span class="p">())</span> <span class="ow">is</span> <span class="n">Project</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.get_type">
+<code class="descname">get_type</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a type for the specified tag</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.get_types">
+<code class="descname">get_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.get_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all registered types</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.on_entry_deleted">
+<code class="descname">on_entry_deleted</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_deleted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.on_entry_missing">
+<code class="descname">on_entry_missing</code><span class="sig-paren">(</span><em>entry</em>, <em>exc</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_missing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.on_entry_relinked_or_moved">
+<code class="descname">on_entry_relinked_or_moved</code><span class="sig-paren">(</span><em>entry</em>, <em>old_path</em>, <em>new_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_relinked_or_moved" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.on_entry_tagged">
+<code class="descname">on_entry_tagged</code><span class="sig-paren">(</span><em>entry</em>, <em>tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_tagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>When entry tag added set mtime to None. Forces proxy to update.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.on_entry_untagged">
+<code class="descname">on_entry_untagged</code><span class="sig-paren">(</span><em>entry</em>, <em>tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_untagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>When entry tag removed set mtime to None. Forces proxy to update.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects this factory to all necessary signals. Called when this
+factory is set as the policy’s entry_factory using
+<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.teardown">
+<code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnects this factory to all necessary signals. Called when
+another factory is set as the policy’s entry_factory using
+<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.factory.EntryFactory.type_for_tags">
+<code class="descname">type_for_tags</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.type_for_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type that would be used for the specified tags</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.lockfile">
+<span id="fsfs-lockfile-module"></span><h2>fsfs.lockfile module<a class="headerlink" href="#module-fsfs.lockfile" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="fsfs.lockfile.LockFileError">
+<em class="property">exception </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFileError</code><a class="headerlink" href="#fsfs.lockfile.LockFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="fsfs.lockfile.LockFileTimeOutError">
+<em class="property">exception </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFileTimeOutError</code><a class="headerlink" href="#fsfs.lockfile.LockFileTimeOutError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.lockfile.LockFilePump">
+<em class="property">class </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFilePump</code><a class="headerlink" href="#fsfs.lockfile.LockFilePump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></p>
+<p>A daemon thread that updates all acquired LockFiles held by this
+process. This keeps the locks from expiring while the process has them.</p>
+<dl class="method">
+<dt id="fsfs.lockfile.LockFilePump.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFilePump.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.lockfile.LockFilePump.shutdown">
+<code class="descname">shutdown</code><a class="headerlink" href="#fsfs.lockfile.LockFilePump.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.lockfile.LockFilePump.started">
+<code class="descname">started</code><a class="headerlink" href="#fsfs.lockfile.LockFilePump.started" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.lockfile.LockFilePump.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFilePump.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.lockfile.LockFilePump.stopped">
+<code class="descname">stopped</code><a class="headerlink" href="#fsfs.lockfile.LockFilePump.stopped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.lockfile.LockFile">
+<em class="property">class </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Uses a file as a lock. When a LockFile is acquired a file is created at
+its associated path. While this file exists no other process can acquire
+the lock. When a LockFile is released, the file is removed, allowing other
+processes to acquire the lock.</p>
+<p>To make sure we don’t leave hanging locks, locks expire after
+LockFile._expiration (defaults to 2 seconds). This works because we
+have a background thread constantly updating the mtime of all locks the
+current process holds. Once this process exits, any hanging locks will
+finally have a static mtime, and they can expire.</p>
+<p class="rubric">Examples</p>
+<p>Acquire a lock.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">locked</span>
+</pre></div>
+</div>
+<p>Acquire a lock using a timeout.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">lock2</span><span class="o">.</span><span class="n">acquired</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock2</span><span class="o">.</span><span class="n">locked</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
+</pre></div>
+</div>
+<p>Release a lock and acquire a new one using another LockFile instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock2</span><span class="o">.</span><span class="n">acquired</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">lock2</span><span class="o">.</span><span class="n">acquired</span>
+</pre></div>
+</div>
+<p>Use LockFile as a contextmanager.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Call a LockFile to use it as a contextmanager with a timeout.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lock</span><span class="p">(</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fsfs.lockfile.LockFile.acquire">
+<code class="descname">acquire</code><span class="sig-paren">(</span><em>timeout=0</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFile.acquire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acquire the lock. Raises an exception when timeout is reached.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> (<em>int</em><em> or </em><em>float</em>) – Amount of time to wait for lock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.lockfile.LockFile.expired">
+<code class="descname">expired</code><a class="headerlink" href="#fsfs.lockfile.LockFile.expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if this lock has expired…</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.lockfile.LockFile.locked">
+<code class="descname">locked</code><a class="headerlink" href="#fsfs.lockfile.LockFile.locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if this lock is currently locked…</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.lockfile.LockFile.release">
+<code class="descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFile.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release the lock</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.lockfile.lockfile">
+<code class="descclassname">fsfs.lockfile.</code><code class="descname">lockfile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.lockfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>LockFile contextmanager, for when you only need to acquire a lock one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) – path to the lockfile</li>
+<li><strong>timeout</strong> (<em>int</em><em> or </em><em>float</em>) – time to wait for the lock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Acquired LockFile</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fsfs.lockfile.LockFileTimeOutError" title="fsfs.lockfile.LockFileTimeOutError"><code class="xref py py-exc docutils literal"><span class="pre">LockFileTimeOutError</span></code></a> – when timeout reached</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lockfile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">l</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">acquired</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lockfile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.models">
+<span id="fsfs-models-module"></span><h2>fsfs.models module<a class="headerlink" href="#module-fsfs.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fsfs.models.Entry">
+<em class="property">class </em><code class="descclassname">fsfs.models.</code><code class="descname">Entry</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Represents a directory with metadata and tags.</p>
+<dl class="method">
+<dt id="fsfs.models.Entry.children">
+<code class="descname">children</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>remove_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.exists">
+<code class="descname">exists</code><a class="headerlink" href="#fsfs.models.Entry.exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.parent">
+<code class="descname">parent</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.parents">
+<code class="descname">parents</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.parents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.read_blob">
+<code class="descname">read_blob</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read_blob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.read_file">
+<code class="descname">read_file</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.set_path">
+<code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em>, <em>uuid=None</em>, <em>uuid_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.set_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.tag">
+<code class="descname">tag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.tags">
+<code class="descname">tags</code><a class="headerlink" href="#fsfs.models.Entry.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.untag">
+<code class="descname">untag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.untag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.write_blob">
+<code class="descname">write_blob</code><span class="sig-paren">(</span><em>key</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write_blob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.write_file">
+<code class="descname">write_file</code><span class="sig-paren">(</span><em>key</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.models.EntryData">
+<em class="property">class </em><code class="descclassname">fsfs.models.</code><code class="descname">EntryData</code><span class="sig-paren">(</span><em>parent</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Interface to a directories metadata and tags.</p>
+<dl class="method">
+<dt id="fsfs.models.EntryData.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.EntryData.itags">
+<code class="descname">itags</code><a class="headerlink" href="#fsfs.models.EntryData.itags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.items">
+<code class="descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.keys">
+<code class="descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.read_blob">
+<code class="descname">read_blob</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.read_blob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.read_file">
+<code class="descname">read_file</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.read_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.set_path">
+<code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em>, <em>uuid=None</em>, <em>uuid_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.set_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.tag">
+<code class="descname">tag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.EntryData.tags">
+<code class="descname">tags</code><a class="headerlink" href="#fsfs.models.EntryData.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.untag">
+<code class="descname">untag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.untag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.values">
+<code class="descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.write_blob">
+<code class="descname">write_blob</code><span class="sig-paren">(</span><em>key</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.write_blob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.EntryData.write_file">
+<code class="descname">write_file</code><span class="sig-paren">(</span><em>key</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.write_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.policy">
+<span id="fsfs-policy-module"></span><h2>fsfs.policy module<a class="headerlink" href="#module-fsfs.policy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fsfs.policy.FsFsPolicy">
+<em class="property">class </em><code class="descclassname">fsfs.policy.</code><code class="descname">FsFsPolicy</code><span class="sig-paren">(</span><em>data_encoder=None</em>, <em>data_decoder=None</em>, <em>data_root=None</em>, <em>data_file=None</em>, <em>entry_factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>fsfs uses a global policy to specify the behavior of Entry creation,
+data encoding/decoding, and Entry discovery. the default global policy is
+DefaultPolicy which sets the following policy attributes.</p>
+<dl class="attribute">
+<dt id="fsfs.policy.FsFsPolicy.data_encoder">
+<code class="descname">data_encoder</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>partial(yaml.safe_dump, default_flow_style=False)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.policy.FsFsPolicy.data_decoder">
+<code class="descname">data_decoder</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>yaml.load</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.policy.FsFsPolicy.data_root">
+<code class="descname">data_root</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘.data’</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.policy.FsFsPolicy.data_file">
+<code class="descname">data_file</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘data’</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.policy.FsFsPolicy.entry_factory">
+<code class="descname">entry_factory</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.entry_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>default_entry_factory</p>
+</dd></dl>
+
+<dl class="docutils">
+<dt>Use the following api methods to modify the global policy:</dt>
+<dd>api.set_data_encoder(data_encoder)
+api.set_data_decoder(data_decoder)
+api.set_data_root(data_root)
+api.set_data_file(data_file)
+api.set_entry_factory(entry_factory)</dd>
+</dl>
+<p>You can also subclass FsFsPolicy if you like and use api.set_policy() to
+use an instance of your custom FsFsPolicy.</p>
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.get_data_decoder">
+<code class="descname">get_data_decoder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.get_data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.get_data_encoder">
+<code class="descname">get_data_encoder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.get_data_encoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.get_data_file">
+<code class="descname">get_data_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.get_data_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.get_data_root">
+<code class="descname">get_data_root</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.get_data_root" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.get_entry_factory">
+<code class="descname">get_entry_factory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.get_entry_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.set_data_decoder">
+<code class="descname">set_data_decoder</code><span class="sig-paren">(</span><em>data_decoder</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.set_data_decoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.set_data_encoder">
+<code class="descname">set_data_encoder</code><span class="sig-paren">(</span><em>data_encoder</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.set_data_encoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.set_data_file">
+<code class="descname">set_data_file</code><span class="sig-paren">(</span><em>data_file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.set_data_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.set_data_root">
+<code class="descname">set_data_root</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.set_data_root" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.policy.FsFsPolicy.set_entry_factory">
+<code class="descname">set_entry_factory</code><span class="sig-paren">(</span><em>entry_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy.set_entry_factory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.policy.JsonDecoder">
+<code class="descclassname">fsfs.policy.</code><code class="descname">JsonDecoder</code><span class="sig-paren">(</span><em>s</em>, <em>encoding=None</em>, <em>cls=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>object_pairs_hook=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.JsonDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize <code class="docutils literal"><span class="pre">s</span></code> (a <code class="docutils literal"><span class="pre">str</span></code> or <code class="docutils literal"><span class="pre">unicode</span></code> instance containing a JSON
+document) to a Python object.</p>
+<p>If <code class="docutils literal"><span class="pre">s</span></code> is a <code class="docutils literal"><span class="pre">str</span></code> instance and is encoded with an ASCII based encoding
+other than utf-8 (e.g. latin-1) then an appropriate <code class="docutils literal"><span class="pre">encoding</span></code> name
+must be specified. Encodings that are not ASCII based (such as UCS-2)
+are not allowed and should be decoded to <code class="docutils literal"><span class="pre">unicode</span></code> first.</p>
+<p><code class="docutils literal"><span class="pre">object_hook</span></code> is an optional function that will be called with the
+result of any object literal decode (a <code class="docutils literal"><span class="pre">dict</span></code>). The return value of
+<code class="docutils literal"><span class="pre">object_hook</span></code> will be used instead of the <code class="docutils literal"><span class="pre">dict</span></code>. This feature
+can be used to implement custom decoders (e.g. JSON-RPC class hinting).</p>
+<p><code class="docutils literal"><span class="pre">object_pairs_hook</span></code> is an optional function that will be called with the
+result of any object literal decoded with an ordered list of pairs.  The
+return value of <code class="docutils literal"><span class="pre">object_pairs_hook</span></code> will be used instead of the <code class="docutils literal"><span class="pre">dict</span></code>.
+This feature can be used to implement custom decoders that rely on the
+order that the key and value pairs are decoded (for example,
+collections.OrderedDict will remember the order of insertion). If
+<code class="docutils literal"><span class="pre">object_hook</span></code> is also defined, the <code class="docutils literal"><span class="pre">object_pairs_hook</span></code> takes priority.</p>
+<p><code class="docutils literal"><span class="pre">parse_float</span></code>, if specified, will be called with the string
+of every JSON float to be decoded. By default this is equivalent to
+float(num_str). This can be used to use another datatype or parser
+for JSON floats (e.g. decimal.Decimal).</p>
+<p><code class="docutils literal"><span class="pre">parse_int</span></code>, if specified, will be called with the string
+of every JSON int to be decoded. By default this is equivalent to
+int(num_str). This can be used to use another datatype or parser
+for JSON integers (e.g. float).</p>
+<p><code class="docutils literal"><span class="pre">parse_constant</span></code>, if specified, will be called with one of the
+following strings: -Infinity, Infinity, NaN.
+This can be used to raise an exception if invalid JSON numbers
+are encountered.</p>
+<p>To use a custom <code class="docutils literal"><span class="pre">JSONDecoder</span></code> subclass, specify it with the <code class="docutils literal"><span class="pre">cls</span></code>
+kwarg; otherwise <code class="docutils literal"><span class="pre">JSONDecoder</span></code> is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.policy.YamlDecoder">
+<code class="descclassname">fsfs.policy.</code><code class="descname">YamlDecoder</code><span class="sig-paren">(</span><em>stream</em>, <em>Loader=&lt;class 'yaml.loader.Loader'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.YamlDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the first YAML document in a stream
+and produce the corresponding Python object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.policy.DefaultDecoder">
+<code class="descclassname">fsfs.policy.</code><code class="descname">DefaultDecoder</code><span class="sig-paren">(</span><em>stream</em>, <em>Loader=&lt;class 'yaml.loader.Loader'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.DefaultDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the first YAML document in a stream
+and produce the corresponding Python object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.signal">
+<span id="fsfs-signal-module"></span><h2>fsfs.signal module<a class="headerlink" href="#module-fsfs.signal" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fsfs.signal.Channel">
+<em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Manages and sends signals by string identifier. Supports fuzzy signal
+subscriptions using fnmatch with <em>. So you could connect to “new.</em>” to
+subscribe to all signals that start with “new.”.</p>
+<p class="rubric">Examples</p>
+<p>Basic subscription:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;HI&#39;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
+<span class="go">[&#39;HI&#39;]</span>
+</pre></div>
+</div>
+<p>Fuzzy subscription:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;foo.*&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">foo_subscriber</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;FOO&#39;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;foo.bar&#39;</span><span class="p">)</span>
+<span class="go">[&#39;FOO&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;foo.baz&#39;</span><span class="p">)</span>
+<span class="go">[&#39;FOO&#39;]</span>
+</pre></div>
+</div>
+<p>Use a Signal alias:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_signal</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_signal</span><span class="o">.</span><span class="n">route</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">my_subscriber</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;HI&#39;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_signal</span><span class="p">()</span>
+<span class="go">[&#39;HI&#39;]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fsfs.signal.Channel.chain">
+<code class="descname">chain</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chain a signals subscribers. The first subscriber will be passed
+args and kwargs. Then each successive subscriber will be passed the
+return value of the previous subscriber. Unlike <a class="reference internal" href="#fsfs.signal.send" title="fsfs.signal.send"><code class="xref py py-meth docutils literal"><span class="pre">send()</span></code></a> this
+returns one value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal to send</li>
+<li><strong>*args</strong> – args to send</li>
+<li><strong>**kwargs</strong> – kwargs to send</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Final value returned from last subscriber</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>identifier=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect subscribers from one or all signals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>str</em>) – If passed clear subscribers for just this signal</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Clear all signals’ subscribers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Clear one signal’s subscribers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>priority=0</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect an object to a signal. Subscribers are ordered by priority.
+New subscribers are inserted after existing subscribers with the same
+priority.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – Signal identifier</li>
+<li><strong>obj</strong> (<em>callable</em>) – Object to connect to signal</li>
+<li><strong>priority</strong> (<em>int</em>) – priority of obj</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect obj from signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal to connect obj to</li>
+<li><strong>obj</strong> (<em>callable</em>) – callable obj to connect to signal</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forwards signals to another channel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to forward to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.route">
+<code class="descname">route</code><span class="sig-paren">(</span><em>identifier</em>, <em>priority=0</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect an obj to a signal via a decoration. Only works on functions
+and callable class instances at the moment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – Signal identifier</li>
+<li><strong>priority</strong> (<em>int</em>) – obj priority</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">channel</span><span class="o">.</span><span class="n">subscribers</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a signal. Calls each subscriber with args and kwargs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal to send out</li>
+<li><strong>*args</strong> – args to send</li>
+<li><strong>**kwargs</strong> – kwargs to send</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">contains results in order</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.signal">
+<code class="descname">signal</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal"><span class="pre">Signal</span></code></a> alias that forwards all calls to this signal
+channel. Multiple calls to <a class="reference internal" href="#fsfs.signal.Channel.signal" title="fsfs.signal.Channel.signal"><code class="xref py py-meth docutils literal"><span class="pre">signal()</span></code></a> with the same identifier will
+return the same <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal"><span class="pre">Signal</span></code></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signal.Channel.signals">
+<code class="descname">signals</code><a class="headerlink" href="#fsfs.signal.Channel.signals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict containing all signal aliases.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.subscribers">
+<code class="descname">subscribers</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.subscribers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all subscribers in order of priority for a specific signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>str</em>) – Signal identifier</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">subscribers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Channel.unforward">
+<code class="descname">unforward</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.unforward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops forwarding signals to another channel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to stop forwarding signals to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fsfs.signal.Signal">
+<em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Signal</code><span class="sig-paren">(</span><em>identifier</em>, <em>channel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Alias for a Signal identifier. Forwards all calls to a parent channel
+sending the aliases identifier with it. Users should not instance Signal
+themselves, instead they should get them from a channel using the
+<code class="xref py py-meth docutils literal"><span class="pre">signal()</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span> 
+<span class="go">Signal(channel=..., identifier=&#39;my.signal&#39;)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fsfs.signal.Signal.chain">
+<code class="descname">chain</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>obj</em>, <em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><em>obj</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.route">
+<code class="descname">route</code><span class="sig-paren">(</span><em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.route" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs.signal.Signal.subscribers">
+<code class="descname">subscribers</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.subscribers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.channel">
+<code class="descclassname">fsfs.signal.</code><code class="descname">channel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager to temporarily set signal channel</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.get_channel">
+<code class="descclassname">fsfs.signal.</code><code class="descname">get_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.get_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns _current_channel</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.set_channel">
+<code class="descclassname">fsfs.signal.</code><code class="descname">set_channel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets _current_channel to channel</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.set_channel_to_default">
+<code class="descclassname">fsfs.signal.</code><code class="descname">set_channel_to_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel_to_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets _current_channel to _default_channel</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.chain">
+<code class="descclassname">fsfs.signal.</code><code class="descname">chain</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chain signal subscribers on global channel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
+<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.route">
+<code class="descclassname">fsfs.signal.</code><code class="descname">route</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect function to signal via decorator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
+<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.send">
+<code class="descclassname">fsfs.signal.</code><code class="descname">send</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send signal on global channel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
+<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.connect">
+<code class="descclassname">fsfs.signal.</code><code class="descname">connect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect function to signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
+<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
+<li><strong>priority</strong> (<em>int</em>) – Priority of subscriber</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.signal.disconnect">
+<code class="descclassname">fsfs.signal.</code><code class="descname">disconnect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect function to signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
+<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
+<li><strong>priority</strong> (<em>int</em>) – Priority of subscriber</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.signals">
+<span id="fsfs-signals-module"></span><h2>fsfs.signals module<a class="headerlink" href="#module-fsfs.signals" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-fsfs.types">
+<span id="fsfs-types-module"></span><h2>fsfs.types module<a class="headerlink" href="#module-fsfs.types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fsfs.types.File">
+<em class="property">class </em><code class="descclassname">fsfs.types.</code><code class="descname">File</code><span class="sig-paren">(</span><em>name</em>, <em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.types.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A thin wrapper around the standard python file object. Allows users to
+setup a file-like object without actually opening it.</p>
+<p class="rubric">Examples</p>
+<p>open, read, and close a File.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">closed</span> <span class="o">==</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>use File as a context manager.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">closed</span> <span class="o">==</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fsfs.types.File.closed">
+<code class="descname">closed</code><a class="headerlink" href="#fsfs.types.File.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if File is closed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.types.File.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.types.File.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open acts like the builtin open function, it works as a regular
+function and as a context manager. The name and mode passed to the File
+constructor are used as the arguments for the builtin open. The
+resulting file object is stored in the <code class="xref py py-attr docutils literal"><span class="pre">File._file</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.types.File.opened">
+<code class="descname">opened</code><a class="headerlink" href="#fsfs.types.File.opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if File is opened</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs.util">
+<span id="fsfs-util-module"></span><h2>fsfs.util module<a class="headerlink" href="#module-fsfs.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fsfs.util.touch">
+<code class="descclassname">fsfs.util.</code><code class="descname">touch</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.touch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty file or update the date modified of an existing file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.unipath">
+<code class="descclassname">fsfs.util.</code><code class="descname">unipath</code><span class="sig-paren">(</span><em>*paths</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.unipath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like os.path.join but returns an absolute path with forward slashes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.tupilize">
+<code class="descclassname">fsfs.util.</code><code class="descname">tupilize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.tupilize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coerce obj to tuple</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.update_dict">
+<code class="descclassname">fsfs.util.</code><code class="descname">update_dict</code><span class="sig-paren">(</span><em>d</em>, <em>u</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.update_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a dict recursively.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="https://stackoverflow.com/questions/3232943/update-value-of-a-nested-dictionary-of-varying-depth">https://stackoverflow.com/questions/3232943/update-value-of-a-nested-dictionary-of-varying-depth</a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.copy_file">
+<code class="descclassname">fsfs.util.</code><code class="descname">copy_file</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>buffer_size=262144</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.copy_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy operations can be optimized by setting the buffer size for read
+operations and that’s just what copy_file does. copy_file has a default
+buffer size of 256 KB, which increases the speed of file copying in most
+cases. For smaller files the buffer size is reduced to the file size or a minimum of MINIMUM_BUFFER (1 KB).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://blogs.blumetech.com/blumetechs-tech-blog/2011/05/faster-python-file-copy.html">http://blogs.blumetech.com/blumetechs-tech-blog/2011/05/faster-python-file-copy.html</a>
+<a class="reference external" href="https://stackoverflow.com/questions/22078621/python-how-to-copy-files-fast/28129677#28129677">https://stackoverflow.com/questions/22078621/python-how-to-copy-files-fast/28129677#28129677</a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>src</strong> (<em>str</em>) – source file to copy</li>
+<li><strong>dest</strong> (<em>str</em>) – destination file path</li>
+<li><strong>buffer_size</strong> (<em>int</em>) – Number of bytes to buffer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.suppress">
+<code class="descclassname">fsfs.util.</code><code class="descname">suppress</code><span class="sig-paren">(</span><em>fn</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Never use this…ehhhhh, maybe use it. Suppresses all exceptions raised
+by a callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>callable</em>) – function to call</li>
+<li><strong>*args</strong> – args to pass to fn</li>
+<li><strong>**kwargs</strong> – kwargs to pass to fn</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">function return value or None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">Nothing...ever</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="guide.html" class="btn btn-neutral" title="Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Dan Bradham.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
