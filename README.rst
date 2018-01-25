@@ -75,13 +75,6 @@ Testing
     $ nosetests -v --with-doctest --doctest-extension=.rst
 
 
-More Documentation!
-===================
-Visit the Full Documentation for an in depth Guide and API Documentation.
-
-`fsfs Documentation <https://danbradham.github.io/fsfs>`_
-
-
 Inspiration
 ===========
 *fsfs* is directly inspired by Abstract Factory's
@@ -91,3 +84,8 @@ fsfs follows a different design pattern allowing you to store data in any
 format you like, and does not follow the openmetadata specification. fsfs
 comes with encoders for json and yaml out of the box, and allows the storing
 of blobs and files.
+
+
+More Documentation!
+===================
+`Visit the Full Documentation for an in depth Guide and API Documentation <https://danbradham.github.io/fsfs>`_
