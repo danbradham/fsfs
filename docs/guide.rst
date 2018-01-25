@@ -204,6 +204,6 @@ Use connect to subscribe a callable to any of the above signals.
 
     >>> def on_entry_created(entry):
     >>>     print('Entry Created: ', entry)
-    >>> fsfs.EntryCreated.connect(lambda entry: print(entry))
+    >>> fsfs.EntryCreated.connect(on_entry_created)
 
 For more information on *fsfs* signals visit the API documentation.

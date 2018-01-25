@@ -385,7 +385,7 @@ their caches up-to-date.</p>
 <p>Use connect to subscribe a callable to any of the above signals.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entry</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For more information on <em>fsfs</em> signals visit the API documentation.</p>
