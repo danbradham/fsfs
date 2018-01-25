@@ -92,9 +92,9 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">fsfs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html#signals">Signals</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.api">fsfs.api module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.cli">fsfs.cli module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.factory">fsfs.factory module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.lockfile">fsfs.lockfile module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.models">fsfs.models module</a></li>
@@ -645,16 +645,6 @@ tags are provided check if the DATA_ROOT directory exists.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-fsfs.cli">
-<span id="fsfs-cli-module"></span><h2>fsfs.cli module<a class="headerlink" href="#module-fsfs.cli" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="fsfs.cli.safe_eval">
-<code class="descclassname">fsfs.cli.</code><code class="descname">safe_eval</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.cli.safe_eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Evaluate a string in an empty namespace without __builtins__. Prevents
-imports and dubious scenarious like eval(“super”) == &lt;type ‘super’&gt;.</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-fsfs.factory">
 <span id="fsfs-factory-module"></span><h2>fsfs.factory module<a class="headerlink" href="#module-fsfs.factory" title="Permalink to this headline">¶</a></h2>
 <dl class="exception">
@@ -667,7 +657,7 @@ imports and dubious scenarious like eval(“super”) == &lt;type ‘super’&gt
 <dt id="fsfs.factory.SimpleEntryFactory">
 <em class="property">class </em><code class="descclassname">fsfs.factory.</code><code class="descname">SimpleEntryFactory</code><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>SimpleEntryFactory returns only the base implementation of Entry.</p>
+<p>SimpleEntryFactory returns the base implementation of Entry.</p>
 <dl class="method">
 <dt id="fsfs.factory.SimpleEntryFactory.on_entry_deleted">
 <code class="descname">on_entry_deleted</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.on_entry_deleted" title="Permalink to this definition">¶</a></dt>
@@ -710,8 +700,8 @@ another factory is set as the policy’s entry_factory using
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>EntryFactory that allows you to create Entry subclasses that handle
 directories with specific tags. You could register an Entry subclass to
-handle directories with the tag “project” for example and provide
-additional methods. For example:</p>
+handle directories with the tag “project” and provide
+additional methods.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fsfs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">EntryFactory</span><span class="p">()</span>
 </pre></div>
@@ -742,17 +732,20 @@ additional methods. For example:</p>
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.on_entry_deleted">
 <code class="descname">on_entry_deleted</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_deleted" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Remove entry.path from cache when entry deleted</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.on_entry_missing">
 <code class="descname">on_entry_missing</code><span class="sig-paren">(</span><em>entry</em>, <em>exc</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_missing" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Remove entry.path from cache when entry goes missing</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.on_entry_relinked_or_moved">
 <code class="descname">on_entry_relinked_or_moved</code><span class="sig-paren">(</span><em>entry</em>, <em>old_path</em>, <em>new_path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.on_entry_relinked_or_moved" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update cache when entry relinked or moved</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.on_entry_tagged">
@@ -977,7 +970,21 @@ finally have a static mtime, and they can expire.</p>
 <dl class="method">
 <dt id="fsfs.models.Entry.children">
 <code class="descname">children</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.children" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Walks down the directory tree yielding Entry objects. If tags are
+provided, only Entry’s matching those keys will be yieled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*tags</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Entry objects</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">generator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.delete">
@@ -987,67 +994,199 @@ finally have a static mtime, and they can expire.</p>
 <dl class="attribute">
 <dt id="fsfs.models.Entry.exists">
 <code class="descname">exists</code><a class="headerlink" href="#fsfs.models.Entry.exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>An Entry exists when it’s path exists and it’s data path exists</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.parent">
 <code class="descname">parent</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.parent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Walks up the directory tree returning the first Entry object found.
+If tags are provided, only an Entry matching those keys will be
+returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*tags</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">parent of this Entry</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#fsfs.models.Entry" title="fsfs.models.Entry">Entry</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.parents">
 <code class="descname">parents</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.parents" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Walks up the directory tree yielding Entry objects. If tags are
+provided, only Entry’s matching those keys will be yieled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*tags</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Entry objects</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">generator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.read">
 <code class="descname">read</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Read this Entry’s data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*keys</strong> – If specified, the returned dict will only contain these keys
+If only one key is passed, return just the value for that
+key and not a dict</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict or value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.read_blob">
 <code class="descname">read_blob</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read_blob" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get a file object representing a blob stored under the specified key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> – blob’s key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><cite>fsfs.File</cite> object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.read_file">
-<code class="descname">read_file</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">read_file</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.read_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a File stored under the specified key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> – file’s key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><cite>fsfs.File</cite> object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.set_path">
 <code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em>, <em>uuid=None</em>, <em>uuid_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.set_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets this Entry’s path. Used by relink to update this Entry’s
+path, name, and it’s associated data path. This shouldn’t be necessary
+during normal usage.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.tag">
 <code class="descname">tag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.tag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Add tags to this Entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*tags</strong> – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="fsfs.models.Entry.tags">
 <code class="descname">tags</code><a class="headerlink" href="#fsfs.models.Entry.tags" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>List of this Entry’s tags</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.untag">
 <code class="descname">untag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.untag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Remove tags from this Entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*tags</strong> – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.uuid">
+<code class="descname">uuid</code><a class="headerlink" href="#fsfs.models.Entry.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entry’s UUID stored in a filename in the data dir uuid_*</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write data to this Entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**data</strong> – key, value pairs to write to the Entry’s data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.write_blob">
 <code class="descname">write_blob</code><span class="sig-paren">(</span><em>key</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write_blob" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write binary data under the specified key. This will store the data
+in a file under the “blobs” subdirectory. You can then get a handle
+to the blob file via <cite>Entry.read_blob(key)</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> – blob’s key</li>
+<li><strong>data</strong> – binary data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.write_file">
 <code class="descname">write_file</code><span class="sig-paren">(</span><em>key</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write a file under the specified key. This will copy the file to
+the “files” subdirectory. You can then get a handle to the file via
+<cite>Entry.read_file(key)</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> – files’s key</li>
+<li><strong>file</strong> – path to file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -1156,13 +1295,13 @@ DefaultPolicy which sets the following policy attributes.</p>
 <dl class="attribute">
 <dt id="fsfs.policy.FsFsPolicy.data_encoder">
 <code class="descname">data_encoder</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_encoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>partial(yaml.safe_dump, default_flow_style=False)</p>
+<dd><p><cite>YamlEncoder</cite> falls back to <cite>JsonEncoder</cite></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="fsfs.policy.FsFsPolicy.data_decoder">
 <code class="descname">data_decoder</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.data_decoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>yaml.load</p>
+<dd><p><cite>YamlDecoder</cite> falls back to <cite>JsonDecoder</cite></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1180,7 +1319,7 @@ DefaultPolicy which sets the following policy attributes.</p>
 <dl class="attribute">
 <dt id="fsfs.policy.FsFsPolicy.entry_factory">
 <code class="descname">entry_factory</code><a class="headerlink" href="#fsfs.policy.FsFsPolicy.entry_factory" title="Permalink to this definition">¶</a></dt>
-<dd><p>default_entry_factory</p>
+<dd><p><cite>SimpleEntryFactory</cite></p>
 </dd></dl>
 
 <dl class="docutils">
@@ -1303,7 +1442,7 @@ and produce the corresponding Python object.</p>
 <em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Manages and sends signals by string identifier. Supports fuzzy signal
-subscriptions using fnmatch with <em>. So you could connect to “new.</em>” to
+subscriptions using fnmatch with *. So you could connect to “new.*” to
 subscribe to all signals that start with “new.”.</p>
 <p class="rubric">Examples</p>
 <p>Basic subscription:</p>
@@ -1602,19 +1741,19 @@ themselves, instead they should get them from a channel using the
 <dl class="function">
 <dt id="fsfs.signal.get_channel">
 <code class="descclassname">fsfs.signal.</code><code class="descname">get_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.get_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns _current_channel</p>
+<dd><p>Returns global channel</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="fsfs.signal.set_channel">
 <code class="descclassname">fsfs.signal.</code><code class="descname">set_channel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets _current_channel to channel</p>
+<dd><p>Sets global channel to channel</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="fsfs.signal.set_channel_to_default">
 <code class="descclassname">fsfs.signal.</code><code class="descname">set_channel_to_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel_to_default" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets _current_channel to _default_channel</p>
+<dd><p>Sets global channel to _default_channel</p>
 </dd></dl>
 
 <dl class="function">

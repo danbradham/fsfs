@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#advanced-provide-your-own-entry-models">Advanced: Provide your own <cite>Entry</cite> models</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#signals">Signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 </ul>
 
@@ -188,8 +189,8 @@ by <em>fsfs</em> and <em>fsfs</em> provides a class by the same name for interac
 them. Let’s take a look at using the <cite>Entry</cite> object.</p>
 <div class="section" id="getting-to-know-the-entry-object">
 <h2>Getting to know the <cite>Entry</cite> object<a class="headerlink" href="#getting-to-know-the-entry-object" title="Permalink to this headline">¶</a></h2>
-<p>Let’s get an <cite>Entry</cite> object representing the folder we created previously and
-use it to change our data.</p>
+<p>First we will get an <cite>Entry</cite> object representing the folder we tagged project
+previously and use it to change our data.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Get an Entry object
 <span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.one<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>
 
@@ -210,9 +211,9 @@ use it to change our data.</p>
 </pre></div>
 </div>
 <p>We used <cite>fsfs.one</cite> to retrieve the first <cite>Entry</cite> tagged <cite>project</cite>. Since we’ve
-only created one folder tagged <cite>project</cite>, we’re guaranteed to get an <cite>Entry</cite>
-for <cite>tmp/my_super_project</cite>. You could also use <cite>fsfs.search</cite> to get a
-generator yielding all <cite>Entry</cite>’s with the tag ‘project’ like so:</p>
+tagged one folder with project, we’re guaranteed to get an <cite>Entry</cite> for
+<cite>tmp/my_super_project</cite>. You could also use <cite>fsfs.search</cite> to get a
+generator yielding all <cite>Entry</cite>’s with the tag ‘project’.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="k">for</span> entry in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>:
 <span class="go">...     entry.name</span>
 <span class="go">&#39;my_super_project&#39;</span>
@@ -221,70 +222,70 @@ generator yielding all <cite>Entry</cite>’s with the tag ‘project’ like so
 </div>
 <div class="section" id="customizing-fsfs">
 <h2>Customizing <em>fsfs</em><a class="headerlink" href="#customizing-fsfs" title="Permalink to this headline">¶</a></h2>
-<p><em>fsfs</em> uses the policy pattern to provide a mechanism for customizing <em>fsfs</em>.
+<p><em>fsfs</em> uses the policy pattern to provide a mechanism for customization.
 The global policy is used behind the scenes in all api functions and clases.
 The policy provides data encoding and decoding, data storage locations, and
 a factory used to create <cite>Entry</cite> instances:</p>
-<ul>
-<li><p class="first">data_encoder: a function or callable class that encodes data</p>
-<blockquote>
-<div><ul class="simple">
-<li>defaults to <cite>fsfs.YamlEncoder</cite> falls back to <cite>fsfs.JsonEncoder</cite></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">data_decoder: a function or callable class that decodes data</p>
-<blockquote>
-<div><ul class="simple">
-<li>defaults to <cite>fsfs.YamlDecoder</cite> falls back to <cite>fsfs.JsonDecoder</cite></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">data_root: the name of the subdirectory to store data in</p>
-<blockquote>
-<div><ul class="simple">
-<li>defaults to “.data”</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">data_file: the name of the file to store encoded data</p>
-<blockquote>
-<div><ul class="simple">
-<li>defaults to “data”</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">entry_factory: a function or callabled class used by <cite>fsfs.get_entry</cite> to
-retrieve an <cite>Entry</cite> object for the given path</p>
-<blockquote>
-<div><ul class="simple">
-<li>defaults to <cite>fsfs.SimpleEntryFactory</cite> which simple yields the base
-implementation <cite>Entry</cite> for every path</li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p>Let’s take a look at modifying the default policy’s data storage behavior:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="45%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">default</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>data_root</td>
+<td>“.data”</td>
+<td>Name of data subdirectory</td>
+</tr>
+<tr class="row-odd"><td>data_file</td>
+<td>“data”</td>
+<td>Name of data file</td>
+</tr>
+<tr class="row-even"><td>data_encoder</td>
+<td><cite>fsfs.YamlEncoder</cite>
+falls back to <cite>fsfs.JsonEncoder</cite></td>
+<td>Encodes data</td>
+</tr>
+<tr class="row-odd"><td>data_decoder</td>
+<td><cite>fsfs.YamlDecoder</cite>
+falls back to <cite>fsfs.JsonDecoder</cite></td>
+<td>Decodes data</td>
+</tr>
+<tr class="row-even"><td>entry_factory</td>
+<td><cite>fsfs.SimpleEntryFactory</cite></td>
+<td>creates <cite>Entry</cite> objects</td>
+</tr>
+</tbody>
+</table>
+<p>Here is how we would modify the global policy’s data encoding options.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_encoder<span class="o">(</span>fsfs.JsonEncoder<span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_decoder<span class="o">(</span>fsfs.JsonDecoder<span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_root<span class="o">(</span><span class="s1">&#39;.metadata&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_file<span class="o">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Now when we use <em>fsfs</em> data to write data it will be stored in a subdirectory
-of the folder called <cite>.metadata</cite> in a file called <cite>metadata.json</cite> and encoded
-using <cite>JsonEncoder</cite>. The <cite>JsonEncoder</cite> and <cite>JsonDecoder</cite> are just wrappers
-around <cite>json.dumps</cite> and <cite>json.loads</cite>.</p>
-</div>
-<div class="section" id="advanced-provide-your-own-entry-models">
-<h2>Advanced: Provide your own <cite>Entry</cite> models<a class="headerlink" href="#advanced-provide-your-own-entry-models" title="Permalink to this headline">¶</a></h2>
-<p>Finally let’s take a look at customing the <cite>Entry</cite> objects returned by the
-<em>fsfs</em> api. By changing the global policy’s <cite>EntryFactory</cite> we can customize the <cite>Entry</cite>. First let’s reset our policy to the defaults.</p>
+<p>From now on, when we use <em>fsfs</em> data to write data it will be stored in a
+subdirectory called <cite>.metadata</cite> in a file called <cite>metadata.json</cite> and encoded
+using <cite>JsonEncoder</cite>. The <cite>JsonEncoder</cite> and <cite>JsonDecoder</cite> are simply wrappers
+around <cite>json.dumps</cite> and <cite>json.loads</cite>. You can also restore the default global
+policy.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_default_policy<span class="o">()</span>
 </pre></div>
 </div>
-<p>OK! Now let’s create a new <cite>EntryFactory</cite> instance that will allow us to
-define <cite>Entry</cite> models to handle folders tagged with specific tags.</p>
+</div>
+<div class="section" id="advanced-provide-your-own-entry-models">
+<h2>Advanced: Provide your own <cite>Entry</cite> models<a class="headerlink" href="#advanced-provide-your-own-entry-models" title="Permalink to this headline">¶</a></h2>
+<p>Finally let’s take a look at customizing the <cite>Entry</cite> objects returned by the
+<em>fsfs</em> api. The default policy uses <cite>fsfs.SimpleEntryFactory</cite> which maintains
+return instances of the default <cite>Entry</cite> implementation. We can provide our own
+<cite>Entry</cite> classes to handle folders with specific tags by creating an instance
+of <cite>fsfs.EntryFactory</cite>.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">factory</span> <span class="o">=</span> fsfs.EntryFactory<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; class Project<span class="o">(</span>factory.Entry<span class="o">)</span>:
 <span class="go">...     def special_method(self):</span>
@@ -293,34 +294,102 @@ define <cite>Entry</cite> models to handle folders tagged with specific tags.</p
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_entry_factory<span class="o">(</span>factory<span class="o">)</span>
 </pre></div>
 </div>
-<p>Great. When we use <em>fsfs</em> now, and we get an <cite>Entry</cite> for a folder tagged
-<cite>project</cite> we will receive an instance of our <cite>Project</cite> class instead of the
-default <cite>Entry</cite>.</p>
+<p>By default subclasses are registered to handle a tag that matches the lower
+cased class name. You can specify a tag by providing a class attribute
+<code class="xref py py-attr docutils literal"><span class="pre">type_for_tag</span></code>. With our new <cite>EntryFactory</cite> set, the <em>fsfs</em> api will use
+our <cite>Project</cite> subclass when acting on a folder that is tagged <cite>project</cite>.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.one<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; entry.special_method<span class="o">()</span>
 <span class="go">&#39;Hello from your special method!&#39;</span>
 </pre></div>
 </div>
-<p>A couple notes about entry factories. An entry factory can be as simple as a
-function that returns and <cite>Entry</cite> instance. <cite>fsfs.EntryFactory</cite> is a complex
-class that automatically registers subclasses of the factory’s Entry base class
-to handle specific tags. Instead of directly handing <cite>Entry</cite> classes back to
-the user, <cite>fsfs.EntryFactory</cite> returns an <cite>EntryProxy</cite> instance that wraps a
-cached <cite>Entry</cite> instance. This allows the proxy to magically “change” types
-when a folders tags change. If you remove the <cite>project</cite> tag from the above
-example <cite>Project.special_method</cite> will no longer be available.</p>
+<p>An entry factory can be as simple as a function that returns <cite>Entry</cite>
+instances. <cite>fsfs.EntryFactory</cite> is a complex callable class that automatically
+registers subclasses of the factory’s <cite>Entry</cite> base class to handle specific
+tags. If we remove the <cite>project</cite> tag from the above example
+<cite>Project.special_method</cite> will no longer be available.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; entry.untag<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; hasattr<span class="o">(</span>entry, <span class="s1">&#39;special_method&#39;</span><span class="o">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
-<p>To get the actual object the proxy is currently referencing you can call the
-proxy’s obj method.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; entry.tag<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>
-<span class="gp">&gt;</span>&gt;&gt; assert type<span class="o">(</span>entry.obj<span class="o">())</span> is Project
+<p>It seems like our <cite>entry</cite> changed types. The trick here is that
+<cite>fsfs.EntryFactory</cite> returns an <cite>EntryProxy</cite> that directs all attribute lookup
+to a real <cite>Entry</cite> instance. This allows the entry to magically “<em>change</em>”
+types when a folder’s tags change. Signals are used to keep a cache of
+<cite>EntryProxy</cite> and <cite>Entry</cite> objects in sync when tags change, or an entry is moved
+on the file system.</p>
+</div>
+</div>
+<div class="section" id="signals">
+<h1>Signals<a class="headerlink" href="#signals" title="Permalink to this headline">¶</a></h1>
+<p><em>fsfs</em> emits the following signals.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="32%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">signal</th>
+<th class="head">signature</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>fsfs.EntryCreated</td>
+<td>entry</td>
+<td>When a new Entry is Created</td>
+</tr>
+<tr class="row-odd"><td>fsfs.EntryMoved</td>
+<td>entry, old_path, new_path</td>
+<td>When an Entry is moved</td>
+</tr>
+<tr class="row-even"><td>fsfs.EntryTagged</td>
+<td>entry, tags</td>
+<td>When an Entry receives a new tag</td>
+</tr>
+<tr class="row-odd"><td>fsfs.EntryUntagged</td>
+<td>entry, tags</td>
+<td>When an Entry’s tag is removed</td>
+</tr>
+<tr class="row-even"><td>fsfs.EntryMissing</td>
+<td>entry, exc</td>
+<td>When an Entry goes missing
+sent when a relink fails</td>
+</tr>
+<tr class="row-odd"><td>fsfs.EntryRelinked</td>
+<td>entry, old_path, new_path</td>
+<td>When an Entry is relinked</td>
+</tr>
+<tr class="row-even"><td>fsfs.EntryDeleted</td>
+<td>entry</td>
+<td>When an Entry is deleted</td>
+</tr>
+<tr class="row-odd"><td>fsfs.EntryDataChanged</td>
+<td>entry, data</td>
+<td>When an Entry’s data is changed</td>
+</tr>
+<tr class="row-even"><td>fsfs.EntryDataDeleted</td>
+<td>entry</td>
+<td>When an Entry’s data is deleted
+sent before EntryDeleted</td>
+</tr>
+<tr class="row-odd"><td>fsfs.EntryUUIDChanged</td>
+<td>entry</td>
+<td>When an Entry’s UUID changes</td>
+</tr>
+</tbody>
+</table>
+<p><cite>fsfs.EntryFactory</cite> and <cite>fsfs.SimpleEntryFactory</cite> uses these signals to keep
+their caches up-to-date.</p>
+<p>Use connect to subscribe a callable to any of the above signals.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entry</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
+<p>For more information on <em>fsfs</em> signals visit the API documentation.</p>
 </div>
 
 

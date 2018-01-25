@@ -9,14 +9,6 @@ fsfs\.api module
     :undoc-members:
     :show-inheritance:
 
-fsfs\.cli module
-----------------
-
-.. automodule:: fsfs.cli
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 fsfs\.factory module
 --------------------
 
