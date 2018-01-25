@@ -165,7 +165,7 @@ on the file system.
 
 
 Signals
-=======
+-------
 
 *fsfs* emits the following signals.
 
