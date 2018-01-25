@@ -11,7 +11,7 @@ class RegistrationError(Exception): pass
 
 
 class SimpleEntryFactory(object):
-    '''SimpleEntryFactory returns only the base implementation of Entry.'''
+    '''SimpleEntryFactory returns the base implementation of Entry.'''
 
     def __init__(self):
         self._cache = {}
@@ -66,8 +66,8 @@ class SimpleEntryFactory(object):
 class EntryFactory(object):
     '''EntryFactory that allows you to create Entry subclasses that handle
     directories with specific tags. You could register an Entry subclass to
-    handle directories with the tag "project" for example and provide
-    additional methods. For example:
+    handle directories with the tag "project" and provide
+    additional methods.
 
         >>> import fsfs
         >>> factory = fsfs.EntryFactory()
@@ -201,6 +201,8 @@ class EntryFactory(object):
         self._mtimes[entry.path] = None
 
     def on_entry_relinked_or_moved(self, entry, old_path, new_path):
+        '''Update cache when entry relinked or moved'''
+
         _entry, proxy, _mtime = self._pop_cache_path(old_path)
         proxy._path = new_path
         tags = api.get_tags(new_path)
@@ -210,12 +212,18 @@ class EntryFactory(object):
         self._mtimes[new_path] = os.path.getmtime(new_path)
 
     def on_entry_missing(self, entry, exc):
+        '''Remove entry.path from cache when entry goes missing'''
+
         self._pop_cache_path(entry.path)
 
     def on_entry_deleted(self, entry):
+        '''Remove entry.path from cache when entry deleted'''
+
         self._pop_cache_path(entry.path)
 
     def _pop_cache_path(self, path):
+        '''Removes the specified path from all caches'''
+
         return (
             self._cache.pop(path, None),
             self._cache_proxies.pop(path, None),

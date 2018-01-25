@@ -318,7 +318,6 @@ class EntryData(object):
         signals.EntryDataChanged.send(self.parent, dict(self._data))
 
     def read_blob(self, key):
-
         data = self._read()
         data.setdefault('blobs', {})
         blobs = data['blobs']
@@ -326,7 +325,6 @@ class EntryData(object):
         return types.File(blob_path, mode='rb')
 
     def write_blob(self, key, data):
-
         if not os.path.exists(self.blobs_path):
             os.makedirs(self.blobs_path)
 
@@ -338,7 +336,6 @@ class EntryData(object):
         signals.EntryDataChanged.send(self.parent, dict(self._data))
 
     def read_file(self, key):
-
         data = self._read()
         data.setdefault('files', {})
         files = data['files']
@@ -346,7 +343,6 @@ class EntryData(object):
         return types.File(file_path, mode='rb')
 
     def write_file(self, key, file):
-
         if not os.path.exists(self.files_path):
             os.makedirs(self.files_path)
 
@@ -382,50 +378,158 @@ class Entry(object):
         return self.path
 
     def set_path(self, path, uuid=None, uuid_file=None):
+        '''Sets this Entry's path. Used by relink to update this Entry's
+        path, name, and it's associated data path. This shouldn't be necessary
+        during normal usage.
+        '''
+
         self.path = path
         self.name = os.path.basename(path)
         data_path = util.unipath(path, api.get_data_root())
         self.data.set_path(data_path, uuid, uuid_file)
 
     @property
+    def uuid(self):
+        '''Entry's UUID stored in a filename in the data dir uuid_*'''
+
+        return self.data.uuid
+
+    @property
     def tags(self):
+        '''List of this Entry's tags'''
+
         return self.data.tags
 
     def tag(self, *tags):
+        '''Add tags to this Entry
+
+        Arguments:
+            *tags
+        '''
         self.data.tag(*tags)
 
     def untag(self, *tags):
+        '''Remove tags from this Entry
+
+        Arguments:
+            *tags
+        '''
         self.data.untag(*tags)
 
     def read(self, *keys):
+        '''Read this Entry's data
+
+        Arguments:
+            *keys: If specified, the returned dict will only contain these keys
+                   If only one key is passed, return just the value for that
+                   key and not a dict
+
+        Returns:
+            dict or value
+        '''
         return self.data.read(*keys)
 
     def write(self, **data):
+        '''Write data to this Entry
+
+        Arguments:
+            **data: key, value pairs to write to the Entry's data
+        '''
+
         self.data.write(**data)
 
     def read_blob(self, key):
+        '''Get a file object representing a blob stored under the specified key
+
+        Arguments:
+            key: blob's key
+
+        Returns:
+            `fsfs.File` object
+        '''
+
         return self.data.read_blob(key)
 
     def write_blob(self, key, data):
+        '''Write binary data under the specified key. This will store the data
+        in a file under the "blobs" subdirectory. You can then get a handle
+        to the blob file via `Entry.read_blob(key)`.
+
+        Arguments:
+            key: blob's key
+            data: binary data
+        '''
+
         self.data.write_blob(key, data)
 
-    def read_file(self, *keys):
-        return self.data.read_file(*keys)
+    def read_file(self, key):
+        '''Get a File stored under the specified key
+
+        Arguments:
+            key: file's key
+
+        Returns:
+            `fsfs.File` object
+        '''
+
+        return self.data.read_file(key)
 
     def write_file(self, key, file):
+        '''Write a file under the specified key. This will copy the file to
+        the "files" subdirectory. You can then get a handle to the file via
+        `Entry.read_file(key)`.
+
+        Arguments:
+            key: files's key
+            file: path to file
+        '''
+
         self.data.write_file(key, file)
 
     def parents(self, *tags):
+        '''Walks up the directory tree yielding Entry objects. If tags are
+        provided, only Entry's matching those keys will be yieled
+
+        Arguments:
+            *tags
+
+        Returns:
+            generator: Entry objects
+        '''
+
         return api.search(self.path, tags, direction=api.UP, skip_root=True)
 
     def parent(self, *tags):
+        '''Walks up the directory tree returning the first Entry object found.
+        If tags are provided, only an Entry matching those keys will be
+        returned.
+
+        Arguments:
+            *tags
+
+        Returns:
+            Entry: parent of this Entry
+        '''
+
         return api.one(self.path, tags, direction=api.UP, skip_root=True)
 
     def children(self, *tags):
+        '''Walks down the directory tree yielding Entry objects. If tags are
+        provided, only Entry's matching those keys will be yieled
+
+        Arguments:
+            *tags
+
+        Returns:
+            generator: Entry objects
+        '''
+
         return api.search(self.path, tags, skip_root=True)
 
     @property
     def exists(self):
+        '''An Entry exists when it's path exists and it's data path exists'''
+
         return os.path.isdir(self.path) and os.path.isdir(self.data.path)
 
     def delete(self, remove_root=False):

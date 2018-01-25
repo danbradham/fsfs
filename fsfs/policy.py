@@ -27,11 +27,11 @@ class FsFsPolicy(object):
     DefaultPolicy which sets the following policy attributes.
 
     Attributes:
-        data_encoder: partial(yaml.safe_dump, default_flow_style=False)
-        data_decoder: yaml.load
+        data_encoder: `YamlEncoder` falls back to `JsonEncoder`
+        data_decoder: `YamlDecoder` falls back to `JsonDecoder`
         data_root: '.data'
         data_file: 'data'
-        entry_factory: default_entry_factory
+        entry_factory: `SimpleEntryFactory`
 
     Use the following api methods to modify the global policy:
         api.set_data_encoder(data_encoder)

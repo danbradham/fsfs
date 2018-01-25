@@ -36,8 +36,8 @@ them. Let's take a look at using the `Entry` object.
 Getting to know the `Entry` object
 ----------------------------------
 
-Let's get an `Entry` object representing the folder we created previously and
-use it to change our data.
+First we will get an `Entry` object representing the folder we tagged project
+previously and use it to change our data.
 
 .. code-block:: console
 
@@ -60,9 +60,9 @@ use it to change our data.
     {'status': 'active', 'framerate': '24fps'}
 
 We used `fsfs.one` to retrieve the first `Entry` tagged `project`. Since we've
-only created one folder tagged `project`, we're guaranteed to get an `Entry`
-for `tmp/my_super_project`. You could also use `fsfs.search` to get a
-generator yielding all `Entry`'s with the tag 'project' like so:
+tagged one folder with project, we're guaranteed to get an `Entry` for
+`tmp/my_super_project`. You could also use `fsfs.search` to get a
+generator yielding all `Entry`'s with the tag 'project'.
 
 .. code-block:: console
 
@@ -74,35 +74,28 @@ generator yielding all `Entry`'s with the tag 'project' like so:
 Customizing *fsfs*
 ------------------
 
-*fsfs* uses the policy pattern to provide a mechanism for customizing *fsfs*.
+*fsfs* uses the policy pattern to provide a mechanism for customization.
 The global policy is used behind the scenes in all api functions and clases.
 The policy provides data encoding and decoding, data storage locations, and
 a factory used to create `Entry` instances:
 
-- data_encoder: a function or callable class that encodes data
++---------------+----------------------------------+---------------------------+
+| attribute     | default                          | description               |
++===============+==================================+===========================+
+| data_root     | ".data"                          | Name of data subdirectory |
++---------------+----------------------------------+---------------------------+
+| data_file     | "data"                           | Name of data file         |
++---------------+----------------------------------+---------------------------+
+| data_encoder  | `fsfs.YamlEncoder`               | Encodes data              |
+|               | falls back to `fsfs.JsonEncoder` |                           |
++---------------+----------------------------------+---------------------------+
+| data_decoder  | `fsfs.YamlDecoder`               | Decodes data              |
+|               | falls back to `fsfs.JsonDecoder` |                           |
++---------------+----------------------------------+---------------------------+
+| entry_factory | `fsfs.SimpleEntryFactory`        | creates `Entry` objects   |
++---------------+----------------------------------+---------------------------+
 
-    - defaults to `fsfs.YamlEncoder` falls back to `fsfs.JsonEncoder`
-
-- data_decoder: a function or callable class that decodes data
-
-    - defaults to `fsfs.YamlDecoder` falls back to `fsfs.JsonDecoder`
-
-- data_root: the name of the subdirectory to store data in
-
-    - defaults to ".data"
-
-- data_file: the name of the file to store encoded data
-
-    - defaults to "data"
-
-- entry_factory: a function or callabled class used by `fsfs.get_entry` to
-  retrieve an `Entry` object for the given path
-
-    - defaults to `fsfs.SimpleEntryFactory` which simple yields the base
-      implementation `Entry` for every path
-
-
-Let's take a look at modifying the default policy's data storage behavior:
+Here is how we would modify the global policy's data encoding options.
 
 .. code-block:: console
 
@@ -111,24 +104,25 @@ Let's take a look at modifying the default policy's data storage behavior:
     >>> fsfs.set_data_root('.metadata')
     >>> fsfs.set_data_file('metadata.json')
 
-Now when we use *fsfs* data to write data it will be stored in a subdirectory
-of the folder called `.metadata` in a file called `metadata.json` and encoded
-using `JsonEncoder`. The `JsonEncoder` and `JsonDecoder` are just wrappers
-around `json.dumps` and `json.loads`.
-
-
-Advanced: Provide your own `Entry` models
------------------------------------------
-
-Finally let's take a look at customing the `Entry` objects returned by the
-*fsfs* api. By changing the global policy's `EntryFactory` we can customize the `Entry`. First let's reset our policy to the defaults.
+From now on, when we use *fsfs* data to write data it will be stored in a
+subdirectory called `.metadata` in a file called `metadata.json` and encoded
+using `JsonEncoder`. The `JsonEncoder` and `JsonDecoder` are simply wrappers
+around `json.dumps` and `json.loads`. You can also restore the default global
+policy.
 
 .. code-block:: console
 
     >>> fsfs.set_default_policy()
 
-OK! Now let's create a new `EntryFactory` instance that will allow us to
-define `Entry` models to handle folders tagged with specific tags.
+
+Advanced: Provide your own `Entry` models
+-----------------------------------------
+
+Finally let's take a look at customizing the `Entry` objects returned by the
+*fsfs* api. The default policy uses `fsfs.SimpleEntryFactory` which maintains
+return instances of the default `Entry` implementation. We can provide our own
+`Entry` classes to handle folders with specific tags by creating an instance
+of `fsfs.EntryFactory`.
 
 .. code-block:: console
 
@@ -139,9 +133,10 @@ define `Entry` models to handle folders tagged with specific tags.
 
     >>> fsfs.set_entry_factory(factory)
 
-Great. When we use *fsfs* now, and we get an `Entry` for a folder tagged
-`project` we will receive an instance of our `Project` class instead of the
-default `Entry`.
+By default subclasses are registered to handle a tag that matches the lower
+cased class name. You can specify a tag by providing a class attribute
+:attr:`type_for_tag`. With our new `EntryFactory` set, the *fsfs* api will use
+our `Project` subclass when acting on a folder that is tagged `project`.
 
 .. code-block:: console
 
@@ -149,14 +144,11 @@ default `Entry`.
     >>> entry.special_method()
     'Hello from your special method!'
 
-A couple notes about entry factories. An entry factory can be as simple as a
-function that returns and `Entry` instance. `fsfs.EntryFactory` is a complex
-class that automatically registers subclasses of the factory's Entry base class
-to handle specific tags. Instead of directly handing `Entry` classes back to
-the user, `fsfs.EntryFactory` returns an `EntryProxy` instance that wraps a
-cached `Entry` instance. This allows the proxy to magically "change" types
-when a folders tags change. If you remove the `project` tag from the above
-example `Project.special_method` will no longer be available.
+An entry factory can be as simple as a function that returns `Entry`
+instances. `fsfs.EntryFactory` is a complex callable class that automatically
+registers subclasses of the factory's `Entry` base class to handle specific
+tags. If we remove the `project` tag from the above example
+`Project.special_method` will no longer be available.
 
 .. code-block:: console
 
@@ -164,10 +156,54 @@ example `Project.special_method` will no longer be available.
     >>> hasattr(entry, 'special_method')
     False
 
-To get the actual object the proxy is currently referencing you can call the
-proxy's obj method.
+It seems like our `entry` changed types. The trick here is that
+`fsfs.EntryFactory` returns an `EntryProxy` that directs all attribute lookup
+to a real `Entry` instance. This allows the entry to magically "*change*"
+types when a folder's tags change. Signals are used to keep a cache of
+`EntryProxy` and `Entry` objects in sync when tags change, or an entry is moved
+on the file system.
 
-.. code-block:: console
 
-    >>> entry.tag('project')
-    >>> assert type(entry.obj()) is Project
+Signals
+=======
+
+*fsfs* emits the following signals.
+
++-----------------------+---------------------------+----------------------------------+
+| signal                | signature                 | description                      |
++=======================+===========================+==================================+
+| fsfs.EntryCreated     | entry                     | When a new Entry is Created      |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryMoved       | entry, old_path, new_path | When an Entry is moved           |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryTagged      | entry, tags               | When an Entry receives a new tag |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryUntagged    | entry, tags               | When an Entry's tag is removed   |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryMissing     | entry, exc                | When an Entry goes missing       |
+|                       |                           | sent when a relink fails         |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryRelinked    | entry, old_path, new_path | When an Entry is relinked        |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryDeleted     | entry                     | When an Entry is deleted         |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryDataChanged | entry, data               | When an Entry's data is changed  |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryDataDeleted | entry                     | When an Entry's data is deleted  |
+|                       |                           | sent before EntryDeleted         |
++-----------------------+---------------------------+----------------------------------+
+| fsfs.EntryUUIDChanged | entry                     | When an Entry's UUID changes     |
++-----------------------+---------------------------+----------------------------------+
+
+`fsfs.EntryFactory` and `fsfs.SimpleEntryFactory` uses these signals to keep
+their caches up-to-date.
+
+Use connect to subscribe a callable to any of the above signals.
+
+.. code-block::
+
+    >>> def on_entry_created(entry):
+    >>>     print('Entry Created: ', entry)
+    >>> fsfs.EntryCreated.connect(lambda entry: print(entry))
+
+For more information on *fsfs* signals visit the API documentation.

@@ -29,7 +29,7 @@ _current_channel = None
 
 class Channel(object):
     '''Manages and sends signals by string identifier. Supports fuzzy signal
-    subscriptions using fnmatch with *. So you could connect to "new.*" to
+    subscriptions using fnmatch with \*. So you could connect to "new.\*" to
     subscribe to all signals that start with "new.".
 
     Examples:
@@ -365,20 +365,20 @@ class Signal(object):
 
 
 def get_channel():
-    '''Returns _current_channel'''
+    '''Returns global channel'''
 
     return _current_channel
 
 
 def set_channel(channel):
-    '''Sets _current_channel to channel'''
+    '''Sets global channel to channel'''
 
     global _current_channel
     _current_channel = channel
 
 
 def set_channel_to_default():
-    '''Sets _current_channel to _default_channel'''
+    '''Sets global channel to _default_channel'''
 
     global _current_channel
     _current_channel = _default_channel
