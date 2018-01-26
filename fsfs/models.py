@@ -554,7 +554,7 @@ class Entry(object):
             if not only_data:
                 util.copy_tree(self.path, dest, force=True, overwrite=True)
             else:
-                hierarchy = [self] + list(self.children)
+                hierarchy = [self] + list(self.children())
                 for entry in hierarchy:
                     new_path = os.path.relpath(entry.path, self.path)
                     new_data_path = os.path.relpath(entry.data.path, self.path)
@@ -570,7 +570,7 @@ class Entry(object):
         new_entry = api.get_entry(dest)
         new_entry._new_uuid()
         signals.EntryCreated.send(new_entry)
-        for child in children:
+        for child in new_entry.children():
             child._new_uuid()
             signals.EntryCreated.send(child)
         return new_entry
@@ -605,7 +605,7 @@ class Entry(object):
         new_path = dest
         self._set_path(dest) # Update this Entry's path
         signals.EntryMoved.send(new_entry, old_path, new_path)
-        for child in children:
+        for child in self.children():
             new_child_path = child.path
             old_child_path = new_child_path.replace(new_path, old_path)
             signals.EntryMoved.send(child, old_child_path, new_child_path)
