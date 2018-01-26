@@ -12,8 +12,9 @@ __all__ = [
 import os
 import errno
 import collections
-from _compat import basestring
+import shutil
 from scandir import walk
+from _compat import basestring
 
 
 BINARY = os.__dict__.get('O_BINARY', 0)  # Windows has a binary flag
