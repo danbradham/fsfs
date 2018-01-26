@@ -79,7 +79,7 @@ def relink_uuid(entry):
     if match:
         old_root = entry.path
         new_root, new_data_root, new_uuid_file = match
-        entry.set_path(new_root, data.uuid, new_uuid_file)
+        entry._set_path(new_root, data.uuid, new_uuid_file)
         signals.EntryRelinked.send(entry, old_root, new_root)
     else:
         exc = EntryNotFoundError(
@@ -104,12 +104,12 @@ class EntryData(object):
         self.uuid = None
         self.uuid_file = None
         self._lock = None
-        self.set_path(path)
+        self._set_path(path)
 
         self._data = None
         self._data_mtime = None
 
-    def set_path(self, path, uuid=None, uuid_file=None):
+    def _set_path(self, path, uuid=None, uuid_file=None):
         self.path = path
         self.blobs_path = util.unipath(self.path, 'blobs')
         self.files_path = util.unipath(self.path, 'files_path')
@@ -377,16 +377,16 @@ class Entry(object):
     def __str__(self):
         return self.path
 
-    def set_path(self, path, uuid=None, uuid_file=None):
+    def _set_path(self, path, uuid=None, uuid_file=None):
         '''Sets this Entry's path. Used by relink to update this Entry's
         path, name, and it's associated data path. This shouldn't be necessary
         during normal usage.
         '''
 
-        self.path = path
-        self.name = os.path.basename(path)
-        data_path = util.unipath(path, api.get_data_root())
-        self.data.set_path(data_path, uuid, uuid_file)
+        self.path = new_path
+        self.name = os.path.basename(new_path)
+        data_path = util.unipath(new_path, api.get_data_root())
+        self.data._set_path(data_path, uuid, uuid_file)
 
     @property
     def uuid(self):
@@ -532,8 +532,96 @@ class Entry(object):
 
         return os.path.isdir(self.path) and os.path.isdir(self.data.path)
 
+    def copy(self, dest, only_data=True):
+        '''Copy this Entry and it's children to a new location
+
+        Arguments:
+            dest (str): Destination path for new Entry
+            only_data (bool): Copy only Entry data, includes no files outside
+                the Entry's data directories
+
+        Raises:
+            OSError: Raised when dest already exists or copy_tree fails.
+                Entry is left in original location, any files partially copied
+                will be removed.
+
+        '''
+
+        if os.path.exists(dest):
+            raise OSError('Can not copy Entry to existing location...')
+
+        try:
+            if not only_data:
+                util.copy_tree(self.path, dest, force=True, overwrite=True)
+            else:
+                hierarchy = [self] + list(self.children)
+                for entry in hierarchy:
+                    new_path = os.path.relpath(entry.path, self.path)
+                    new_data_path = os.path.relpath(entry.data.path, self.path)
+                    if not os.path.isdir(new_path):
+                        os.makedirs(new_path)
+                    util.copy_tree(entry.data.path, new_data_path)
+        except:
+            if os.path.exists(dest):
+                shutil.rmtree(dest)
+            raise
+
+        # Update uuids and send EntryCreated signals
+        new_entry = api.get_entry(dest)
+        new_entry._new_uuid()
+        signals.EntryCreated.send(new_entry)
+        for child in children:
+            child._new_uuid()
+            signals.EntryCreated.send(child)
+        return new_entry
+
+    def move(self, dest):
+        '''Move this Entry and it's children to a new location
+
+        Arguments:
+            dest (str): Destination path for new Entry
+            only_data (bool): Move only Entry data, includes no files outside
+                the Entry's data directories
+
+        Raises:
+            OSError: Raised when dest already exists or move_tree fails.
+                Entry is left in original location, any files partially copied
+                will be removed.
+        '''
+
+        if os.path.exists(dest):
+            raise OSError('Can not move Entry to existing location...')
+
+        # Recurisvely moves the tree
+        try:
+            util.move_tree(self.path, dest, force=True, overwrite=True)
+        except:
+            if os.path.exists(dest):
+                shutil.rmtree(dest)
+            raise
+
+        # Update uuids and send EntryCreated signals
+        old_path = self.path
+        new_path = dest
+        self._set_path(dest) # Update this Entry's path
+        signals.EntryMoved.send(new_entry, old_path, new_path)
+        for child in children:
+            new_child_path = child.path
+            old_child_path = new_child_path.replace(new_path, old_path)
+            signals.EntryMoved.send(child, old_child_path, new_child_path)
+
     def delete(self, remove_root=False):
+        '''Delete an entry
+
+        Arguments:
+            remove_root (bool): Remove root directory and all it's contents not
+                just the data directory that marks this as an Entry
+        '''
+
         self.data.delete()
+        for child in reversed(self.children):
+            child.delete()
+
         if remove_root:
             try:
                 shutil.rmtree(self.path)

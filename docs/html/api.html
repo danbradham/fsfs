@@ -92,7 +92,6 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">fsfs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html">Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="guide.html#signals">Signals</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.api">fsfs.api module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.factory">fsfs.factory module</a></li>
@@ -987,14 +986,72 @@ provided, only Entry’s matching those keys will be yieled</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="fsfs.models.Entry.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><em>dest</em>, <em>only_data=True</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy this Entry and it’s children to a new location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dest</strong> (<em>str</em>) – Destination path for new Entry</li>
+<li><strong>only_data</strong> (<em>bool</em>) – Copy only Entry data, includes no files outside
+the Entry’s data directories</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">OSError</span></code> – Raised when dest already exists or copy_tree fails.
+Entry is left in original location, any files partially copied
+will be removed.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="fsfs.models.Entry.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>remove_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.delete" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Delete an entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>remove_root</strong> (<em>bool</em>) – Remove root directory and all it’s contents not
+just the data directory that marks this as an Entry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="fsfs.models.Entry.exists">
 <code class="descname">exists</code><a class="headerlink" href="#fsfs.models.Entry.exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>An Entry exists when it’s path exists and it’s data path exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fsfs.models.Entry.move">
+<code class="descname">move</code><span class="sig-paren">(</span><em>dest</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move this Entry and it’s children to a new location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dest</strong> (<em>str</em>) – Destination path for new Entry</li>
+<li><strong>only_data</strong> (<em>bool</em>) – Move only Entry data, includes no files outside
+the Entry’s data directories</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">OSError</span></code> – Raised when dest already exists or move_tree fails.
+Entry is left in original location, any files partially copied
+will be removed.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1084,14 +1141,6 @@ key and not a dict</td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.models.Entry.set_path">
-<code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em>, <em>uuid=None</em>, <em>uuid_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.set_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets this Entry’s path. Used by relink to update this Entry’s
-path, name, and it’s associated data path. This shouldn’t be necessary
-during normal usage.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1233,11 +1282,6 @@ the “files” subdirectory. You can then get a handle to the file via
 <dl class="method">
 <dt id="fsfs.models.EntryData.read_file">
 <code class="descname">read_file</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.read_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.models.EntryData.set_path">
-<code class="descname">set_path</code><span class="sig-paren">(</span><em>path</em>, <em>uuid=None</em>, <em>uuid_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.set_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1950,6 +1994,36 @@ cases. For smaller files the buffer size is reduced to the file size or a minimu
 <li><strong>src</strong> (<em>str</em>) – source file to copy</li>
 <li><strong>dest</strong> (<em>str</em>) – destination file path</li>
 <li><strong>buffer_size</strong> (<em>int</em>) – Number of bytes to buffer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.copy_tree">
+<code class="descclassname">fsfs.util.</code><code class="descname">copy_tree</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>force=False</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.copy_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies a directory tree and it’s stats</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.util.move_tree">
+<code class="descclassname">fsfs.util.</code><code class="descname">move_tree</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>force=False</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.move_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a directory from one location to another. Same as
+<a class="reference internal" href="#fsfs.util.copy_tree" title="fsfs.util.copy_tree"><code class="xref py py-func docutils literal"><span class="pre">copy_tree()</span></code></a> followed by shutil.rmtree. Replaces files that already
+exist in the destination directory by default. If overwrite is True the
+entire destination directory will be overwritten, none of the original
+files in destination will remain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>src</strong> (<em>str</em>) – Path to source directory</li>
+<li><strong>dest</strong> (<em>dest</em>) – Path to destintation directory</li>
+<li><strong>force</strong> (<em>bool</em>) – If False, raise an error if dest already exists</li>
+<li><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite entire tree</li>
 </ul>
 </td>
 </tr>

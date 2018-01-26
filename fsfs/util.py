@@ -5,12 +5,15 @@ __all__ = [
     'tupilize',
     'update_dict',
     'copy_file',
+    'copy_tree',
+    'move_tree',
     'suppress'
 ]
 import os
 import errno
 import collections
 from _compat import basestring
+from scandir import walk
 
 
 BINARY = os.__dict__.get('O_BINARY', 0)  # Windows has a binary flag
@@ -89,6 +92,52 @@ def copy_file(src, dest, buffer_size=DEFAULT_BUFFER):
     finally:
         suppress(os.close, i_file)
         suppress(os.close, o_file)
+
+
+def move_tree(src, dest, force=False, overwrite=False):
+    '''Move a directory from one location to another. Same as
+    :func:`copy_tree` followed by shutil.rmtree. Replaces files that already
+    exist in the destination directory by default. If overwrite is True the
+    entire destination directory will be overwritten, none of the original
+    files in destination will remain.
+
+    Arguments:
+        src (str): Path to source directory
+        dest (dest): Path to destintation directory
+        force (bool): If False, raise an error if dest already exists
+        overwrite (bool): If True, overwrite entire tree
+    '''
+
+    try:
+        copy_tree(src, dest, force, overwrite)
+    except:
+        raise
+    else:
+        shutil.rmtree(src)
+
+
+def copy_tree(src, dest, force=False, overwrite=False):
+    '''Copies a directory tree and it's stats'''
+
+    if os.path.exists(dest) and not force:
+        raise OSError('Destination path already exists: ' + dest)
+
+    if os.path.exists(dest) and overwrite:
+        shutil.rmtree(dest)
+        shutil.copytree(src, dest)
+
+    for root, subdirs, files in walk(src):
+
+        dest_root = root.replace(src, dest, 1)
+        if not os.path.exists(dest_root):
+            os.makedirs(dest_root)
+            shutil.copystat(root, dest_root)
+
+        for file in files:
+            dest_file = file.replace(src, dest, 1)
+            if os.path.exists(dest_file):
+                os.remove(dest_root)
+            shutil.copy2(file, dest_file)
 
 
 def touch(file):
