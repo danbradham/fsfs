@@ -81,6 +81,8 @@ class EntryFactory(object):
         >>> entry = fsfs.get_entry('tmp/project')
         >>> assert type(entry.obj()) is Project
 
+        >>> import shutil; shutil.rmtree('tmp')
+
     '''
 
     _registry = defaultdict(dict)

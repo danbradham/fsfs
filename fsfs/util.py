@@ -135,10 +135,11 @@ def copy_tree(src, dest, force=False, overwrite=False):
             shutil.copystat(root, dest_root)
 
         for file in files:
-            dest_file = file.replace(src, dest, 1)
+            src_file = unipath(root, file)
+            dest_file = unipath(dest_root, file)
             if os.path.exists(dest_file):
-                os.remove(dest_root)
-            shutil.copy2(file, dest_file)
+                os.remove(dest_file)
+            shutil.copy2(src_file, dest_file)
 
 
 def touch(file):

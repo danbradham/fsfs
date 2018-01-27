@@ -14,6 +14,7 @@ import os
 import time
 import errno
 import threading
+from warnings import warn
 from datetime import datetime
 from timeit import default_timer
 from contextlib import contextmanager
@@ -66,7 +67,14 @@ class LockFilePump(threading.Thread):
 
                 for lock in list(LockFile._acquired_locks):
                     if lock.locked:
-                        lock._touch()
+                        try:
+                            lock._touch()
+                        except OSError as e:
+                            msg = (
+                                'PumpThread failed to update mtime of lock: \n'
+                                '{errno}: {massge}'
+                            ).format(e.errno, e.message)
+                            warn(msg)
 
                 if self._shutdown.wait(LockFile._pump_interval_):
                     break

@@ -5,29 +5,46 @@ import json
 import os
 import shutil
 from random import choice, randint, sample
-from nose.tools import assert_raises, with_setup
-from functools import partial
+from nose.tools import assert_raises, with_setup, make_decorator
+from functools import partial, wraps
+from tempfile import mkdtemp
 from fstrings import f
+import string
 import fsfs
 from fsfs import util
 
+
 samefile = shutil._samefile
-TEST_ROOT = 'tmp'
+TEMP_DIR = 'tmp'
 
 
-def setup_module():
-    if os.path.exists(TEST_ROOT):
-        shutil.rmtree(TEST_ROOT)
+def provide_tempdir(fn):
 
-    os.makedirs(TEST_ROOT)
+    @make_decorator(fn)
+    def test_with_tempdir():
+        tmpdir = mkdtemp()
+        try:
+            fn(tmpdir)
+        finally:
+            shutil.rmtree(tmpdir)
+
+    return test_with_tempdir
 
 
-def teardown_module():
-    if os.path.exists(TEST_ROOT):
-        shutil.rmtree(TEST_ROOT)
+def fake_name(used=[]):
+    '''Generate a unique 8 character string'''
 
+    while True:
+        name = ''.join(
+                choice(string.ascii_uppercase + string.digits)
+                for _ in range(8)
+            )
 
-test_func_setup = partial(with_setup, setup_module, teardown_module)
+        if name in used:
+            continue
+
+        used.append(name)
+        return name
 
 
 class ProjectFaker():
@@ -134,12 +151,11 @@ class ProjectFaker():
             fsfs.tag(asset_path, 'asset')
 
 
-fake = ProjectFaker(root=TEST_ROOT)
-
-
-def test_tag():
+@provide_tempdir
+def test_tag(tempdir):
     '''tag and untag'''
 
+    fake = ProjectFaker(root=tempdir)
     asset_path = fake.asset_path()
     tag_path = fsfs.make_tag_path(asset_path, 'asset')
 
@@ -157,9 +173,11 @@ def test_tag():
     assert os.path.isdir(os.path.join(asset_path, fsfs.get_data_root()))
 
 
-def test_search_down():
+@provide_tempdir
+def test_search_down(tempdir):
     '''search down'''
 
+    fake = ProjectFaker(root=tempdir)
     project = fake.project()
     project_path = fake.project_path(project=project)
     fsfs.tag(project_path, 'project')
@@ -209,9 +227,11 @@ def test_search_down():
     assert ['asset', 'hero'] == hero_result[0].tags
 
 
-def test_search_up():
+@provide_tempdir
+def test_search_up(tempdir):
     '''search up'''
 
+    fake = ProjectFaker(root=tempdir)
     project = fake.project()
     project_path = fake.project_path(project=project)
     fsfs.tag(project_path, 'project')
@@ -239,9 +259,11 @@ def test_search_up():
     assert no_result is None
 
 
-def test_read_write():
+@provide_tempdir
+def test_read_write(tempdir):
     '''Entry read and write.'''
 
+    fake = ProjectFaker(root=tempdir)
     project_path = fake.project_path()
     fsfs.tag(project_path, 'project')
 
@@ -304,15 +326,17 @@ class Asset(CustomFactory.Entry):
         pass
 
 
-@test_func_setup()
-def test_entryfactory():
+@provide_tempdir
+def test_entryfactory(tempdir):
     '''Custom EntryFactory'''
 
+    entry_path = util.unipath(tempdir, 'entry')
+
     fsfs.set_entry_factory(CustomFactory)
-    entry = fsfs.get_entry('tmp/entry')
+    entry = fsfs.get_entry(entry_path)
 
     # Factory returns cache entry obj
-    assert entry is fsfs.get_entry('tmp/entry')
+    assert entry is fsfs.get_entry(entry_path)
 
     # No tag == default entry
     assert type(entry) == CustomFactory.EntryProxy
@@ -337,10 +361,119 @@ def test_entryfactory():
     assert hasattr(entry, 'asset_method')
 
     # Relinked when moved
-    assert samefile(entry.path, 'tmp/entry')
-    os.rename(entry.path, 'tmp/supercool')
+    new_entry_path = util.unipath(tempdir, 'supercool')
+    assert samefile(entry.path, entry_path)
+    os.rename(entry.path, new_entry_path)
     entry.read()  # Triggers entry project to relink entry
-    assert samefile(entry.path, 'tmp/supercool')
+    assert samefile(entry.path, new_entry_path)
 
     # Restore DefaultFactory
     fsfs.set_entry_factory(fsfs.DefaultFactory)
+
+
+def random_entry(entry_path):
+
+    files = [fake_name() for _ in range(4)]
+    data_globs = ['/'.join([fsfs.get_data_root(), 'globs', fake_name()])
+                  for _ in range(4)]
+    data_files = ['/'.join([fsfs.get_data_root(), 'files', fake_name()])
+                  for _ in range(4)]
+    children = {
+        fake_name(): {
+            'files': [fake_name() for _ in range(4)],
+            'data_globs': [fake_name() for _ in range(4)],
+            'data_files': [fake_name() for _ in range(4)],
+        }
+        for _ in range(4)
+    }
+
+    data_manifest = data_globs + data_files
+    manifest = files
+    for child, data in children.items():
+        for f in data['files']:
+            manifest.append('/'.join([child, f]))
+        for f in data['data_files'] + data['data_globs']:
+            data_manifest.append('/'.join([child, fsfs.get_data_root(), f]))
+
+    entry = fsfs.get_entry(entry_path)
+    entry.tag('parent')
+
+    for child_entry_path in children:
+        child_entry = fsfs.get_entry(
+            util.unipath(entry.path, child_entry_path)
+        )
+        child_entry.tag('child')
+
+    for file in manifest + data_manifest:
+        util.touch(util.unipath(entry.path, file))
+
+    return entry, manifest, data_manifest
+
+
+@provide_tempdir
+def test_copy_entry(tempdir):
+    '''Copy Entry with files'''
+
+    entry_path = util.unipath(tempdir, 'entry')
+    entry_copy_path = util.unipath(tempdir, 'copy')
+    entry, manifest, data_manifest = random_entry(entry_path)
+
+    new_entry = entry.copy(entry_copy_path)
+    assert new_entry is fsfs.get_entry(entry_copy_path)
+    assert new_entry.uuid != entry.uuid
+
+    for file in manifest + data_manifest:
+        assert os.path.exists(util.unipath(new_entry.path, file))
+
+
+@provide_tempdir
+def test_copy_entry_only_data(tempdir):
+    '''Copy Entry with only_data'''
+
+    entry_path = util.unipath(tempdir, 'entry')
+    entry_copy_path = util.unipath(tempdir, 'copy')
+    entry, manifest, data_manifest = random_entry(entry_path)
+
+    new_entry = entry.copy(entry_copy_path, only_data=True)
+    assert new_entry is fsfs.get_entry(entry_copy_path)
+    assert new_entry.uuid != entry.uuid
+
+    for file in manifest:
+        assert not os.path.exists(util.unipath(new_entry.path, file))
+
+    for file in data_manifest:
+        assert os.path.exists(util.unipath(new_entry.path, file))
+
+
+@provide_tempdir
+def test_move_entry(tempdir):
+    '''Move Entry'''
+
+    entry_path = util.unipath(tempdir, 'entry')
+    entry_move_path = util.unipath(tempdir, 'move')
+    entry, manifest, data_manifest = random_entry(entry_path)
+    old_uuid = entry.uuid
+
+    entry.move(entry_move_path)
+    assert entry.name == 'move'
+    assert entry.path != entry_path
+    assert entry.path == entry_move_path
+    assert entry is fsfs.get_entry(entry_move_path)
+    assert entry.uuid == old_uuid
+
+    for file in manifest + data_manifest:
+        assert os.path.exists(util.unipath(entry.path, file))
+
+
+@provide_tempdir
+def test_move_entry_raises(tempdir):
+    '''Copy or Move Entry to existing location raises'''
+
+    entry_path = util.unipath(tempdir, 'entry')
+    dest_path = util.unipath(tempdir, 'move')
+    os.makedirs(dest_path)
+
+    entry = fsfs.get_entry(entry_path)
+    entry.tag('generic')
+    assert_raises(OSError, entry.move, dest_path)
+    assert_raises(OSError, entry.copy, dest_path)

@@ -383,9 +383,9 @@ class Entry(object):
         during normal usage.
         '''
 
-        self.path = new_path
-        self.name = os.path.basename(new_path)
-        data_path = util.unipath(new_path, api.get_data_root())
+        self.path = path
+        self.name = os.path.basename(path)
+        data_path = util.unipath(path, api.get_data_root())
         self.data._set_path(data_path, uuid, uuid_file)
 
     @property
@@ -532,7 +532,7 @@ class Entry(object):
 
         return os.path.isdir(self.path) and os.path.isdir(self.data.path)
 
-    def copy(self, dest, only_data=True):
+    def copy(self, dest, only_data=False):
         '''Copy this Entry and it's children to a new location
 
         Arguments:
@@ -556,11 +556,10 @@ class Entry(object):
             else:
                 hierarchy = [self] + list(self.children())
                 for entry in hierarchy:
-                    new_path = os.path.relpath(entry.path, self.path)
-                    new_data_path = os.path.relpath(entry.data.path, self.path)
-                    if not os.path.isdir(new_path):
-                        os.makedirs(new_path)
-                    util.copy_tree(entry.data.path, new_data_path)
+                    old_data_path = entry.data.path
+                    rel_data_path = os.path.relpath(old_data_path, self.path)
+                    new_data_path = util.unipath(dest, rel_data_path)
+                    util.copy_tree(old_data_path, new_data_path)
         except:
             if os.path.exists(dest):
                 shutil.rmtree(dest)
@@ -568,10 +567,10 @@ class Entry(object):
 
         # Update uuids and send EntryCreated signals
         new_entry = api.get_entry(dest)
-        new_entry._new_uuid()
+        new_entry.data._new_uuid()
         signals.EntryCreated.send(new_entry)
         for child in new_entry.children():
-            child._new_uuid()
+            child.data._new_uuid()
             signals.EntryCreated.send(child)
         return new_entry
 
@@ -580,8 +579,6 @@ class Entry(object):
 
         Arguments:
             dest (str): Destination path for new Entry
-            only_data (bool): Move only Entry data, includes no files outside
-                the Entry's data directories
 
         Raises:
             OSError: Raised when dest already exists or move_tree fails.
@@ -604,7 +601,7 @@ class Entry(object):
         old_path = self.path
         new_path = dest
         self._set_path(dest) # Update this Entry's path
-        signals.EntryMoved.send(new_entry, old_path, new_path)
+        signals.EntryMoved.send(self, old_path, new_path)
         for child in self.children():
             new_child_path = child.path
             old_child_path = new_child_path.replace(new_path, old_path)
