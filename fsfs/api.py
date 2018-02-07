@@ -419,15 +419,17 @@ def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
 
     if direction == DOWN:
 
-        level = 0
+        base_level = root.count(os.sep)
         for root, subdirs, _ in walk(root):
+
+            level = root.count(os.sep) - base_level
+
+            if depth and level == depth:
+                del subdirs[:]
+
             subdirs[:] = [d for d in subdirs if not d == get_data_root()]
 
-            level += 1
-            if depth and level > depth:
-                break
-
-            if skip_root and level == 1:
+            if skip_root and level == 0:
                 continue
 
             if is_match(root, *tags):
@@ -435,17 +437,17 @@ def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
 
     if direction == UP:
 
-        level = 0
+        level = -1
         next_root = util.unipath(root)
         while True:
 
             root = next_root
-
             level += 1
+
             if depth and level > depth:
                 break
 
-            if skip_root and level == 1:
+            if skip_root and level == 0:
                 next_root = os.path.dirname(root)
                 continue
 
@@ -516,15 +518,17 @@ def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
 
     if direction == DOWN:
 
-        level = 0
+        base_level = root.count(os.sep)
         for root, subdirs, _ in walk(root):
+
+            level = root.count(os.sep) - base_level
+
+            if depth and level == depth:
+                del subdirs[:]
+
             subdirs[:] = [d for d in subdirs if not d == get_data_root()]
 
-            level += 1
-            if depth and level > depth:
-                break
-
-            if skip_root and level == 1:
+            if skip_root and level == 0:
                 continue
 
             root = util.unipath(root)
@@ -535,17 +539,17 @@ def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
 
     if direction == UP:
 
-        level = 0
+        level = -1
         next_root = util.unipath(root)
         while True:
 
             root = next_root
-
             level += 1
+
             if depth and level > depth:
                 break
 
-            if skip_root and level == 1:
+            if skip_root and level == 0:
                 next_root = os.path.dirname(root)
                 continue
 
