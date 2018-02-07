@@ -93,7 +93,7 @@ def read(root, keys):
 
     data = fsfs.read(root, *keys)
 
-    click.echo(fsfs.DATA_ENCODER(data))
+    click.echo(fsfs.encode_data(data))
 
 
 @cli.command()
@@ -129,5 +129,10 @@ def write(root, pairs):
 @click.option('--root', type=click.Path(), default=os.getcwd())
 @click.option('--remove-root', is_flag=True, default=False)
 def delete(root, remove_root):
+    '''Delete an entry'''
+
+    entry = fsfs.get_entry(root)
+    if not entry.exists:
+        raise UsageError(f('{root} is not an Entry.'))
 
     fsfs.delete(root, remove_root=remove_root)
