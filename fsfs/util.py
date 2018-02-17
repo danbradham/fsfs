@@ -7,13 +7,16 @@ __all__ = [
     'copy_file',
     'copy_tree',
     'move_tree',
-    'suppress'
+    'suppress',
+    'regenerator'
 ]
 import os
 import errno
 import collections
 import shutil
+from functools import wraps
 from scandir import walk
+import inspect
 from _compat import basestring
 
 
@@ -32,28 +35,6 @@ def optimize_buffer(f, buffer_size):
     '''Calculate optimate buffer size for smaller files'''
 
     return max(min(buffer_size, os.path.getsize(f)), MINIMUM_BUFFER)
-
-
-def suppress(fn, *args, **kwargs):
-    '''Never use this...ehhhhh, maybe use it. Suppresses all exceptions raised
-    by a callable.
-
-    Arguments:
-        fn (callable): function to call
-        *args: args to pass to fn
-        **kwargs: kwargs to pass to fn
-
-    Returns:
-        function return value or None
-
-    Raises:
-        Nothing...ever
-    '''
-
-    try:
-        return fn(*args, **kwargs)
-    except:
-        pass
 
 
 def copy_file(src, dest, buffer_size=DEFAULT_BUFFER):
@@ -93,6 +74,28 @@ def copy_file(src, dest, buffer_size=DEFAULT_BUFFER):
     finally:
         suppress(os.close, i_file)
         suppress(os.close, o_file)
+
+
+def suppress(fn, *args, **kwargs):
+    '''Never use this...ehhhhh, maybe use it. Suppresses all exceptions raised
+    by a callable.
+
+    Arguments:
+        fn (callable): function to call
+        *args: args to pass to fn
+        **kwargs: kwargs to pass to fn
+
+    Returns:
+        function return value or None
+
+    Raises:
+        Nothing...ever
+    '''
+
+    try:
+        return fn(*args, **kwargs)
+    except:
+        pass
 
 
 def move_tree(src, dest, force=False, overwrite=False):
@@ -194,3 +197,39 @@ def update_dict(d, u):
         else:
             d[k] = v
     return d
+
+
+def regenerator(generator_fn):
+    '''A decorator for generators. When a generator is yielded, it's
+    items are yielded one by one. This allows generators to be recursive
+    without requiring the yield from syntax of Python 3.3+.
+
+    Examples:
+
+        >>> @regenerator
+        ... def count_down(number):
+        ...     if number < 0:
+        ...         return
+        ...     for i in range(number)[::-1]:
+        ...         yield i
+        ...     yield count_down(number - 1)
+        >>> list(count_down(3))
+        [2, 1, 0, 1, 0, 0]
+    '''
+
+    @wraps(generator_fn)
+    def flatten_generator(*args, **kwargs):
+        stack = [generator_fn(*args, **kwargs)]
+        while True:
+            try:
+                item = stack[-1].next()
+            except StopIteration:
+                stack.pop()
+                if not stack:
+                    raise
+            else:
+                if inspect.isgenerator(item):
+                    stack.append(item)
+                else:
+                    yield item
+    return flatten_generator

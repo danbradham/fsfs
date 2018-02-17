@@ -7,7 +7,6 @@ docs_root = os.path.dirname(__file__)
 lib_root = os.path.dirname(docs_root)
 sys.path.insert(1, lib_root)
 import fsfs
-
 project = fsfs.__title__
 copyright = '2018, ' + fsfs.__author__
 author = fsfs.__author__

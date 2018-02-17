@@ -12,7 +12,7 @@ import uuid
 from collections import defaultdict
 from functools import wraps
 from scandir import scandir
-from fsfs import api, util, lockfile, types, signals
+from fsfs import api, util, lockfile, types, signals, _search
 
 
 class EntryNotFoundError(Exception): pass
@@ -66,13 +66,13 @@ def relink_uuid(entry):
             signals.EntryMissing.send(entry, exc)
             raise exc
 
-    match = api.one_uuid(root, data.uuid, depth=level + 1)
+    match = _search.one_uuid(root, data.uuid, depth=level + 1)
 
     # Search top-level parent entry
     if not match:
         try:
             parent = list(entry.parents())[-1]
-            match = api.one_uuid(parent.path, data.uuid)
+            match = _search.one_uuid(parent.path, data.uuid)
         except IndexError:
             pass
 
@@ -496,8 +496,10 @@ class Entry(object):
         Returns:
             generator: Entry objects
         '''
-
-        return api.search(self.path, tags, direction=api.UP, skip_root=True)
+        g = api.search(self.path, direction=api.UP, skip_root=True)
+        if tags:
+            g = g.tags(*tags)
+        return g
 
     def parent(self, *tags):
         '''Walks up the directory tree returning the first Entry object found.
@@ -511,7 +513,10 @@ class Entry(object):
             Entry: parent of this Entry
         '''
 
-        return api.one(self.path, tags, direction=api.UP, skip_root=True)
+        g = api.search(self.path, direction=api.UP, skip_root=True)
+        if tags:
+            g = g.tags(*tags)
+        return g.one()
 
     def children(self, *tags):
         '''Walks down the directory tree yielding Entry objects. If tags are
@@ -523,8 +528,10 @@ class Entry(object):
         Returns:
             generator: Entry objects
         '''
-
-        return api.search(self.path, tags, skip_root=True)
+        g = api.search(self.path, skip_root=True)
+        if tags:
+            g = g.tags(*tags)
+        return g
 
     @property
     def exists(self):

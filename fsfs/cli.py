@@ -34,7 +34,7 @@ def cli():
 @click.option('--with-data', '-d', is_flag=True, default=False)
 @click.option('--up/--down', 'direction', default=False)
 def search(root, tags, name, with_data, direction):
-    '''Search for tagged directories'''
+    '''Search for Entries'''
 
     results = fsfs.search(root, tags, direction=int(direction))
 

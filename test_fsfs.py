@@ -211,15 +211,15 @@ def test_search_down(tempdir):
     results = list(full_search)
     assert len(results) == 33
 
-    first_result = fsfs.one(project_path)
+    first_result = fsfs.search(project_path).one()
     assert first_result.name == project
     assert samefile(first_result.path, project_path)
     assert 'project' in first_result.tags
 
-    asset_search = fsfs.search(project_path, 'asset')
+    asset_search = fsfs.search(project_path).tags('asset')
     assert len(list(asset_search)) == 10
 
-    hero_search = fsfs.search(project_path, ['asset', 'hero'])
+    hero_search = fsfs.search(project_path).tags('asset', 'hero')
     hero_result = list(hero_search)
     assert len(hero_result) == 1
     assert hero_result[0].name == hero
@@ -251,11 +251,11 @@ def test_search_up(tempdir):
     assert results[1].name == sequence
     assert results[2].name == project
 
-    project_result = fsfs.one(shot_path, 'project', fsfs.UP)
+    project_result = fsfs.search(shot_path, fsfs.UP).tags('project').one()
     assert project_result.name == project
     assert samefile(project_result.path, project_path)
 
-    no_result = fsfs.one(shot_path, 'unused', fsfs.UP)
+    no_result = fsfs.search(shot_path, fsfs.UP).tags('unused').one()
     assert no_result is None
 
 

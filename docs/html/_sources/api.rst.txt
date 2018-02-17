@@ -72,3 +72,11 @@ fsfs\.util module
     :members:
     :undoc-members:
     :show-inheritance:
+
+fsfs\._search module
+--------------------
+
+.. automodule:: fsfs._search
+    :members:
+    :undoc-members:
+    :show-inheritance:

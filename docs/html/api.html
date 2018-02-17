@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.1.0 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.1.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.0 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.1 documentation" href="index.html"/>
         <link rel="prev" title="Guide" href="guide.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -102,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.signals">fsfs.signals module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.types">fsfs.types module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.util">fsfs.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fsfs._search">fsfs._search module</a></li>
 </ul>
 </li>
 </ul>
@@ -549,118 +550,51 @@ return all key, value pairs.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="fsfs.api.search_uuid">
-<code class="descclassname">fsfs.api.</code><code class="descname">search_uuid</code><span class="sig-paren">(</span><em>root</em>, <em>uuid</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search_uuid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like search but finds a uuid file instead of a tags. Used to relink
-moved entries.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
-<li><strong>uuid</strong> (<em>str</em>) – UUID to match</li>
-<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
-<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
-<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">generator yielding (root, data_root, uuid_file)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.api.one_uuid">
-<code class="descclassname">fsfs.api.</code><code class="descname">one_uuid</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.one_uuid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return first result from search_uuid.</p>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#fsfs.api.search_uuid" title="fsfs.api.search_uuid"><code class="xref py py-func docutils literal"><span class="pre">fsfs.api.search_uuid()</span></code></a></p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(root, data_root, uuid_file)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="fsfs.api.search">
-<code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>tags=None</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Search a root directory yielding Entry objects that match tags. A tag
-is a string containing letters, numbers or any of these characters: .-_</p>
-<p>You can specify a direction to search (fsfs.UP or fsfs.DOWN) and a maximum
-search depth. If no tag arguments are passed search yields all Entries.</p>
+<code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Search object that yields <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> objects. The
+Search generator supports advanced query functionality similar to the
+Query objects found in many SQL libraries.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>root</strong> (<em>str</em>) – Directory to search</li>
-<li><strong>*tags</strong> (<em>str</em>) – Tags to match</li>
 <li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
 <li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
 <li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
-</td>
-</tr>
 </tbody>
 </table>
-</dd></dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Yield all entries</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 
-<dl class="function">
-<dt id="fsfs.api.one">
-<code class="descclassname">fsfs.api.</code><code class="descname">one</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.one" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return first result from search.</p>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#fsfs.api.search" title="fsfs.api.search"><code class="xref py py-func docutils literal"><span class="pre">fsfs.api.search()</span></code></a></p>
+<span class="c1"># Get the first entry</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+
+<span class="c1"># Get entries by tag</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tags</span><span class="p">(</span><span class="s1">&#39;project&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get entries by uuid</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">uuid</span><span class="p">(</span><span class="s1">&#39;098a0s-asd9f-as8sf-asdf07&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get entries by name</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s1">&#39;entry_name&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get entries by nested name</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;parent1/parent2/entry_name&#39;</span><span class="p">)</span>
+
+<span class="c1"># Use custom predicates</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entry</span><span class="p">:</span> <span class="n">entry</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;Dan&#39;</span><span class="p">)</span>
+
+<span class="c1"># Combine methods to create advanced queries</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s1">&#39;entry_name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tags</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+</pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#fsfs.models.Entry" title="fsfs.models.Entry"><code class="xref py py-class docutils literal"><span class="pre">fsfs.models.Entry</span></code></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.api.is_match">
-<code class="descclassname">fsfs.api.</code><code class="descname">is_match</code><span class="sig-paren">(</span><em>root</em>, <em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.is_match" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True if the root directory matches all of the tags provided. If no
-tags are provided check if the DATA_ROOT directory exists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>root</strong> (<em>str</em>) – Directory to check</li>
-<li><strong>tags</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Tags to check</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </div>
@@ -2084,6 +2018,194 @@ by a callable.</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="fsfs.util.regenerator">
+<code class="descclassname">fsfs.util.</code><code class="descname">regenerator</code><span class="sig-paren">(</span><em>generator_fn</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.regenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator for generators. When a generator is yielded, it’s
+items are yielded one by one. This allows generators to be recursive
+without requiring the yield from syntax of Python 3.3+.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@regenerator</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">count_down</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">i</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="n">count_down</span><span class="p">(</span><span class="n">number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">count_down</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">[2, 1, 0, 1, 0, 0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fsfs._search">
+<span id="fsfs-search-module"></span><h2>fsfs._search module<a class="headerlink" href="#module-fsfs._search" title="Permalink to this headline">¶</a></h2>
+<p>Low-level Search API</p>
+<dl class="class">
+<dt id="fsfs._search.Search">
+<em class="property">class </em><code class="descclassname">fsfs._search.</code><code class="descname">Search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em>, <em>predicates=None</em>, <em>selector=None</em>, <em>sep=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="fsfs._search.Search.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>predicate</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.name">
+<code class="descname">name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.one">
+<code class="descname">one</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>selector</em>, <em>sep='/'</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.select" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.tags">
+<code class="descname">tags</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.throw">
+<code class="descname">throw</code><span class="sig-paren">(</span><em>typ</em>, <em>val=None</em>, <em>tb=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.throw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fsfs._search.Search.uuid">
+<code class="descname">uuid</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs._search.search">
+<code class="descclassname">fsfs._search.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search a root directory yielding Entry objects. You can specify a
+direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
+<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
+<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
+<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs._search.search_tree">
+<code class="descclassname">fsfs._search.</code><code class="descname">search_tree</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walks up or down a tree yielding lists containing all Entries</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs._search.search_uuid">
+<code class="descclassname">fsfs._search.</code><code class="descname">search_uuid</code><span class="sig-paren">(</span><em>root</em>, <em>uuid</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like search but finds a uuid file. This is a low-level function used
+to lookup missing entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
+<li><strong>uuid</strong> (<em>str</em>) – UUID to match</li>
+<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
+<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
+<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">generator yielding (root, data_root, uuid_file)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs._search.one_uuid">
+<code class="descclassname">fsfs._search.</code><code class="descname">one_uuid</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.one_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return first result from search_uuid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(root, data_root, uuid_file)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs._search.select_from_tree">
+<code class="descclassname">fsfs._search.</code><code class="descname">select_from_tree</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.select_from_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used under the hood by the Search class, you shouldn’t
+need to call it manually.</p>
+<p>Walk tree up or down yielding entries that match the selector.
+A selector is a string representing a hierarchy of names. The selector
+<cite>my_parent/my_entry</cite> would match an Entry named <cite>my_entry</cite> within an Entry
+named <cite>my_parent</cite>. You can use a custom separator by passing the
+keyword argument <cite>sep</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to search</li>
+<li><strong>selector</strong> (<em>str</em>) – Hierarchy of names separated by sep</li>
+<li><strong>sep</strong> (<em>str</em>) – Separator used to split selector</li>
+<li><strong>direction</strong> (<em>int</em>) – Direction to search (fsfs.UP or fsfs.DOWN)</li>
+<li><strong>depth</strong> (<em>int</em>) – Maximum depth of search</li>
+<li><strong>skip_root</strong> (<em>bool</em>) – Skip search in root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -2129,7 +2251,7 @@ by a callable.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.0',
+            VERSION:'0.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

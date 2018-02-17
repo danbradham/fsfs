@@ -11,3 +11,8 @@ try:
     basestring = basestring
 except NameError:
     basestring = (str, bytes)
+
+try:
+    from itertools import izip
+except NameError:
+    izip = zip

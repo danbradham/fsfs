@@ -32,11 +32,7 @@ __all__ = [
     'write_blob',
     'read_file',
     'write_file',
-    'search_uuid',
-    'one_uuid',
     'search',
-    'one',
-    'is_match',
 ]
 
 import os
@@ -396,186 +392,44 @@ def untag(root, *tags):
     entry.untag(*tags)
 
 
-def search(root, tags=None, direction=DOWN, depth=0, skip_root=False):
-    '''Search a root directory yielding Entry objects that match tags. A tag
-    is a string containing letters, numbers or any of these characters: .-_
-
-    You can specify a direction to search (fsfs.UP or fsfs.DOWN) and a maximum
-    search depth. If no tag arguments are passed search yields all Entries.
+def search(root, direction=DOWN, depth=10, skip_root=False):
+    '''Returns a Search object that yields :class:`models.Entry` objects. The
+    Search generator supports advanced query functionality similar to the
+    Query objects found in many SQL libraries.
 
     Arguments:
         root (str): Directory to search
-        *tags (str): Tags to match
         direction (int): Direction to search (fsfs.UP or fsfs.DOWN)
         depth (int): Maximum depth of search
         skip_root (bool): Skip search in root directory
 
-    Returns:
-        generator: yielding :class:`models.Entry` matches
+    Examples:
+        .. code-block:: python
+
+            # Yield all entries
+            search('.')
+
+            # Get the first entry
+            search('.').one()
+
+            # Get entries by tag
+            search('.').tags('project')
+
+            # Get entries by uuid
+            search('.').uuid('098a0s-asd9f-as8sf-asdf07')
+
+            # Get entries by name
+            search('.').name('entry_name')
+
+            # Get entries by nested name
+            search('.').select('parent1/parent2/entry_name')
+
+            # Use custom predicates
+            search('.').filter(lambda entry: entry.read('user') == 'Dan')
+
+            # Combine methods to create advanced queries
+            search('.').name('entry_name').tags('asset').one()
     '''
 
-    tags = util.tupilize(tags)
-    [validate_tag(tag) for tag in tags]
-
-    if direction == DOWN:
-
-        base_level = root.count(os.sep)
-        for root, subdirs, _ in walk(root):
-
-            level = root.count(os.sep) - base_level
-
-            if depth and level == depth:
-                del subdirs[:]
-
-            subdirs[:] = [d for d in subdirs if not d == get_data_root()]
-
-            if skip_root and level == 0:
-                continue
-
-            if is_match(root, *tags):
-                yield get_entry(util.unipath(root))
-
-    if direction == UP:
-
-        level = -1
-        next_root = util.unipath(root)
-        while True:
-
-            root = next_root
-            level += 1
-
-            if depth and level > depth:
-                break
-
-            if skip_root and level == 0:
-                next_root = os.path.dirname(root)
-                continue
-
-            if is_match(root, *tags):
-                yield get_entry(root)
-
-            next_root = os.path.dirname(root)
-            if next_root == root:
-                break
-
-
-def one(*args, **kwargs):
-    '''Return first result from search.
-
-    See also:
-        :func:`fsfs.api.search`
-
-    Returns:
-        :class:`fsfs.models.Entry`
-    '''
-
-    matches = search(*args, **kwargs)
-    try:
-        return matches.next()
-    except StopIteration:  # no result
-        return
-
-
-def is_match(root, *tags):
-    '''
-    Return True if the root directory matches all of the tags provided. If no
-    tags are provided check if the DATA_ROOT directory exists.
-
-    Arguments:
-        root (str): Directory to check
-        tags (List[str]): Tags to check
-
-    Returns:
-        bool
-    '''
-
-    if not tags:
-        return os.path.isdir(util.unipath(root, get_data_root()))
-
-    match = True
-    for tag in tags:
-        tag_path = make_tag_path(root, tag)
-        if not os.path.isfile(tag_path):
-            match = False
-
-    return match
-
-
-def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
-    '''Like search but finds a uuid file instead of a tags. Used to relink
-    moved entries.
-
-    Arguments:
-        root (str): Directory to search
-        uuid (str): UUID to match
-        direction (int): Direction to search (fsfs.UP or fsfs.DOWN)
-        depth (int): Maximum depth of search
-        skip_root (bool): Skip search in root directory
-
-    Returns:
-        generator yielding (root, data_root, uuid_file)
-    '''
-
-    if direction == DOWN:
-
-        base_level = root.count(os.sep)
-        for root, subdirs, _ in walk(root):
-
-            level = root.count(os.sep) - base_level
-
-            if depth and level == depth:
-                del subdirs[:]
-
-            subdirs[:] = [d for d in subdirs if not d == get_data_root()]
-
-            if skip_root and level == 0:
-                continue
-
-            root = util.unipath(root)
-            data_root = util.unipath(root, get_data_root())
-            uuid_file = util.unipath(root, get_data_root(), 'uuid_' + uuid)
-            if os.path.isfile(uuid_file):
-                yield root, data_root, uuid_file
-
-    if direction == UP:
-
-        level = -1
-        next_root = util.unipath(root)
-        while True:
-
-            root = next_root
-            level += 1
-
-            if depth and level > depth:
-                break
-
-            if skip_root and level == 0:
-                next_root = os.path.dirname(root)
-                continue
-
-            data_root = util.unipath(root, get_data_root())
-            uuid_path = util.unipath(root, get_data_root(), 'uuid_' + uuid)
-            if os.path.isfile(uuid_path):
-                yield root, data_root, uuid_file
-
-            next_root = os.path.dirname(root)
-            if next_root == root:
-                break
-
-
-def one_uuid(*args, **kwargs):
-    '''Return first result from search_uuid.
-
-    See also:
-        :func:`fsfs.api.search_uuid`
-
-    Returns:
-        tuple: (root, data_root, uuid_file)
-    '''
-
-    matches = search_uuid(*args, **kwargs)
-    try:
-        return matches.next()
-    except StopIteration:  # no result
-        return
-
+    from fsfs._search import Search
+    return Search(root, direction, depth, skip_root)
