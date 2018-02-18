@@ -176,6 +176,7 @@ class Tasks(object):
     '''Package Maintainence tasks
 
     Tasks:
+
         test
             Run the test suite
         increment [--major] [--minor] [--patch]
@@ -216,9 +217,9 @@ class Tasks(object):
 
     def test(self):
         '''Run Test Suite...'''
-        run([
-            'nosetests', '-v', '--with-doctest', '--doctest-extension=.rst'
-        ])
+        run('nosetests -v --with-doctest --doctest-extension=rst')
+        print('Run Doctests...')
+        run('nosetests -v --with-doctest --doctest-extension=rst', cwd='docs')
 
     def increment(self, major=False, minor=False, patch=True):
         '''Increment package version'''

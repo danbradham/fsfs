@@ -3,10 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 __all__ = [
     'channel',
+    'EntryCreated',
     'EntryMoved',
-    'EntryDataChanged',
     'EntryTagged',
+    'EntryUntagged',
     'EntryMissing',
+    'EntryRelinked',
+    'EntryDeleted',
+    'EntryDataChanged',
+    'EntryDataDeleted',
+    'EntryUUIDChanged',
 ]
 
 from fsfs import signal

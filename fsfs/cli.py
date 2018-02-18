@@ -41,8 +41,7 @@ def search(root, tags, name, with_data, direction):
     if name:
         results = (e for e in results if name in e.name)
 
-    i = -1
-    for i, entry in enumerate(results):
+    for entry in results:
         click.echo(entry)
 
         if with_data:

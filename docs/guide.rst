@@ -42,7 +42,7 @@ previously and use it to change our data.
 .. code-block:: console
 
     # Get an Entry object
-    >>> entry = fsfs.one('.', 'project')
+    >>> entry = fsfs.search('.').one()
 
     # Check some properties and read our data
     >>> entry.name
@@ -59,17 +59,82 @@ previously and use it to change our data.
     >>> entry.read()
     {'status': 'active', 'framerate': '24fps'}
 
-We used `fsfs.one` to retrieve the first `Entry` tagged `project`. Since we've
-tagged one folder with project, we're guaranteed to get an `Entry` for
-`tmp/my_super_project`. You could also use `fsfs.search` to get a
-generator yielding all `Entry`'s with the tag 'project'.
+We used `one` to retrieve the first `Entry` yielded by our search. Since we've
+tagged only one folder, we're guaranteed to get an `Entry` for `tmp/my_super_project`. You could also use `fsfs.search` to get a generator yielding all `Entry`'s with the tag 'project'.
 
 .. code-block:: console
 
-    >>> for entry in fsfs.search('.', 'project'):
+    >>> for entry in fsfs.search('.').tags('project'):
     ...     entry.name
     'my_super_project'
 
+Searching for something
+=======================
+The search api in fsfs should feel familiar. It's structured like common SQL
+Query apis from libraries like sqlalchemy or django. The search function itself
+returns a Search generator object with some special methods to narrow the
+results. Let's look at some alternative searches that would find the
+Entry we named `my_super_project` from above.
+
+.. code-block:: console
+
+    >>> super_project = fsfs.search('.').name('my_super_project).one()
+    >>> super_project.name
+    'my_super_project'
+
+    # Search by partial name and tag
+    >>> entries = fsfs.search('.').name('super').tags('project')
+    >>> entries.one() is super_project
+    True
+
+    # Search by uuid
+    >>> uuid = super_project.uuid
+    >>> entries = fsfs.search('.').uuid(uuid)
+    >>> entries.one() is super_project
+    True
+
+    # Filter results using a custom predicate
+    >>> entries = fsfs.search('.').filter(lambda e: e.startswith('my_super'))
+    >>> entries.one() is super_project
+    True
+
+The most common use cases for searching are provided through methods on the
+Search generator. For everything else you can use your own generator
+expressions.
+
+.. code-block:: console
+
+    # Use your own generator expression
+    >>> entries = (e for e in search('.') if e.read('status') == 'active')
+    >>> entries.next() is super_project
+    True
+
+Note that we no longer have access to the method :meth:`Search.one` because
+entries is now a regular generator and not a Search generator. In this case
+we use the next method to obtain the first result yielded by our generator
+expression.
+
+You can also search for nested Entries by name using a selector string like
+"parent/child". Passing full names will get you the best results, but, you can
+use partial names to cast a broader net.
+
+.. code-block:: console
+
+    >>> fsfs.tag('tmp/my_super_project/assets/blue_monster', 'asset')
+    >>> fsfs.tag('tmp/my_super_project/assets/green_monster', 'asset')
+    >>> entry = fsfs.search('.').select('my_super_project/blue_monster').one()
+    >>> entry.name
+    'blue_monster'
+
+    >>> entries = fsfs.search('.').select('super/monster')
+    ['blue_monster', 'green_monster']
+
+Pass the sep keyword to use a custom separator.
+
+.. code-block:: console
+
+    >>> entries = fsfs.search('.').select('super|monster', sep='|')
+    ['blue_monster', 'green_monster']
 
 Customizing *fsfs*
 ------------------
@@ -140,7 +205,7 @@ our `Project` subclass when acting on a folder that is tagged `project`.
 
 .. code-block:: console
 
-    >>> entry = fsfs.one('.', 'project')
+    >>> entry = fsfs.search('.').tags('project').one()
     >>> entry.special_method()
     'Hello from your special method!'
 
@@ -203,7 +268,8 @@ Use connect to subscribe a callable to any of the above signals.
 .. code-block:: python
 
     >>> def on_entry_created(entry):
-    >>>     print('Entry Created: ', entry)
+    ...     print('Entry Created: ', entry)
     >>> fsfs.EntryCreated.connect(on_entry_created)
+    >>> fsfs.EntryCreated.disconnect(on_entry_created)
 
 For more information on *fsfs* signals visit the API documentation.

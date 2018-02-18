@@ -94,6 +94,9 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">fsfs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-to-know-the-entry-object">Getting to know the <cite>Entry</cite> object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#searching-for-something">Searching for something</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#customizing-fsfs">Customizing <em>fsfs</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-provide-your-own-entry-models">Advanced: Provide your own <cite>Entry</cite> models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
@@ -192,7 +195,7 @@ them. Let’s take a look at using the <cite>Entry</cite> object.</p>
 <p>First we will get an <cite>Entry</cite> object representing the folder we tagged project
 previously and use it to change our data.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Get an Entry object
-<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.one<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 
 <span class="gp">#</span> Check some properties and <span class="nb">read</span> our data
 <span class="gp">&gt;</span>&gt;&gt; entry.name
@@ -210,15 +213,73 @@ previously and use it to change our data.</p>
 <span class="go">{&#39;status&#39;: &#39;active&#39;, &#39;framerate&#39;: &#39;24fps&#39;}</span>
 </pre></div>
 </div>
-<p>We used <cite>fsfs.one</cite> to retrieve the first <cite>Entry</cite> tagged <cite>project</cite>. Since we’ve
-tagged one folder with project, we’re guaranteed to get an <cite>Entry</cite> for
-<cite>tmp/my_super_project</cite>. You could also use <cite>fsfs.search</cite> to get a
-generator yielding all <cite>Entry</cite>’s with the tag ‘project’.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="k">for</span> entry in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>:
+<p>We used <cite>one</cite> to retrieve the first <cite>Entry</cite> yielded by our search. Since we’ve
+tagged only one folder, we’re guaranteed to get an <cite>Entry</cite> for <cite>tmp/my_super_project</cite>. You could also use <cite>fsfs.search</cite> to get a generator yielding all <cite>Entry</cite>’s with the tag ‘project’.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="k">for</span> entry in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>:
 <span class="go">...     entry.name</span>
 <span class="go">&#39;my_super_project&#39;</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="searching-for-something">
+<h1>Searching for something<a class="headerlink" href="#searching-for-something" title="Permalink to this headline">¶</a></h1>
+<p>The search api in fsfs should feel familiar. It’s structured like common SQL
+Query apis from libraries like sqlalchemy or django. The search function itself
+returns a Search generator object with some special methods to narrow the
+results. Let’s look at some alternative searches that would find the
+Entry we named <cite>my_super_project</cite> from above.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span>&gt;&gt;&gt; super_project = fsfs.search(&#39;.&#39;).name(&#39;my_super_project).one()
+&gt;&gt;&gt; super_project.name
+&#39;my_super_project&#39;
+
+# Search by partial name and tag
+&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).name(&#39;super&#39;).tags(&#39;project&#39;)
+&gt;&gt;&gt; entries.one() is super_project
+True
+
+# Search by uuid
+&gt;&gt;&gt; uuid = super_project.uuid
+&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).uuid(uuid)
+&gt;&gt;&gt; entries.one() is super_project
+True
+
+# Filter results using a custom predicate
+&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).filter(lambda e: e.startswith(&#39;my_super&#39;))
+&gt;&gt;&gt; entries.one() is super_project
+True
+</pre></div>
+</div>
+<p>The most common use cases for searching are provided through methods on the
+Search generator. For everything else you can use your own generator
+expressions.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Use your own generator expression
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> <span class="o">(</span>e <span class="k">for</span> e in search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span> <span class="k">if</span> e.read<span class="o">(</span><span class="s1">&#39;status&#39;</span><span class="o">)</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; entries.next<span class="o">()</span> is super_project
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Note that we no longer have access to the method <code class="xref py py-meth docutils literal"><span class="pre">Search.one()</span></code> because
+entries is now a regular generator and not a Search generator. In this case
+we use the next method to obtain the first result yielded by our generator
+expression.</p>
+<p>You can also search for nested Entries by name using a selector string like
+“parent/child”. Passing full names will get you the best results, but, you can
+use partial names to cast a broader net.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/blue_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/green_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;my_super_project/blue_monster&#39;</span><span class="o">)</span>.one<span class="o">()</span>
+<span class="gp">&gt;</span>&gt;&gt; entry.name
+<span class="go">&#39;blue_monster&#39;</span>
+
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;super/monster&#39;</span><span class="o">)</span>
+<span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
+</pre></div>
+</div>
+<p>Pass the sep keyword to use a custom separator.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;super|monster&#39;</span>, <span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="o">)</span>
+<span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
+</pre></div>
 </div>
 <div class="section" id="customizing-fsfs">
 <h2>Customizing <em>fsfs</em><a class="headerlink" href="#customizing-fsfs" title="Permalink to this headline">¶</a></h2>
@@ -298,7 +359,7 @@ of <cite>fsfs.EntryFactory</cite>.</p>
 cased class name. You can specify a tag by providing a class attribute
 <code class="xref py py-attr docutils literal"><span class="pre">type_for_tag</span></code>. With our new <cite>EntryFactory</cite> set, the <em>fsfs</em> api will use
 our <cite>Project</cite> subclass when acting on a folder that is tagged <cite>project</cite>.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.one<span class="o">(</span><span class="s1">&#39;.&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; entry.special_method<span class="o">()</span>
 <span class="go">&#39;Hello from your special method!&#39;</span>
 </pre></div>
@@ -384,8 +445,9 @@ sent before EntryDeleted</td>
 their caches up-to-date.</p>
 <p>Use connect to subscribe a callable to any of the above signals.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For more information on <em>fsfs</em> signals visit the API documentation.</p>
