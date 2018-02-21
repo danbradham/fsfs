@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Guide &mdash; fsfs 0.1.1 documentation</title>
+  <title>Guide &mdash; fsfs 0.1.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.1 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.2 documentation" href="index.html"/>
         <link rel="next" title="API Documentation" href="api.html"/>
         <link rel="prev" title="fsfs" href="index.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
             
           
@@ -229,32 +229,32 @@ Query apis from libraries like sqlalchemy or django. The search function itself
 returns a Search generator object with some special methods to narrow the
 results. Let’s look at some alternative searches that would find the
 Entry we named <cite>my_super_project</cite> from above.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span>&gt;&gt;&gt; super_project = fsfs.search(&#39;.&#39;).name(&#39;my_super_project).one()
-&gt;&gt;&gt; super_project.name
-&#39;my_super_project&#39;
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">super_project</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;my_super_project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
+<span class="gp">&gt;</span>&gt;&gt; super_project.name
+<span class="go">&#39;my_super_project&#39;</span>
 
-# Search by partial name and tag
-&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).name(&#39;super&#39;).tags(&#39;project&#39;)
-&gt;&gt;&gt; entries.one() is super_project
-True
+<span class="gp">#</span> Search by partial name and tag
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;super&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; entries.one<span class="o">()</span> is super_project
+<span class="go">True</span>
 
-# Search by uuid
-&gt;&gt;&gt; uuid = super_project.uuid
-&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).uuid(uuid)
-&gt;&gt;&gt; entries.one() is super_project
-True
+<span class="gp">#</span> Search by uuid
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">uuid</span> <span class="o">=</span> super_project.uuid
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.uuid<span class="o">(</span>uuid<span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; entries.one<span class="o">()</span> is super_project
+<span class="go">True</span>
 
-# Filter results using a custom predicate
-&gt;&gt;&gt; entries = fsfs.search(&#39;.&#39;).filter(lambda e: e.startswith(&#39;my_super&#39;))
-&gt;&gt;&gt; entries.one() is super_project
-True
+<span class="gp">#</span> Filter results using a custom predicate
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.filter<span class="o">(</span>lambda e: e.name.startswith<span class="o">(</span><span class="s1">&#39;my_super&#39;</span><span class="o">))</span>
+<span class="gp">&gt;</span>&gt;&gt; entries.one<span class="o">()</span> is super_project
+<span class="go">True</span>
 </pre></div>
 </div>
 <p>The most common use cases for searching are provided through methods on the
 Search generator. For everything else you can use your own generator
 expressions.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Use your own generator expression
-<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> <span class="o">(</span>e <span class="k">for</span> e in search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span> <span class="k">if</span> e.read<span class="o">(</span><span class="s1">&#39;status&#39;</span><span class="o">)</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> <span class="o">(</span>e <span class="k">for</span> e in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span> <span class="k">if</span> e.read<span class="o">(</span><span class="s1">&#39;status&#39;</span><span class="o">)</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; entries.next<span class="o">()</span> is super_project
 <span class="go">True</span>
 </pre></div>
@@ -268,16 +268,18 @@ expression.</p>
 use partial names to cast a broader net.</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/blue_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/green_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
-<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;my_super_project/blue_monster&#39;</span><span class="o">)</span>.one<span class="o">()</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;my_super_project/blue_monster&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; entry.name
 <span class="go">&#39;blue_monster&#39;</span>
 
-<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;super/monster&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;super/monster&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="o">[</span>e.name <span class="k">for</span> e in entries<span class="o">]</span>
 <span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
 </pre></div>
 </div>
 <p>Pass the sep keyword to use a custom separator.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.select<span class="o">(</span><span class="s1">&#39;super|monster&#39;</span>, <span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="o">)</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;super|monster&#39;</span>, <span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="o">[</span>e.name <span class="k">for</span> e in entries<span class="o">]</span>
 <span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
 </pre></div>
 </div>
@@ -498,7 +500,7 @@ their caches up-to-date.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1',
+            VERSION:'0.1.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
