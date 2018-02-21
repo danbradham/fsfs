@@ -94,9 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">fsfs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-to-know-the-entry-object">Getting to know the <cite>Entry</cite> object</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#searching-for-something">Searching for something</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#searching-for-something">Searching for something</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#customizing-fsfs">Customizing <em>fsfs</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-provide-your-own-entry-models">Advanced: Provide your own <cite>Entry</cite> models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
@@ -221,9 +219,8 @@ tagged only one folder, we’re guaranteed to get an <cite>Entry</cite> for <cit
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="searching-for-something">
-<h1>Searching for something<a class="headerlink" href="#searching-for-something" title="Permalink to this headline">¶</a></h1>
+<h2>Searching for something<a class="headerlink" href="#searching-for-something" title="Permalink to this headline">¶</a></h2>
 <p>The search api in fsfs should feel familiar. It’s structured like common SQL
 Query apis from libraries like sqlalchemy or django. The search function itself
 returns a Search generator object with some special methods to narrow the
@@ -282,6 +279,7 @@ use partial names to cast a broader net.</p>
 <span class="gp">&gt;</span>&gt;&gt; <span class="o">[</span>e.name <span class="k">for</span> e in entries<span class="o">]</span>
 <span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
 </pre></div>
+</div>
 </div>
 <div class="section" id="customizing-fsfs">
 <h2>Customizing <em>fsfs</em><a class="headerlink" href="#customizing-fsfs" title="Permalink to this headline">¶</a></h2>

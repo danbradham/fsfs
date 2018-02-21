@@ -69,7 +69,7 @@ tagged only one folder, we're guaranteed to get an `Entry` for `tmp/my_super_pro
     'my_super_project'
 
 Searching for something
-=======================
+-----------------------
 The search api in fsfs should feel familiar. It's structured like common SQL
 Query apis from libraries like sqlalchemy or django. The search function itself
 returns a Search generator object with some special methods to narrow the
