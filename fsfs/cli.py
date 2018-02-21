@@ -76,7 +76,7 @@ def cli():
 @cli.command()
 @option('--root', '-r', default=os.getcwd(), help='Root directory of search')
 @option('--up/--down', 'direction', default=False, help='Direction to search')
-@argument('name', required=False, help='Like "entry" or "parent/entry"')
+@argument('name', required=False)
 @option('--tags', '-t', cls=ListOption, help='List of tags to match')
 def search(root, direction, name, tags):
     '''Search for Entries'''
@@ -102,7 +102,7 @@ def search(root, direction, name, tags):
 @cli.command()
 @option('--root', '-r', default=os.getcwd(), help='Root directory of search')
 @option('--up/--down', 'direction', default=False, help='Direction to search')
-@argument('name', required=False, help='Like "entry" or "parent/entry"')
+@argument('name', required=False)
 @option('--tags', '-t', cls=ListOption, help='List of tags to match')
 def one(root, direction, name, tags):
     '''Get first search result'''
@@ -124,7 +124,7 @@ def one(root, direction, name, tags):
         sys.exit(1)
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
+@option('--root', '-r', default=os.getcwd(), help='Directory to tag')
 @argument('tags', nargs=-1, required=True)
 def tag(root, tags):
     '''Tag a directory'''
@@ -133,7 +133,7 @@ def tag(root, tags):
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
+@option('--root', '-r', default=os.getcwd(), help='Directoy to untag')
 @argument('tags', nargs=-1, required=True)
 def untag(root, tags):
     '''Untag a directory'''
@@ -142,7 +142,7 @@ def untag(root, tags):
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
+@option('--root', '-r', default=os.getcwd(), help='Directory to read from')
 @argument('keys', nargs=-1)
 def read(root, keys):
     '''Read metadata'''
@@ -153,8 +153,10 @@ def read(root, keys):
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
-@option('data', '--key', '-k', multiple=True, type=(unicode, OBJECT))
+@option('--root', '-r', default=os.getcwd(), help='Directory to write to')
+@option('--key', '-k', 'data',
+        multiple=True, type=(unicode, OBJECT),
+        help='Key Value pairs to write ')
 def write(root, data):
     '''Write metadata'''
 
@@ -171,8 +173,8 @@ def write(root, data):
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
-@option('--remove-root', is_flag=True, default=False)
+@option('--root', '-r', default=os.getcwd(), help='Entry to delete')
+@option('--remove-root', is_flag=True, default=False, help='Remove directory?')
 def delete(root, remove_root):
     '''Delete an entry'''
 
@@ -180,4 +182,5 @@ def delete(root, remove_root):
     if not entry.exists:
         raise UsageError(f('{root} is not an Entry.'))
 
-    fsfs.delete(root, remove_root=remove_root)
+    if click.confirm('Are you sure you want to delete {}?'.format(entry.name)):
+        fsfs.delete(root, remove_root=remove_root)
