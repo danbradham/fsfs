@@ -74,10 +74,10 @@ def cli():
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
-@option('--up/--down', 'direction', default=False)
-@argument('name', required=False)
-@option('--tags', '-t', cls=ListOption)
+@option('--root', '-r', default=os.getcwd(), help='Root directory of search')
+@option('--up/--down', 'direction', default=False, help='Direction to search')
+@argument('name', required=False, help='Like "entry" or "parent/entry"')
+@option('--tags', '-t', cls=ListOption, help='List of tags to match')
 def search(root, direction, name, tags):
     '''Search for Entries'''
 
@@ -100,10 +100,10 @@ def search(root, direction, name, tags):
 
 
 @cli.command()
-@option('--root', '-r', default=os.getcwd())
-@option('--up/--down', 'direction', default=False)
-@argument('name', required=False)
-@option('--tags', '-t', cls=ListOption)
+@option('--root', '-r', default=os.getcwd(), help='Root directory of search')
+@option('--up/--down', 'direction', default=False, help='Direction to search')
+@argument('name', required=False, help='Like "entry" or "parent/entry"')
+@option('--tags', '-t', cls=ListOption, help='List of tags to match')
 def one(root, direction, name, tags):
     '''Get first search result'''
 
