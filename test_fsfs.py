@@ -4,6 +4,7 @@ import itertools
 import json
 import os
 import shutil
+import time
 from random import choice, randint, sample
 from nose.tools import assert_raises, with_setup, make_decorator
 from functools import partial, wraps
@@ -289,12 +290,15 @@ def test_read_write(tempdir):
 
     # External data change causes mtime to change
     entry = fsfs.get_entry(project_path)
+    time.sleep(0.1)
     with open(entry.data.file, 'w') as f:
         data = dict(hello='wurld!')
         f.write(json.dumps(data))
 
     # Now ids are different, because our cached mtime is < the mtime on disk
     # causing read to return a new dict
+    print(id(fsfs.read(project_path)))
+    print(id(project_data))
     assert fsfs.read(project_path) is not project_data
 
 

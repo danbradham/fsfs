@@ -78,7 +78,7 @@ Entry we named `my_super_project` from above.
 
 .. code-block:: console
 
-    >>> super_project = fsfs.search('.').name('my_super_project).one()
+    >>> super_project = fsfs.search('.').name('my_super_project').one()
     >>> super_project.name
     'my_super_project'
 
@@ -94,7 +94,7 @@ Entry we named `my_super_project` from above.
     True
 
     # Filter results using a custom predicate
-    >>> entries = fsfs.search('.').filter(lambda e: e.startswith('my_super'))
+    >>> entries = fsfs.search('.').filter(lambda e: e.name.startswith('my_super'))
     >>> entries.one() is super_project
     True
 
@@ -105,7 +105,7 @@ expressions.
 .. code-block:: console
 
     # Use your own generator expression
-    >>> entries = (e for e in search('.') if e.read('status') == 'active')
+    >>> entries = (e for e in fsfs.search('.') if e.read('status') == 'active')
     >>> entries.next() is super_project
     True
 
@@ -122,18 +122,20 @@ use partial names to cast a broader net.
 
     >>> fsfs.tag('tmp/my_super_project/assets/blue_monster', 'asset')
     >>> fsfs.tag('tmp/my_super_project/assets/green_monster', 'asset')
-    >>> entry = fsfs.search('.').select('my_super_project/blue_monster').one()
+    >>> entry = fsfs.search('.').name('my_super_project/blue_monster').one()
     >>> entry.name
     'blue_monster'
 
-    >>> entries = fsfs.search('.').select('super/monster')
+    >>> entries = fsfs.search('.').name('super/monster')
+    >>> [e.name for e in entries]
     ['blue_monster', 'green_monster']
 
 Pass the sep keyword to use a custom separator.
 
 .. code-block:: console
 
-    >>> entries = fsfs.search('.').select('super|monster', sep='|')
+    >>> entries = fsfs.search('.').name('super|monster', sep='|')
+    >>> [e.name for e in entries]
     ['blue_monster', 'green_monster']
 
 Customizing *fsfs*

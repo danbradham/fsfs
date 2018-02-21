@@ -422,7 +422,7 @@ def search(root, direction=DOWN, depth=10, skip_root=False):
             search('.').name('entry_name')
 
             # Get entries by nested name
-            search('.').select('parent1/parent2/entry_name')
+            search('.').name('parent1/parent2/entry_name')
 
             # Use custom predicates
             search('.').filter(lambda entry: entry.read('user') == 'Dan')

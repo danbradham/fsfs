@@ -220,13 +220,11 @@ def regenerator(generator_fn):
     @wraps(generator_fn)
     def flatten_generator(*args, **kwargs):
         stack = [generator_fn(*args, **kwargs)]
-        while True:
+        while stack:
             try:
                 item = stack[-1].next()
             except StopIteration:
                 stack.pop()
-                if not stack:
-                    raise
             else:
                 if inspect.isgenerator(item):
                     stack.append(item)
