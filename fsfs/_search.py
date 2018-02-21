@@ -96,53 +96,39 @@ class Search(object):
         except StopIteration:
             return None
 
+    def clone(self, **overrides):
+        kwargs = dict(
+            root=self.root,
+            direction=self.direction,
+            depth=self.depth,
+            skip_root=self.skip_root,
+            predicates=self.predicates,
+            selector=self.selector,
+            sep=self.sep
+        )
+        kwargs.update(**overrides)
+        return Search(**kwargs)
+
     def tags(self, *tags):
         [api.validate_tag(tag) for tag in tags]
-        return Search(
-            self.root,
-            self.direction,
-            self.depth,
-            self.skip_root,
-            self.predicates + [lambda e: all([tag in e.tags for tag in tags])]
-        )
+        predicate = lambda e: all([tag in e.tags for tag in tags])
+        return self.clone(predicates=self.predicates + [predicate])
 
     def uuid(self, uuid):
-        return Search(
-            self.root,
-            self.direction,
-            self.depth,
-            self.skip_root,
-            self.predicates + [lambda e: uuid == e.uuid]
-        )
+        predicate = lambda e: uuid == e.uuid
+        return self.clone(predicates=self.predicates + [predicate])
 
-    def name(self, name):
-        return Search(
-            self.root,
-            self.direction,
-            self.depth,
-            self.skip_root,
-            self.predicates + [lambda e: name in e.name]
-        )
+    def name(self, name, sep='/'):
 
-    def select(self, selector, sep='/'):
-        return Search(
-            self.root,
-            self.direction,
-            self.depth,
-            self.skip_root,
-            self.predicates,
-            selector,
-            sep
-        )
+        if sep in name:
+            name = name.strip(sep)
+            return self.clone(selector=name, sep=sep)
+
+        predicate = lambda e: name in e.name
+        return self.clone(predicates=self.predicates + [predicate])
 
     def filter(self, predicate):
-        return Search(
-            self.root,
-            self.direction,
-            self.depth,
-            self.skip_root,
-            self.predicates + [predicate]
-        )
+        return self.clone(predicates=self.predicates + [predicate])
 
 
 def search(root, direction=DOWN, depth=10, skip_root=False):
@@ -237,7 +223,7 @@ def _search_tree_dn(root, depth=10, skip_root=False, level=0, visited=None):
                     yield visited
             else:
                 only_data = False
-                yield search_tree_dn(
+                yield _search_tree_dn(
                     root + '/' + entry.name,
                     depth,
                     skip_root,
