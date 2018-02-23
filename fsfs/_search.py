@@ -96,17 +96,14 @@ class Search(object):
         except StopIteration:
             return None
 
-    def clone(self, **overrides):
-        kwargs = dict(
-            root=self.root,
-            direction=self.direction,
-            depth=self.depth,
-            skip_root=self.skip_root,
-            predicates=self.predicates,
-            selector=self.selector,
-            sep=self.sep
-        )
-        kwargs.update(**overrides)
+    def clone(self, **kwargs):
+        kwargs.setdefault('root', self.root)
+        kwargs.setdefault('direction', self.direction)
+        kwargs.setdefault('depth', self.depth)
+        kwargs.setdefault('skip_root', self.skip_root)
+        kwargs.setdefault('predicates', self.predicates)
+        kwargs.setdefault('selector', self.selector)
+        kwargs.setdefault('sep', self.sep)
         return Search(**kwargs)
 
     def tags(self, *tags):
