@@ -294,7 +294,7 @@ class Tasks(object):
         remote = remote or 'origin'
         branch = branch or 'master'
 
-        run('git push ' + ' '.join((remote, branch)))
+        run('git push --tags ' + ' '.join((remote, branch)))
 
     def upload(self, where=None):
         '''uploading package...not implemented'''
