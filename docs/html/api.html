@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.1.2 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.1.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.2 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.5 documentation" href="index.html"/>
         <link rel="prev" title="Guide" href="guide.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.2
+                0.1.5
               </div>
             
           
@@ -438,7 +438,7 @@ return all key, value pairs.</li>
 
 <dl class="function">
 <dt id="fsfs.api.write">
-<code class="descclassname">fsfs.api.</code><code class="descname">write</code><span class="sig-paren">(</span><em>root</em>, <em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.write" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs.api.</code><code class="descname">write</code><span class="sig-paren">(</span><em>root</em>, <em>replace=False</em>, <em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write metadata to directory</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1095,6 +1095,20 @@ key and not a dict</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="fsfs.models.Entry.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove keys from this Entry’s data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*keys</strong> – Keys to remove from data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="fsfs.models.Entry.tag">
 <code class="descname">tag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.tag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add tags to this Entry</p>
@@ -1136,7 +1150,7 @@ key and not a dict</td>
 
 <dl class="method">
 <dt id="fsfs.models.Entry.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write</code><span class="sig-paren">(</span><em>replace=False</em>, <em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write data to this Entry</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1236,6 +1250,11 @@ the “files” subdirectory. You can then get a handle to the file via
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="fsfs.models.EntryData.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="fsfs.models.EntryData.tag">
 <code class="descname">tag</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.tag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1262,7 +1281,7 @@ the “files” subdirectory. You can then get a handle to the file via
 
 <dl class="method">
 <dt id="fsfs.models.EntryData.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.write" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write</code><span class="sig-paren">(</span><em>replace=False</em>, <em>**data</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.write" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2048,7 +2067,7 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fsfs._search.Search.clone">
-<code class="descname">clone</code><span class="sig-paren">(</span><em>**overrides</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.clone" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clone</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.clone" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2251,7 +2270,7 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.2',
+            VERSION:'0.1.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -4,12 +4,14 @@ import os
 import sys
 import ast
 import click
+import re
 from click import group, argument, option
 from fstrings import f
 import fsfs
 
 
 class NameToString(ast.NodeTransformer):
+    '''Transforms Name Nodes to Str nodes.'''
 
     def visit_Name(self, node):
         if node.id in ('True', 'False', 'None'):
@@ -18,9 +20,16 @@ class NameToString(ast.NodeTransformer):
 
 
 def safe_eval(string):
-    tree = NameToString().visit(ast.parse(string, mode='eval'))
-    value = ast.literal_eval(tree)
-    return value
+    '''Evaluates a string using ast.literal_eval.
+
+    Returns a python object or the original string if it can not be parsed.
+    '''
+
+    try:
+        tree = NameToString().visit(ast.parse(string, mode='eval'))
+        return ast.literal_eval(tree)
+    except (SyntaxError, ValueError):
+        return string
 
 
 class ObjType(click.ParamType):
@@ -31,12 +40,7 @@ class ObjType(click.ParamType):
     name = 'object'
 
     def convert(self, value, param, ctx):
-        try:
-            value = safe_eval(value)
-        except:
-            self.fail('%s is not a valid python object' % value, param, ctx)
-        else:
-            return value
+        return safe_eval(value)
 
 
 OBJECT = ObjType()
@@ -157,13 +161,18 @@ def read(root, keys):
 @option('--key', '-k', 'data',
         multiple=True, type=(unicode, OBJECT),
         help='Key Value pairs to write ')
-def write(root, data):
+@option('--delete', '-d', 'delkeys', multiple=True, help='Delete keys')
+def write(root, data, delkeys):
     '''Write metadata'''
+
+    entry = fsfs.get_entry(root)
+    if delkeys:
+        entry.remove(*delkeys)
 
     data = {k: v for k, v in data}
 
     try:
-        fsfs.write(root, **data)
+        entry.write(**data)
     except Exception as e:
         print('Failed to write data: ')
         print(dict(pairs))

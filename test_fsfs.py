@@ -4,6 +4,7 @@ import itertools
 import json
 import os
 import shutil
+import glob
 import time
 from random import choice, randint, sample
 from nose.tools import assert_raises, with_setup, make_decorator
@@ -22,10 +23,10 @@ TEMP_DIR = 'tmp'
 def provide_tempdir(fn):
 
     @make_decorator(fn)
-    def test_with_tempdir():
+    def test_with_tempdir(*args, **kwargs):
         tmpdir = mkdtemp()
         try:
-            fn(tmpdir)
+            fn(tmpdir, *args, **kwargs)
         finally:
             shutil.rmtree(tmpdir)
 
@@ -481,3 +482,19 @@ def test_move_entry_raises(tempdir):
     entry.tag('generic')
     assert_raises(OSError, entry.move, dest_path)
     assert_raises(OSError, entry.copy, dest_path)
+
+
+@provide_tempdir
+def test_new_uuid_after_copy(tempdir):
+    '''Copy Entry creates a new uuid'''
+
+    entry_path = util.unipath(tempdir, 'entry')
+    dest_path = util.unipath(tempdir, 'copy')
+
+    entry = fsfs.get_entry(entry_path)
+    entry.tag('generic')
+
+    new_entry = entry.copy(dest_path)
+    assert new_entry.path == dest_path
+    assert new_entry.uuid != entry.uuid
+    assert len(glob.glob(new_entry.data.path + '/uuid_*')) == 1

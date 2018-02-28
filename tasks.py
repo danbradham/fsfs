@@ -219,7 +219,7 @@ class Tasks(object):
         '''Run Test Suite...'''
         run('nosetests -v --with-doctest --doctest-extension=rst')
         print('Run Doctests...')
-        run('nosetests -v --with-doctest --doctest-extension=rst', cwd='docs')
+        run('nosetests -v --with-doctest --doctest-extension=rst', cwd='./docs')
 
     def increment(self, major=False, minor=False, patch=True):
         '''Increment package version'''

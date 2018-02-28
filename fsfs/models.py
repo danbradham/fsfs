@@ -139,8 +139,14 @@ class EntryData(object):
     def __getitem__(self, key):
         return self._read()[key]
 
+    def __delitem__(self, key):
+        data = self._read()
+        del data[key]
+        signals.EntryDataChanged.send(self.parent, dict(self._data))
+
     def __setitem__(self, key, value):
         self._write(**{key: value})
+        signals.EntryDataChanged.send(self.parent, dict(self._data))
 
     def __iter__(self):
         return self._read().__iter__()
@@ -165,6 +171,7 @@ class EntryData(object):
 
     def update(self, **kwargs):
         self._write(**kwargs)
+        signals.EntryDataChanged.send(self.parent, dict(self._data))
 
     def __eq__(self, other):
         self._read().__eq__(other)
@@ -190,7 +197,7 @@ class EntryData(object):
         for entry in scandir(self.path):
             if entry.name.startswith('uuid_'):
                 self.uuid = entry.name.replace('uuid_', '')
-                self.uuid_file = entry.name
+                self.uuid_file = entry.path
                 return True
 
     def _new_uuid(self):
@@ -201,6 +208,10 @@ class EntryData(object):
         is_new_uuid = bool(self.uuid)
 
         with self._lock:
+
+            if self.uuid_file and os.path.isfile(self.uuid_file):
+                os.remove(self.uuid_file)
+
             self.uuid = str(uuid.uuid4())
             self.uuid_file = self._make_uuid_path(self.uuid)
             util.touch(self.uuid_file)
@@ -255,15 +266,17 @@ class EntryData(object):
 
             return self._data
 
-    def _write(self, **data):
+    def _write(self, replace=False, **data):
         '''Ensure data directory is initialized, then write updated data'''
 
         self._init()
 
         with self._lock:
-            new_data = self._read()
-            util.update_dict(new_data, data)
-
+            if not replace:
+                new_data = self._read()
+                util.update_dict(new_data, data)
+            else:
+                new_data = data
             with open(self.file, 'w') as f:
                 f.write(api.encode_data(new_data))
 
@@ -313,8 +326,15 @@ class EntryData(object):
 
         return dict((k, data[k]) for k in keys)
 
-    def write(self, **data):
-        self._write(**data)
+    def write(self, replace=False, **data):
+        self._write(replace, **data)
+        signals.EntryDataChanged.send(self.parent, dict(self._data))
+
+    def remove(self, *keys):
+        data = self._read()
+        for key in keys:
+            data.pop(key, None)
+        self._write(replace=True, **data)
         signals.EntryDataChanged.send(self.parent, dict(self._data))
 
     def read_blob(self, key):
@@ -429,14 +449,23 @@ class Entry(object):
         '''
         return self.data.read(*keys)
 
-    def write(self, **data):
+    def write(self, replace=False, **data):
         '''Write data to this Entry
 
         Arguments:
             **data: key, value pairs to write to the Entry's data
         '''
 
-        self.data.write(**data)
+        self.data.write(replace, **data)
+
+    def remove(self, *keys):
+        '''Remove keys from this Entry's data
+
+        Arguments:
+            *keys: Keys to remove from data
+        '''
+
+        self.data.remove(*keys)
 
     def read_blob(self, key):
         '''Get a file object representing a blob stored under the specified key

@@ -251,7 +251,7 @@ def read(root, *keys):
     return entry.read(*keys)
 
 
-def write(root, **data):
+def write(root, replace=False, **data):
     '''Write metadata to directory
 
     Arguments:
@@ -263,7 +263,7 @@ def write(root, **data):
     '''
 
     entry = get_entry(root)
-    entry.write(**data)
+    entry.write(replace, **data)
 
 
 def read_blob(root, key):

@@ -7,18 +7,21 @@ name = "pypi"
 
 [dev-packages]
 
+fire = "*"
+termcolor = "*"
+colorama = "*"
 
 
 [packages]
 
 scandir = "*"
-PyYAML = "*"
+pyyaml = "*"
 nose = "*"
 fstrings = "*"
 click = "*"
 scrim = "*"
-Sphinx = "*"
-sphinx_rtd_theme = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
 sphinxcontrib-napoleon = "*"
 fire = "*"
 termcolor = "*"
