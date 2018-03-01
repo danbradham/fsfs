@@ -400,7 +400,7 @@ def one_uuid(*args, **kwargs):
 
     matches = search_uuid(*args, **kwargs)
     try:
-        return matches.next()
-    except StopIteration:  # no result
+        return next(matches)
+    except StopIteration:
         return
 
