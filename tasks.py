@@ -150,10 +150,12 @@ def upload(ctx, where=None):
 
 
 @task
-def draft(ctx, message, tag=None, remote=None, branch=None):
+def draft(ctx, tag=None, remote=None, branch=None):
     '''Test, Tag, Push Changes...'''
 
     tests(ctx)
+    if tag:
+        tag(ctx, tag)
     push(ctx, remote, branch)
 
 
