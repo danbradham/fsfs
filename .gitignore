@@ -100,5 +100,5 @@ ENV/
 # mypy
 .mypy_cache/
 
-# Ignore windows tasks wrapper
-tasks.bat
+# Vscode Stuff
+*.code-workspace
