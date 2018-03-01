@@ -10,8 +10,8 @@ Take a peek at how it looks from Python:
 
     >>> import fsfs
     >>> fsfs.write('tmp/project_dir', start_frame=100, end_frame=200)
-    >>> fsfs.read('tmp/project_dir')
-    {'end_frame': 200, 'start_frame': 100}
+    >>> fsfs.read('tmp/project_dir') == {'end_frame': 200, 'start_frame': 100}
+    True
     >>> import shutil; shutil.rmtree('tmp')
 
 and from the command line:

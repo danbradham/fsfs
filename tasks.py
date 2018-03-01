@@ -138,7 +138,7 @@ def tests(ctx):
     '''Run test suite'''
 
     docs = join(dirname(__file__), 'docs')
-    ctx.run('nosetests test_fsfs.py -v --with-doctest --doctest-extension=rst')
+    ctx.run('nosetests -v --with-doctest --doctest-extension=rst')
     with ctx.cd(docs):
         ctx.run('nosetests -v --with-doctest --doctest-extension=rst')
 

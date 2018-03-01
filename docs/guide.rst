@@ -56,8 +56,8 @@ previously and use it to change our data.
 
     # Write some new data
     >>> entry.write(status='active')
-    >>> entry.read()
-    {'status': 'active', 'framerate': '24fps'}
+    >>> entry.read() == {'status': 'active', 'framerate': '24fps'}
+    True
 
 We used `one` to retrieve the first `Entry` yielded by our search. Since we've
 tagged only one folder, we're guaranteed to get an `Entry` for `tmp/my_super_project`. You could also use `fsfs.search` to get a generator yielding all `Entry`'s with the tag 'project'.
