@@ -222,7 +222,7 @@ def regenerator(generator_fn):
         stack = [generator_fn(*args, **kwargs)]
         while stack:
             try:
-                item = stack[-1].next()
+                item = next(stack[-1])
             except StopIteration:
                 stack.pop()
             else:

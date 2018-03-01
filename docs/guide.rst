@@ -106,7 +106,7 @@ expressions.
 
     # Use your own generator expression
     >>> entries = (e for e in fsfs.search('.') if e.read('status') == 'active')
-    >>> entries.next() is super_project
+    >>> next(entries) is super_project
     True
 
 Note that we no longer have access to the method :meth:`Search.one` because
