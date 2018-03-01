@@ -14,5 +14,5 @@ except NameError:
 
 try:
     from itertools import izip
-except NameError:
+except ImportError:
     izip = zip
