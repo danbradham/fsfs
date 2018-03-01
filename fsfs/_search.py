@@ -78,11 +78,13 @@ class Search(object):
     def __iter__(self):
         return self
 
+    def __next__(self):
+        return self._generator.send(None)
+
+    next = __next__
+
     def send(self, value):
         return self._generator.send(value)
-
-    def next(self):
-        return self._generator.send(None)
 
     def throw(self, typ, val=None, tb=None):
         self._generator.throw(typ, val, tb)
