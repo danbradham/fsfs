@@ -9,11 +9,13 @@ class File(object):
     setup a file-like object without actually opening it.
 
     Examples:
-        >>> with open('tmpfile', 'wb') as f: f.write('hello')
+        >>> import doctest
+        >>> with open('tmpfile', 'w') as f:
+        ...     _ = f.write('hello') # doctest: +ELLIPSIS
 
         open, read, and close a File.
 
-        >>> f = File('tmpfile', 'rb')
+        >>> f = File('tmpfile', 'r')
         >>> f.open()  # doctest: +ELLIPSIS
         <fsfs.types.File object at ...>
         >>> assert f.opened
@@ -24,7 +26,7 @@ class File(object):
 
         use File as a context manager.
 
-        >>> f = File('tmpfile', 'rb')
+        >>> f = File('tmpfile', 'r')
         >>> with f.open():
         ...     f.read()
         'hello'

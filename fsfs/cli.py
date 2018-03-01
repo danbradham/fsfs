@@ -159,7 +159,7 @@ def read(root, keys):
 @cli.command()
 @option('--root', '-r', default=os.getcwd(), help='Directory to write to')
 @option('--key', '-k', 'data',
-        multiple=True, type=(unicode, OBJECT),
+        multiple=True, type=(str, OBJECT),
         help='Key Value pairs to write ')
 @option('--delete', '-d', 'delkeys', multiple=True, help='Delete keys')
 def write(root, data, delkeys):

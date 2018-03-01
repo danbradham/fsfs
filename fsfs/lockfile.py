@@ -109,7 +109,7 @@ class LockFile(object):
             >>> lock2 = LockFile('.lock')
             >>> assert not lock2.acquired
             >>> assert lock2.locked
-            >>> lock2.acquire(0.1)
+            >>> lock2.acquire(0.1)  # doctest: +IGNORE_EXCEPTION_DETAIL
             Traceback (most recent call last):
             ...
             LockFileTimeOutError: Timed out while trying to acquire lock...
@@ -133,7 +133,7 @@ class LockFile(object):
 
             >>> lock2.acquire()
             >>> with lock(0.1):
-            ...     pass
+            ...     pass  # doctest: +IGNORE_EXCEPTION_DETAIL
             Traceback (most recent call last):
             ...
             LockFileTimeOutError: Timed out while trying to acquire lock...
@@ -321,7 +321,7 @@ def lockfile(path, timeout=0):
         >>> l = LockFile('.lock')
         >>> l.acquire()
         >>> with lockfile('.lock', 0.1):
-        ...     pass
+        ...     pass  # doctest: +IGNORE_EXCEPTION_DETAIL
         Traceback (most recent call last):
         ...
         LockFileTimeOutError: Timed out while trying to acquire lock...

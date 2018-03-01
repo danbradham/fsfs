@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2181a23786019dc3cbb8fa43a37f42edb8ce17de0f08c9928cbbe34a3794832a"
+            "sha256": "f9232a7b5fc43b9d56c5726896193c7e6ea95054c5af83b8da439d17884de15a"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -12,7 +12,7 @@
             "platform_release": "7",
             "platform_system": "Windows",
             "platform_version": "6.1.7601",
-            "python_full_version": "2.7.11",
+            "python_full_version": "2.7.14",
             "python_version": "2.7",
             "sys_platform": "win32"
         },
@@ -175,6 +175,14 @@
                 "sha256:5b326e4678b6925158ccc66a9fa3122b6106d7c876ee32d7de6ce59385b96315"
             ],
             "version": "==1.0.0"
+        },
+        "invoke": {
+            "hashes": [
+                "sha256:357f0661c1d84f9f113e6164705d92eb00b35cd704c31e82efbf0f012f25e40c",
+                "sha256:39020b07218c87747e85dd422510f02a8d1282c71952942324c67d9eeaae8e62",
+                "sha256:621181a0efae67b3dadec583cf2c6b5096136635bf6a326c481c73db412b36fc"
+            ],
+            "version": "==0.22.1"
         },
         "jinja2": {
             "hashes": [
