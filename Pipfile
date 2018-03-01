@@ -13,7 +13,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 sphinxcontrib-napoleon = "*"
 nose = "*"
-
+invoke = "*"
 
 [packages]
 
