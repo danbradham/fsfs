@@ -354,13 +354,11 @@ def get_tags(root):
     '''
 
     tags = []
-    try:
-        for entry in scandir(util.unipath(root, get_data_root())):
+    path = util.unipath(root, get_data_root())
+    if os.path.isdir(path):
+        for entry in scandir(path):
             if entry.name.startswith('tag_'):
                 tags.append(entry.name.replace('tag_', ''))
-    except OSError as e:
-        if e.errno != errno.ESRCH:
-            raise
     return tags
 
 

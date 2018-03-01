@@ -17,7 +17,7 @@ import shutil
 from functools import wraps
 from scandir import walk
 import inspect
-from _compat import basestring
+from fsfs._compat import basestring
 
 
 BINARY = os.__dict__.get('O_BINARY', 0)  # Windows has a binary flag
