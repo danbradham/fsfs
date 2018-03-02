@@ -1,3 +1,8 @@
+.. image:: https://img.shields.io/github/license/danbradham/fsfs.svg?style=flat-square
+    :alt: license
+.. image:: https://img.shields.io/travis/danbradham/fsfs.svg?style=flat-square
+    :alt: Travis branch
+
 fsfs
 ====
 Read from and write data to folders on your file system.

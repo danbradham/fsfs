@@ -167,21 +167,21 @@
   <div class="section" id="guide">
 <h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h1>
 <p>Tag a folder:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; import fsfs
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; import fsfs
 <span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span>, <span class="s1">&#39;project&#39;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Get the tags associated with a folder:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.get_tags<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.get_tags<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span><span class="o">)</span>
 <span class="go">[&#39;project&#39;]</span>
 </pre></div>
 </div>
 <p>Write some data to your folder:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.write<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span>, <span class="nv">framerate</span><span class="o">=</span><span class="s1">&#39;24fps&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.write<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span>, <span class="nv">framerate</span><span class="o">=</span><span class="s1">&#39;24fps&#39;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Read the data back from your folder:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.read<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.read<span class="o">(</span><span class="s1">&#39;tmp/my_super_project&#39;</span><span class="o">)</span>
 <span class="go">{&#39;framerate&#39;: &#39;24fps&#39;}</span>
 </pre></div>
 </div>
@@ -192,7 +192,7 @@ them. Let’s take a look at using the <cite>Entry</cite> object.</p>
 <h2>Getting to know the <cite>Entry</cite> object<a class="headerlink" href="#getting-to-know-the-entry-object" title="Permalink to this headline">¶</a></h2>
 <p>First we will get an <cite>Entry</cite> object representing the folder we tagged project
 previously and use it to change our data.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Get an Entry object
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Get an Entry object
 <span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 
 <span class="gp">#</span> Check some properties and <span class="nb">read</span> our data
@@ -207,13 +207,13 @@ previously and use it to change our data.</p>
 
 <span class="gp">#</span> Write some new data
 <span class="gp">&gt;</span>&gt;&gt; entry.write<span class="o">(</span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;active&#39;</span><span class="o">)</span>
-<span class="gp">&gt;</span>&gt;&gt; entry.read<span class="o">()</span>
-<span class="go">{&#39;status&#39;: &#39;active&#39;, &#39;framerate&#39;: &#39;24fps&#39;}</span>
+<span class="gp">&gt;</span>&gt;&gt; entry.read<span class="o">()</span> <span class="o">==</span> <span class="o">{</span><span class="s1">&#39;status&#39;</span>: <span class="s1">&#39;active&#39;</span>, <span class="s1">&#39;framerate&#39;</span>: <span class="s1">&#39;24fps&#39;</span><span class="o">}</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 <p>We used <cite>one</cite> to retrieve the first <cite>Entry</cite> yielded by our search. Since we’ve
 tagged only one folder, we’re guaranteed to get an <cite>Entry</cite> for <cite>tmp/my_super_project</cite>. You could also use <cite>fsfs.search</cite> to get a generator yielding all <cite>Entry</cite>’s with the tag ‘project’.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="k">for</span> entry in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>:
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="k">for</span> entry in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>:
 <span class="go">...     entry.name</span>
 <span class="go">&#39;my_super_project&#39;</span>
 </pre></div>
@@ -226,7 +226,7 @@ Query apis from libraries like sqlalchemy or django. The search function itself
 returns a Search generator object with some special methods to narrow the
 results. Let’s look at some alternative searches that would find the
 Entry we named <cite>my_super_project</cite> from above.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">super_project</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;my_super_project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">super_project</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;my_super_project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; super_project.name
 <span class="go">&#39;my_super_project&#39;</span>
 
@@ -250,20 +250,20 @@ Entry we named <cite>my_super_project</cite> from above.</p>
 <p>The most common use cases for searching are provided through methods on the
 Search generator. For everything else you can use your own generator
 expressions.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Use your own generator expression
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Use your own generator expression
 <span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> <span class="o">(</span>e <span class="k">for</span> e in fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span> <span class="k">if</span> e.read<span class="o">(</span><span class="s1">&#39;status&#39;</span><span class="o">)</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span><span class="o">)</span>
-<span class="gp">&gt;</span>&gt;&gt; entries.next<span class="o">()</span> is super_project
+<span class="gp">&gt;</span>&gt;&gt; next<span class="o">(</span>entries<span class="o">)</span> is super_project
 <span class="go">True</span>
 </pre></div>
 </div>
-<p>Note that we no longer have access to the method <code class="xref py py-meth docutils literal"><span class="pre">Search.one()</span></code> because
+<p>Note that we no longer have access to the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">Search.one()</span></code> because
 entries is now a regular generator and not a Search generator. In this case
 we use the next method to obtain the first result yielded by our generator
 expression.</p>
 <p>You can also search for nested Entries by name using a selector string like
 “parent/child”. Passing full names will get you the best results, but, you can
 use partial names to cast a broader net.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/blue_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/blue_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.tag<span class="o">(</span><span class="s1">&#39;tmp/my_super_project/assets/green_monster&#39;</span>, <span class="s1">&#39;asset&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;my_super_project/blue_monster&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; entry.name
@@ -275,7 +275,7 @@ use partial names to cast a broader net.</p>
 </pre></div>
 </div>
 <p>Pass the sep keyword to use a custom separator.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;super|monster&#39;</span>, <span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entries</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.name<span class="o">(</span><span class="s1">&#39;super|monster&#39;</span>, <span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; <span class="o">[</span>e.name <span class="k">for</span> e in entries<span class="o">]</span>
 <span class="go">[&#39;blue_monster&#39;, &#39;green_monster&#39;]</span>
 </pre></div>
@@ -325,7 +325,7 @@ falls back to <cite>fsfs.JsonDecoder</cite></td>
 </tbody>
 </table>
 <p>Here is how we would modify the global policy’s data encoding options.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_encoder<span class="o">(</span>fsfs.JsonEncoder<span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_encoder<span class="o">(</span>fsfs.JsonEncoder<span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_decoder<span class="o">(</span>fsfs.JsonDecoder<span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_root<span class="o">(</span><span class="s1">&#39;.metadata&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; fsfs.set_data_file<span class="o">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="o">)</span>
@@ -336,7 +336,7 @@ subdirectory called <cite>.metadata</cite> in a file called <cite>metadata.json<
 using <cite>JsonEncoder</cite>. The <cite>JsonEncoder</cite> and <cite>JsonDecoder</cite> are simply wrappers
 around <cite>json.dumps</cite> and <cite>json.loads</cite>. You can also restore the default global
 policy.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_default_policy<span class="o">()</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; fsfs.set_default_policy<span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -347,7 +347,7 @@ policy.</p>
 return instances of the default <cite>Entry</cite> implementation. We can provide our own
 <cite>Entry</cite> classes to handle folders with specific tags by creating an instance
 of <cite>fsfs.EntryFactory</cite>.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">factory</span> <span class="o">=</span> fsfs.EntryFactory<span class="o">()</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">factory</span> <span class="o">=</span> fsfs.EntryFactory<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; class Project<span class="o">(</span>factory.Entry<span class="o">)</span>:
 <span class="go">...     def special_method(self):</span>
 <span class="go">...         return &#39;Hello from your special method!&#39;</span>
@@ -357,9 +357,9 @@ of <cite>fsfs.EntryFactory</cite>.</p>
 </div>
 <p>By default subclasses are registered to handle a tag that matches the lower
 cased class name. You can specify a tag by providing a class attribute
-<code class="xref py py-attr docutils literal"><span class="pre">type_for_tag</span></code>. With our new <cite>EntryFactory</cite> set, the <em>fsfs</em> api will use
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">type_for_tag</span></code>. With our new <cite>EntryFactory</cite> set, the <em>fsfs</em> api will use
 our <cite>Project</cite> subclass when acting on a folder that is tagged <cite>project</cite>.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; <span class="nv">entry</span> <span class="o">=</span> fsfs.search<span class="o">(</span><span class="s1">&#39;.&#39;</span><span class="o">)</span>.tags<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>.one<span class="o">()</span>
 <span class="gp">&gt;</span>&gt;&gt; entry.special_method<span class="o">()</span>
 <span class="go">&#39;Hello from your special method!&#39;</span>
 </pre></div>
@@ -369,7 +369,7 @@ instances. <cite>fsfs.EntryFactory</cite> is a complex callable class that autom
 registers subclasses of the factory’s <cite>Entry</cite> base class to handle specific
 tags. If we remove the <cite>project</cite> tag from the above example
 <cite>Project.special_method</cite> will no longer be available.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; entry.untag<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;</span>&gt;&gt; entry.untag<span class="o">(</span><span class="s1">&#39;project&#39;</span><span class="o">)</span>
 <span class="gp">&gt;</span>&gt;&gt; hasattr<span class="o">(</span>entry, <span class="s1">&#39;special_method&#39;</span><span class="o">)</span>
 <span class="go">False</span>
 </pre></div>
@@ -444,7 +444,7 @@ sent before EntryDeleted</td>
 <p><cite>fsfs.EntryFactory</cite> and <cite>fsfs.SimpleEntryFactory</cite> uses these signals to keep
 their caches up-to-date.</p>
 <p>Use connect to subscribe a callable to any of the above signals.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
