@@ -205,7 +205,6 @@ def _search_tree_dn(root, depth=10, skip_root=False, level=0, visited=None):
         raise StopIteration
 
     entries = scandir(root)
-    only_data = True
 
     while True:
         try:
@@ -221,7 +220,6 @@ def _search_tree_dn(root, depth=10, skip_root=False, level=0, visited=None):
                     visited.append(api.get_entry(root))
                     yield visited
             else:
-                only_data = False
                 yield _search_tree_dn(
                     root + '/' + entry.name,
                     depth,
@@ -270,7 +268,7 @@ def search_tree(root, direction=DOWN, depth=10, skip_root=False):
 
 
 def select_from_tree(root, selector, sep='/', direction=DOWN,
-                      depth=10, skip_root=False):
+                     depth=10, skip_root=False):
     '''This method is used under the hood by the Search class, you shouldn't
     need to call it manually.
 
@@ -319,9 +317,9 @@ def select_from_tree(root, selector, sep='/', direction=DOWN,
                 for i, entry in enumerate(branch[b_i:]):
                     if part in entry.name:
                         b_i += i + 1
-                        break # Match Found
+                        break  # Match Found
                 else:
-                    break # Match Not Found
+                    break  # Match Not Found
             else:
                 # We made it through the for loop without encountering a break
                 # All parts were found
@@ -403,4 +401,3 @@ def one_uuid(*args, **kwargs):
         return next(matches)
     except StopIteration:
         return
-

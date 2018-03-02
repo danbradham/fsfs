@@ -94,7 +94,7 @@ class FsFsPolicy(object):
             setup_method()
 
     def set_entry_factory(self, entry_factory):
-        if self._entry_factory and not entry_factory is self._entry_factory:
+        if self._entry_factory and entry_factory is not self._entry_factory:
             self._teardown_entry_factory(self._entry_factory)
 
         self._entry_factory = entry_factory

@@ -38,9 +38,9 @@ def fake_name(used=[]):
 
     while True:
         name = ''.join(
-                choice(string.ascii_uppercase + string.digits)
-                for _ in range(8)
-            )
+            choice(string.ascii_uppercase + string.digits)
+            for _ in range(8)
+        )
 
         if name in used:
             continue
@@ -141,10 +141,12 @@ class ProjectFaker():
             )
             fsfs.tag(shot_path, 'shot')
 
-        perms = [zip(asset, self.variants)
-                 for asset in itertools.permutations(
-                     self.assets, len(self.variants)
-                )]
+        perms = [
+            zip(asset, self.variants)
+            for asset in itertools.permutations(
+                self.assets, len(self.variants)
+            )
+        ]
         variants = [a + '_' + b for (a, b) in itertools.chain(*perms)]
         assets = max([len(assets), len(variants)])
         asset_names = sample(variants, assets)

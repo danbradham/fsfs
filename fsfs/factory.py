@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 __all__ = ['RegistrationError', 'SimpleEntryFactory', 'EntryFactory']
-from collections import defaultdict
 import os
+from collections import defaultdict
 from fsfs import api, models, signals
-
 
 
 class RegistrationError(Exception): pass
@@ -112,7 +111,6 @@ class EntryFactory(object):
         self._cache = {}
         self._mtimes = {}
         self._cache_proxies = {}
-
 
         class EntryProxy(object):
             '''This proxy is what actually gets returned by the factory. The
@@ -236,7 +234,6 @@ class EntryFactory(object):
         if not os.path.isdir(path):
             return False
 
-        entry = self._cache[path]
         return os.path.getmtime(path) != self._mtimes.get(path, None)
 
     def _update_cache(self, path, proxy=None):

@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
-from invoke import task, Failure
+from invoke import task, Failure, run
+import os
 from os.path import join, dirname
 import shutil
+import fsfs
 
 
 def modify_about(**values):
@@ -36,9 +38,6 @@ def get_tags():
 def increment(major=False, minor=False, patch=True):
     '''Increment package version'''
 
-    print('Incrementing package version by {}.{}.{}'.format(
-        int(major), int(minor), int(version)
-    ))
     import fsfs
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
 
@@ -52,6 +51,7 @@ def increment(major=False, minor=False, patch=True):
         patch = str(int(cpatch) + 1)
         version = cmajor + '.' + cminor + '.' + patch
 
+    print('Incrementing package version by {}'.format(version))
     modify_about(__version__=version)
     print('Changed version to:', version)
 
@@ -60,10 +60,6 @@ def increment(major=False, minor=False, patch=True):
 def decrement(major=False, minor=False, patch=True):
     '''Decrement package version...'''
 
-    print('Decrementing package version by {}.{}.{}'.format(
-        int(major), int(minor), int(version)
-    ))
-    import fsfs
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
 
     if major:
@@ -76,6 +72,7 @@ def decrement(major=False, minor=False, patch=True):
         patch = str(int(cpatch) - 1)
         version = cmajor + '.' + cminor + '.' + patch
 
+    print('Decrementing package version by {}'.format(version))
     modify_about(__version__=version)
     print('Changed version to:', version)
 
@@ -167,4 +164,3 @@ def publish(ctx, tag=None, remote=None, branch=None, where=None):
     tag(ctx, tag)
     push(ctx, remote, branch)
     upload(ctx, where)
-

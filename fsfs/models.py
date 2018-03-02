@@ -83,8 +83,8 @@ def relink_uuid(entry):
         signals.EntryRelinked.send(entry, old_root, new_root)
     else:
         exc = EntryNotFoundError(
-            'Could not locate Entry matching uuid: ' + data.uuid
-            + '    Entry: ' + repr(entry)
+            'Could not locate Entry matching uuid: ' + data.uuid +
+            '    Entry: ' + repr(entry)
         )
         signals.EntryMissing.send(entry, exc)
         raise exc
@@ -248,8 +248,8 @@ class EntryData(object):
         with self._lock:
             mtime = os.path.getmtime(self.file)
             needs_update = (
-                self._data is None
-                or self._data_mtime < mtime
+                self._data is None or
+                self._data_mtime < mtime
             )
 
             if needs_update:
@@ -636,7 +636,7 @@ class Entry(object):
         # Update uuids and send EntryCreated signals
         old_path = self.path
         new_path = dest
-        self._set_path(dest) # Update this Entry's path
+        self._set_path(dest)  # Update this Entry's path
         signals.EntryMoved.send(self, old_path, new_path)
         for child in self.children():
             new_child_path = child.path
@@ -652,7 +652,7 @@ class Entry(object):
         '''
 
         self.data.delete()
-        for child in reversed(self.children):
+        for child in reversed(self.children()):
             child.delete()
 
         if remove_root:
