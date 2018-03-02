@@ -339,9 +339,8 @@ class EntryData(object):
 
     def read_blob(self, key):
         data = self._read()
-        data.setdefault('blobs', {})
-        blobs = data['blobs']
-        blob_path = util.unipath(self.blobs_path, data['blobs'][key])
+        blobs = data.setdefault('blobs', {})
+        blob_path = util.unipath(self.blobs_path, blobs[key])
         return types.File(blob_path, mode='rb')
 
     def write_blob(self, key, data):
@@ -357,9 +356,8 @@ class EntryData(object):
 
     def read_file(self, key):
         data = self._read()
-        data.setdefault('files', {})
-        files = data['files']
-        file_path = util.unipath(self.files_path, data['files'][key])
+        files = data.setdefault('files', {})
+        file_path = util.unipath(self.files_path, files[key])
         return types.File(file_path, mode='rb')
 
     def write_file(self, key, file):
