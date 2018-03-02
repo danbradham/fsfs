@@ -1,7 +1,10 @@
 .. image:: https://img.shields.io/github/license/danbradham/fsfs.svg?style=flat-square
-    :alt: license
+    :target: https://github.com/danbradham/fsfs/blob/master/LICENSE
+    :alt: License
+
 .. image:: https://img.shields.io/travis/danbradham/fsfs.svg?style=flat-square
-    :alt: Travis branch
+    :target: https://travis-ci.org/danbradham/fsfs
+    :alt: Travis
 
 fsfs
 ====
