@@ -13,7 +13,7 @@ install:
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - python -m pip install -U pip
   - pip install pipenv
-  - pipenv install --dev --system
+  - pipenv install --dev --skip-lock --system
 
 test_script:
   - invoke tests
