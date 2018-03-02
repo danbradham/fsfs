@@ -652,10 +652,13 @@ class Entry(object):
         '''
 
         self.data.delete()
-        for child in reversed(self.children()):
-            child.delete()
 
         if remove_root:
+            # Delete children depth-first making sure we send all
+            # appropriate signals along the way
+            for child in list(self.children())[::-1]:
+                child.delete(remove_root=remove_root)
+
             try:
                 shutil.rmtree(self.path)
             except OSError as e:
