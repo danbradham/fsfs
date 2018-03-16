@@ -59,7 +59,7 @@ class SimpleEntryFactory(object):
 
     def on_entry_deleted(self, entry):
         '''Removes entry from cache when it's deleted...'''
-
+        print(entry)
         self._cache.pop(entry.path)
 
 

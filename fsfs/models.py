@@ -660,4 +660,4 @@ class Entry(object):
                 if e.errno != errno.EEXIST:
                     raise
 
-        signals.EntryDeleted.send(self.parent)
+        signals.EntryDeleted.send(self)

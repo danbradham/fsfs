@@ -5,11 +5,10 @@ from invoke import task, Failure, run
 from os.path import join, dirname, isdir
 import fsfs
 import shutil
-import fsfs
 
 
 def modify_about(**values):
-    '''Modify dunder values of the about file...'''
+    '''Modify dunder values in file...'''
 
     about = join(dirname(__file__), 'fsfs', '__init__.py')
 
