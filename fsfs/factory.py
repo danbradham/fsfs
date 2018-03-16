@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 __all__ = ['RegistrationError', 'SimpleEntryFactory', 'EntryFactory']
-from collections import defaultdict
 import os
+from collections import defaultdict
 from fsfs import api, models, signals
-
 
 
 class RegistrationError(Exception):

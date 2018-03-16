@@ -178,7 +178,7 @@
 <dd><p>Get the global FsFsPolicy object</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
+<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -188,7 +188,7 @@
 <dd><p>Set the global FsFsPolicy object.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
+<p class="last"><a class="reference internal" href="#fsfs.policy.FsFsPolicy" title="fsfs.policy.FsFsPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">fsfs.policy.FsFsPolicy</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -198,7 +198,7 @@
 <dd><p>Set the global FsFsPolicy to it’s default values.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-class docutils literal"><span class="pre">fsfs.policy.DefaultPolicy</span></code></p>
+<p class="last"><code class="xref py py-class docutils literal notranslate"><span class="pre">fsfs.policy.DefaultPolicy</span></code></p>
 </div>
 </dd></dl>
 
@@ -289,13 +289,13 @@ file in the data_root that stores the actual encoded metadata for an Entry</p>
 <code class="descclassname">fsfs.api.</code><code class="descname">set_entry_factory</code><span class="sig-paren">(</span><em>entry_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.set_entry_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the global policy’s entry_factory. The entry_factory is used to
 create Entry instances returned by <cite>get_entry</cite>, <cite>search</cite>, and <cite>one</cite>.</p>
-<p>The default entry_factory is <code class="xref py py-func docutils literal"><span class="pre">fsfs.policy.default_entry_factory()</span></code>.
+<p>The default entry_factory is <code class="xref py py-func docutils literal notranslate"><span class="pre">fsfs.policy.default_entry_factory()</span></code>.
 It stores Entry object’s in a cache for quick lookup and generates the
 default implementation of Entry.</p>
 <p>Provide your own entry_factory to have fsfs yield your own Entry subclasses</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-func docutils literal"><span class="pre">fsfs.policy.default_entry_factory()</span></code></p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">fsfs.policy.default_entry_factory()</span></code></p>
 </div>
 </dd></dl>
 
@@ -324,7 +324,7 @@ instance given the same path.</p>
 <dl class="exception">
 <dt id="fsfs.api.InvalidTag">
 <em class="property">exception </em><code class="descclassname">fsfs.api.</code><code class="descname">InvalidTag</code><a class="headerlink" href="#fsfs.api.InvalidTag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -552,7 +552,7 @@ return all key, value pairs.</li>
 <dl class="function">
 <dt id="fsfs.api.search">
 <code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a Search object that yields <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> objects. The
+<dd><p>Returns a Search object that yields <code class="xref py py-class docutils literal notranslate"><span class="pre">models.Entry</span></code> objects. The
 Search generator supports advanced query functionality similar to the
 Query objects found in many SQL libraries.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -570,7 +570,7 @@ Query objects found in many SQL libraries.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Yield all entries</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Yield all entries</span>
 <span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 
 <span class="c1"># Get the first entry</span>
@@ -603,13 +603,13 @@ Query objects found in many SQL libraries.</p>
 <dl class="exception">
 <dt id="fsfs.factory.RegistrationError">
 <em class="property">exception </em><code class="descclassname">fsfs.factory.</code><code class="descname">RegistrationError</code><a class="headerlink" href="#fsfs.factory.RegistrationError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fsfs.factory.SimpleEntryFactory">
 <em class="property">class </em><code class="descclassname">fsfs.factory.</code><code class="descname">SimpleEntryFactory</code><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SimpleEntryFactory returns the base implementation of Entry.</p>
 <dl class="method">
 <dt id="fsfs.factory.SimpleEntryFactory.on_entry_deleted">
@@ -634,7 +634,7 @@ Query objects found in many SQL libraries.</p>
 <code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connects this factory to all necessary signals. Called when this
 factory is set as the policy’s entry_factory using
-<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -642,7 +642,7 @@ factory is set as the policy’s entry_factory using
 <code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnects this factory to all necessary signals. Called when
 another factory is set as the policy’s entry_factory using
-<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -650,27 +650,27 @@ another factory is set as the policy’s entry_factory using
 <dl class="class">
 <dt id="fsfs.factory.EntryFactory">
 <em class="property">class </em><code class="descclassname">fsfs.factory.</code><code class="descname">EntryFactory</code><a class="headerlink" href="#fsfs.factory.EntryFactory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>EntryFactory that allows you to create Entry subclasses that handle
 directories with specific tags. You could register an Entry subclass to
 handle directories with the tag “project” and provide
 additional methods.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fsfs</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fsfs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">factory</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">EntryFactory</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">Entry</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">Entry</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">project_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello from project method&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">set_entry_factory</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">set_entry_factory</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;tmp/project&#39;</span><span class="p">,</span> <span class="s1">&#39;project&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">get_entry</span><span class="p">(</span><span class="s1">&#39;tmp/project&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">obj</span><span class="p">())</span> <span class="ow">is</span> <span class="n">Project</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">shutil</span><span class="p">;</span> <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">shutil</span><span class="p">;</span> <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -720,7 +720,7 @@ additional methods.</p>
 <code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connects this factory to all necessary signals. Called when this
 factory is set as the policy’s entry_factory using
-<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -728,7 +728,7 @@ factory is set as the policy’s entry_factory using
 <code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnects this factory to all necessary signals. Called when
 another factory is set as the policy’s entry_factory using
-<code class="xref py py-meth docutils literal"><span class="pre">fsfs.set_entry_factory()</span></code></p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -745,25 +745,30 @@ another factory is set as the policy’s entry_factory using
 <dl class="exception">
 <dt id="fsfs.lockfile.LockFileError">
 <em class="property">exception </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFileError</code><a class="headerlink" href="#fsfs.lockfile.LockFileError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="fsfs.lockfile.LockFileTimeOutError">
 <em class="property">exception </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFileTimeOutError</code><a class="headerlink" href="#fsfs.lockfile.LockFileTimeOutError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fsfs.lockfile.LockFilePump">
 <em class="property">class </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFilePump</code><a class="headerlink" href="#fsfs.lockfile.LockFilePump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></p>
 <p>A daemon thread that updates all acquired LockFiles held by this
 process. This keeps the locks from expiring while the process has them.</p>
 <dl class="method">
 <dt id="fsfs.lockfile.LockFilePump.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFilePump.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method representing the thread’s activity.</p>
+<p>You may override this method in a subclass. The standard run() method
+invokes the callable object passed to the object’s constructor as the
+target argument, if any, with sequential and keyword arguments taken
+from the args and kwargs arguments, respectively.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="fsfs.lockfile.LockFilePump.shutdown">
@@ -790,7 +795,7 @@ process. This keeps the locks from expiring while the process has them.</p>
 <dl class="class">
 <dt id="fsfs.lockfile.LockFile">
 <em class="property">class </em><code class="descclassname">fsfs.lockfile.</code><code class="descname">LockFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.lockfile.LockFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Uses a file as a lock. When a LockFile is acquired a file is created at
 its associated path. While this file exists no other process can acquire
 the lock. When a LockFile is released, the file is removed, allowing other
@@ -802,24 +807,24 @@ current process holds. Once this process exits, any hanging locks will
 finally have a static mtime, and they can expire.</p>
 <p class="rubric">Examples</p>
 <p>Acquire a lock.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">locked</span>
 </pre></div>
 </div>
 <p>Acquire a lock using a timeout.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">lock2</span><span class="o">.</span><span class="n">acquired</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock2</span><span class="o">.</span><span class="n">locked</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
 </pre></div>
 </div>
 <p>Release a lock and acquire a new one using another LockFile instance.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">lock2</span><span class="o">.</span><span class="n">acquired</span>
@@ -828,15 +833,15 @@ finally have a static mtime, and they can expire.</p>
 </pre></div>
 </div>
 <p>Use LockFile as a contextmanager.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">lock</span><span class="o">.</span><span class="n">acquired</span>
 <span class="gp">...</span>
 </pre></div>
 </div>
 <p>Call a LockFile to use it as a contextmanager with a timeout.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock2</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lock</span><span class="p">(</span><span class="mf">0.1</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">... </span>    <span class="k">pass</span>  
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
@@ -894,20 +899,20 @@ finally have a static mtime, and they can expire.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Acquired LockFile</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fsfs.lockfile.LockFileTimeOutError" title="fsfs.lockfile.LockFileTimeOutError"><code class="xref py py-exc docutils literal"><span class="pre">LockFileTimeOutError</span></code></a> – when timeout reached</p>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fsfs.lockfile.LockFileTimeOutError" title="fsfs.lockfile.LockFileTimeOutError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">LockFileTimeOutError</span></code></a> – when timeout reached</p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lockfile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">l</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lockfile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">l</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">l</span><span class="o">.</span><span class="n">acquired</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">LockFile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">lockfile</span><span class="p">(</span><span class="s1">&#39;.lock&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">... </span>    <span class="k">pass</span>  
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">LockFileTimeOutError</span>: <span class="n">Timed out while trying to acquire lock...</span>
@@ -921,7 +926,7 @@ finally have a static mtime, and they can expire.</p>
 <dl class="class">
 <dt id="fsfs.models.Entry">
 <em class="property">class </em><code class="descclassname">fsfs.models.</code><code class="descname">Entry</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a directory with metadata and tags.</p>
 <dl class="method">
 <dt id="fsfs.models.Entry.children">
@@ -957,7 +962,7 @@ the Entry’s data directories</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">OSError</span></code> – Raised when dest already exists or copy_tree fails.
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code> – Raised when dest already exists or copy_tree fails.
 Entry is left in original location, any files partially copied
 will be removed.</p>
 </td>
@@ -997,7 +1002,7 @@ just the data directory that marks this as an Entry</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest</strong> (<em>str</em>) – Destination path for new Entry</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">OSError</span></code> – Raised when dest already exists or move_tree fails.
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code> – Raised when dest already exists or move_tree fails.
 Entry is left in original location, any files partially copied
 will be removed.</td>
 </tr>
@@ -1207,7 +1212,7 @@ the “files” subdirectory. You can then get a handle to the file via
 <dl class="class">
 <dt id="fsfs.models.EntryData">
 <em class="property">class </em><code class="descclassname">fsfs.models.</code><code class="descname">EntryData</code><span class="sig-paren">(</span><em>parent</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interface to a directories metadata and tags.</p>
 <dl class="method">
 <dt id="fsfs.models.EntryData.delete">
@@ -1302,7 +1307,7 @@ the “files” subdirectory. You can then get a handle to the file via
 <dl class="class">
 <dt id="fsfs.policy.FsFsPolicy">
 <em class="property">class </em><code class="descclassname">fsfs.policy.</code><code class="descname">FsFsPolicy</code><span class="sig-paren">(</span><em>data_encoder=None</em>, <em>data_decoder=None</em>, <em>data_root=None</em>, <em>data_file=None</em>, <em>entry_factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.FsFsPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>fsfs uses a global policy to specify the behavior of Entry creation,
 data encoding/decoding, and Entry discovery. the default global policy is
 DefaultPolicy which sets the following policy attributes.</p>
@@ -1401,37 +1406,37 @@ use an instance of your custom FsFsPolicy.</p>
 <dl class="function">
 <dt id="fsfs.policy.JsonDecoder">
 <code class="descclassname">fsfs.policy.</code><code class="descname">JsonDecoder</code><span class="sig-paren">(</span><em>s</em>, <em>encoding=None</em>, <em>cls=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>object_pairs_hook=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.policy.JsonDecoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deserialize <code class="docutils literal"><span class="pre">s</span></code> (a <code class="docutils literal"><span class="pre">str</span></code> or <code class="docutils literal"><span class="pre">unicode</span></code> instance containing a JSON
+<dd><p>Deserialize <code class="docutils literal notranslate"><span class="pre">s</span></code> (a <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">unicode</span></code> instance containing a JSON
 document) to a Python object.</p>
-<p>If <code class="docutils literal"><span class="pre">s</span></code> is a <code class="docutils literal"><span class="pre">str</span></code> instance and is encoded with an ASCII based encoding
-other than utf-8 (e.g. latin-1) then an appropriate <code class="docutils literal"><span class="pre">encoding</span></code> name
+<p>If <code class="docutils literal notranslate"><span class="pre">s</span></code> is a <code class="docutils literal notranslate"><span class="pre">str</span></code> instance and is encoded with an ASCII based encoding
+other than utf-8 (e.g. latin-1) then an appropriate <code class="docutils literal notranslate"><span class="pre">encoding</span></code> name
 must be specified. Encodings that are not ASCII based (such as UCS-2)
-are not allowed and should be decoded to <code class="docutils literal"><span class="pre">unicode</span></code> first.</p>
-<p><code class="docutils literal"><span class="pre">object_hook</span></code> is an optional function that will be called with the
-result of any object literal decode (a <code class="docutils literal"><span class="pre">dict</span></code>). The return value of
-<code class="docutils literal"><span class="pre">object_hook</span></code> will be used instead of the <code class="docutils literal"><span class="pre">dict</span></code>. This feature
+are not allowed and should be decoded to <code class="docutils literal notranslate"><span class="pre">unicode</span></code> first.</p>
+<p><code class="docutils literal notranslate"><span class="pre">object_hook</span></code> is an optional function that will be called with the
+result of any object literal decode (a <code class="docutils literal notranslate"><span class="pre">dict</span></code>). The return value of
+<code class="docutils literal notranslate"><span class="pre">object_hook</span></code> will be used instead of the <code class="docutils literal notranslate"><span class="pre">dict</span></code>. This feature
 can be used to implement custom decoders (e.g. JSON-RPC class hinting).</p>
-<p><code class="docutils literal"><span class="pre">object_pairs_hook</span></code> is an optional function that will be called with the
+<p><code class="docutils literal notranslate"><span class="pre">object_pairs_hook</span></code> is an optional function that will be called with the
 result of any object literal decoded with an ordered list of pairs.  The
-return value of <code class="docutils literal"><span class="pre">object_pairs_hook</span></code> will be used instead of the <code class="docutils literal"><span class="pre">dict</span></code>.
+return value of <code class="docutils literal notranslate"><span class="pre">object_pairs_hook</span></code> will be used instead of the <code class="docutils literal notranslate"><span class="pre">dict</span></code>.
 This feature can be used to implement custom decoders that rely on the
 order that the key and value pairs are decoded (for example,
 collections.OrderedDict will remember the order of insertion). If
-<code class="docutils literal"><span class="pre">object_hook</span></code> is also defined, the <code class="docutils literal"><span class="pre">object_pairs_hook</span></code> takes priority.</p>
-<p><code class="docutils literal"><span class="pre">parse_float</span></code>, if specified, will be called with the string
+<code class="docutils literal notranslate"><span class="pre">object_hook</span></code> is also defined, the <code class="docutils literal notranslate"><span class="pre">object_pairs_hook</span></code> takes priority.</p>
+<p><code class="docutils literal notranslate"><span class="pre">parse_float</span></code>, if specified, will be called with the string
 of every JSON float to be decoded. By default this is equivalent to
 float(num_str). This can be used to use another datatype or parser
 for JSON floats (e.g. decimal.Decimal).</p>
-<p><code class="docutils literal"><span class="pre">parse_int</span></code>, if specified, will be called with the string
+<p><code class="docutils literal notranslate"><span class="pre">parse_int</span></code>, if specified, will be called with the string
 of every JSON int to be decoded. By default this is equivalent to
 int(num_str). This can be used to use another datatype or parser
 for JSON integers (e.g. float).</p>
-<p><code class="docutils literal"><span class="pre">parse_constant</span></code>, if specified, will be called with one of the
+<p><code class="docutils literal notranslate"><span class="pre">parse_constant</span></code>, if specified, will be called with one of the
 following strings: -Infinity, Infinity, NaN.
 This can be used to raise an exception if invalid JSON numbers
 are encountered.</p>
-<p>To use a custom <code class="docutils literal"><span class="pre">JSONDecoder</span></code> subclass, specify it with the <code class="docutils literal"><span class="pre">cls</span></code>
-kwarg; otherwise <code class="docutils literal"><span class="pre">JSONDecoder</span></code> is used.</p>
+<p>To use a custom <code class="docutils literal notranslate"><span class="pre">JSONDecoder</span></code> subclass, specify it with the <code class="docutils literal notranslate"><span class="pre">cls</span></code>
+kwarg; otherwise <code class="docutils literal notranslate"><span class="pre">JSONDecoder</span></code> is used.</p>
 </dd></dl>
 
 <dl class="function">
@@ -1454,13 +1459,13 @@ and produce the corresponding Python object.</p>
 <dl class="class">
 <dt id="fsfs.signal.Channel">
 <em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Manages and sends signals by string identifier. Supports fuzzy signal
-subscriptions using fnmatch with *. So you could connect to “new.*” to
+subscriptions using fnmatch with <em>. So you could connect to “new.</em>” to
 subscribe to all signals that start with “new.”.</p>
 <p class="rubric">Examples</p>
 <p>Basic subscription:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;HI&#39;</span>
 <span class="gp">...</span>
@@ -1470,7 +1475,7 @@ subscribe to all signals that start with “new.”.</p>
 </pre></div>
 </div>
 <p>Fuzzy subscription:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;foo.*&#39;</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">foo_subscriber</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;FOO&#39;</span>
@@ -1482,7 +1487,7 @@ subscribe to all signals that start with “new.”.</p>
 </pre></div>
 </div>
 <p>Use a Signal alias:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_signal</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_signal</span><span class="o">.</span><span class="n">route</span><span class="p">()</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">my_subscriber</span><span class="p">():</span>
@@ -1497,7 +1502,7 @@ subscribe to all signals that start with “new.”.</p>
 <code class="descname">chain</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.chain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chain a signals subscribers. The first subscriber will be passed
 args and kwargs. Then each successive subscriber will be passed the
-return value of the previous subscriber. Unlike <a class="reference internal" href="#fsfs.signal.send" title="fsfs.signal.send"><code class="xref py py-meth docutils literal"><span class="pre">send()</span></code></a> this
+return value of the previous subscriber. Unlike <a class="reference internal" href="#fsfs.signal.send" title="fsfs.signal.send"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send()</span></code></a> this
 returns one value.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1531,12 +1536,12 @@ returns one value.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Clear all signals’ subscribers:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Clear one signal’s subscribers:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1613,7 +1618,7 @@ and callable class instances at the moment.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">pass</span>
@@ -1651,9 +1656,9 @@ and callable class instances at the moment.</p>
 <dl class="method">
 <dt id="fsfs.signal.Channel.signal">
 <code class="descname">signal</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal"><span class="pre">Signal</span></code></a> alias that forwards all calls to this signal
-channel. Multiple calls to <a class="reference internal" href="#fsfs.signal.Channel.signal" title="fsfs.signal.Channel.signal"><code class="xref py py-meth docutils literal"><span class="pre">signal()</span></code></a> with the same identifier will
-return the same <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal"><span class="pre">Signal</span></code></a> instance.</p>
+<dd><p>Get a <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> alias that forwards all calls to this signal
+channel. Multiple calls to <a class="reference internal" href="#fsfs.signal.Channel.signal" title="fsfs.signal.Channel.signal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">signal()</span></code></a> with the same identifier will
+return the same <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1699,12 +1704,12 @@ return the same <a class="reference internal" href="#fsfs.signal.Signal" title="
 <dl class="class">
 <dt id="fsfs.signal.Signal">
 <em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Signal</code><span class="sig-paren">(</span><em>identifier</em>, <em>channel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Alias for a Signal identifier. Forwards all calls to a parent channel
 sending the aliases identifier with it. Users should not instance Signal
 themselves, instead they should get them from a channel using the
-<code class="xref py py-meth docutils literal"><span class="pre">signal()</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">signal()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span> 
 <span class="go">Signal(channel=..., identifier=&#39;my.signal&#39;)</span>
 </pre></div>
@@ -1716,7 +1721,7 @@ themselves, instead they should get them from a channel using the
 
 <dl class="method">
 <dt id="fsfs.signal.Signal.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.clear" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.clear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1871,15 +1876,17 @@ themselves, instead they should get them from a channel using the
 <dl class="class">
 <dt id="fsfs.types.File">
 <em class="property">class </em><code class="descclassname">fsfs.types.</code><code class="descname">File</code><span class="sig-paren">(</span><em>name</em>, <em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.types.File" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A thin wrapper around the standard python file object. Allows users to
 setup a file-like object without actually opening it.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">doctest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span> 
 </pre></div>
 </div>
 <p>open, read, and close a File.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>  
 <span class="go">&lt;fsfs.types.File object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">opened</span>
@@ -1890,14 +1897,14 @@ setup a file-like object without actually opening it.</p>
 </pre></div>
 </div>
 <p>use File as a context manager.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">f</span><span class="o">.</span><span class="n">open</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;hello&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">closed</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span><span class="p">;</span> <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span><span class="p">;</span> <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;tmpfile&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="attribute">
@@ -1912,7 +1919,7 @@ setup a file-like object without actually opening it.</p>
 <dd><p>Open acts like the builtin open function, it works as a regular
 function and as a context manager. The name and mode passed to the File
 constructor are used as the arguments for the builtin open. The
-resulting file object is stored in the <code class="xref py py-attr docutils literal"><span class="pre">File._file</span></code></p>
+resulting file object is stored in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">File._file</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1960,7 +1967,8 @@ resulting file object is stored in the <code class="xref py py-attr docutils lit
 <dd><p>Copy operations can be optimized by setting the buffer size for read
 operations and that’s just what copy_file does. copy_file has a default
 buffer size of 256 KB, which increases the speed of file copying in most
-cases. For smaller files the buffer size is reduced to the file size or a minimum of MINIMUM_BUFFER (1 KB).</p>
+cases. For smaller files the buffer size is reduced to the file size or a
+minimum of MINIMUM_BUFFER (1 KB).</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference external" href="http://blogs.blumetech.com/blumetechs-tech-blog/2011/05/faster-python-file-copy.html">http://blogs.blumetech.com/blumetechs-tech-blog/2011/05/faster-python-file-copy.html</a>
@@ -1991,7 +1999,7 @@ cases. For smaller files the buffer size is reduced to the file size or a minimu
 <dt id="fsfs.util.move_tree">
 <code class="descclassname">fsfs.util.</code><code class="descname">move_tree</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>force=False</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.util.move_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move a directory from one location to another. Same as
-<a class="reference internal" href="#fsfs.util.copy_tree" title="fsfs.util.copy_tree"><code class="xref py py-func docutils literal"><span class="pre">copy_tree()</span></code></a> followed by shutil.rmtree. Replaces files that already
+<a class="reference internal" href="#fsfs.util.copy_tree" title="fsfs.util.copy_tree"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy_tree()</span></code></a> followed by shutil.rmtree. Replaces files that already
 exist in the destination directory by default. If overwrite is True the
 entire destination directory will be overwritten, none of the original
 files in destination will remain.</p>
@@ -2030,7 +2038,7 @@ by a callable.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">function return value or None</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">Nothing...ever</span></code></p>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Nothing...ever</span></code></p>
 </td>
 </tr>
 </tbody>
@@ -2044,7 +2052,7 @@ by a callable.</p>
 items are yielded one by one. This allows generators to be recursive
 without requiring the yield from syntax of Python 3.3+.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@regenerator</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@regenerator</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">count_down</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="k">return</span>
@@ -2064,7 +2072,7 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="class">
 <dt id="fsfs._search.Search">
 <em class="property">class </em><code class="descclassname">fsfs._search.</code><code class="descname">Search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em>, <em>predicates=None</em>, <em>selector=None</em>, <em>sep=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fsfs._search.Search.clone">
 <code class="descname">clone</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.clone" title="Permalink to this definition">¶</a></dt>
@@ -2134,7 +2142,7 @@ direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal notranslate"><span class="pre">models.Entry</span></code> matches</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
@@ -2215,7 +2223,7 @@ keyword argument <cite>sep</cite>.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal"><span class="pre">models.Entry</span></code> matches</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">yielding <code class="xref py py-class docutils literal notranslate"><span class="pre">models.Entry</span></code> matches</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>

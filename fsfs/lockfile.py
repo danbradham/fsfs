@@ -204,8 +204,8 @@ class LockFile(object):
         '''Return the total seconds since the specified file was modified'''
 
         return (
-            datetime.now()
-          - datetime.fromtimestamp(os.path.getmtime(self.path))
+            datetime.now() -
+            datetime.fromtimestamp(os.path.getmtime(self.path))
         ).total_seconds()
 
     def _acquire_expired_lock(self):

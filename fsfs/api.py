@@ -104,7 +104,6 @@ def set_data_decoder(data_decoder):
     The default policy uses `yaml.safe_load`
     '''
 
-
     get_policy().set_data_decoder(data_decoder)
 
 
@@ -278,7 +277,7 @@ def read_blob(root, key):
     '''
 
     entry = get_entry(root)
-    return entry.read_blob(*keys)
+    return entry.read_blob(key)
 
 
 def write_blob(root, key, data):

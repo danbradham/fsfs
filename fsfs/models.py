@@ -80,8 +80,8 @@ def relink_uuid(entry):
         signals.EntryRelinked.send(entry, old_root, new_root)
     else:
         exc = EntryNotFoundError(
-            'Could not locate Entry matching uuid: ' + data.uuid
-            + '    Entry: ' + repr(entry)
+            'Could not locate Entry matching uuid: ' + data.uuid +
+            '    Entry: ' + repr(entry)
         )
         signals.EntryMissing.send(entry, exc)
         raise exc
@@ -336,8 +336,8 @@ class EntryData(object):
 
     def read_blob(self, key):
         data = self._read()
-        data.setdefault('blobs', {})
-        blob_path = util.unipath(self.blobs_path, data['blobs'][key])
+        blobs = data.setdefault('blobs', {})
+        blob_path = util.unipath(self.blobs_path, blobs[key])
         return types.File(blob_path, mode='rb')
 
     def write_blob(self, key, data):
@@ -353,8 +353,8 @@ class EntryData(object):
 
     def read_file(self, key):
         data = self._read()
-        data.setdefault('files', {})
-        file_path = util.unipath(self.files_path, data['files'][key])
+        files = data.setdefault('files', {})
+        file_path = util.unipath(self.files_path, files[key])
         return types.File(file_path, mode='rb')
 
     def write_file(self, key, file):
@@ -631,7 +631,7 @@ class Entry(object):
         # Update uuids and send EntryCreated signals
         old_path = self.path
         new_path = dest
-        self._set_path(dest) # Update this Entry's path
+        self._set_path(dest)  # Update this Entry's path
         signals.EntryMoved.send(self, old_path, new_path)
         for child in self.children():
             new_child_path = child.path
@@ -647,10 +647,13 @@ class Entry(object):
         '''
 
         self.data.delete()
-        for child in reversed(self.children):
-            child.delete()
 
         if remove_root:
+            # Delete children depth-first making sure we send all
+            # appropriate signals along the way
+            for child in list(self.children())[::-1]:
+                child.delete(remove_root=remove_root)
+
             try:
                 shutil.rmtree(self.path)
             except OSError as e:

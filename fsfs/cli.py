@@ -5,7 +5,7 @@ import sys
 import ast
 import click
 import re
-from click import group, argument, option
+from click import group, argument, option, UsageError
 from fstrings import f
 import fsfs
 
@@ -127,6 +127,7 @@ def one(root, direction, name, tags):
         print('No entries found')
         sys.exit(1)
 
+
 @cli.command()
 @option('--root', '-r', default=os.getcwd(), help='Directory to tag')
 @argument('tags', nargs=-1, required=True)
@@ -175,7 +176,7 @@ def write(root, data, delkeys):
         entry.write(**data)
     except Exception as e:
         print('Failed to write data: ')
-        print(dict(pairs))
+        print(dict(data))
         print(e.message)
     else:
         print(f('Wrote data to {root}'))

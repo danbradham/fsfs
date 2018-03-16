@@ -1,3 +1,11 @@
+.. image:: https://img.shields.io/github/license/danbradham/fsfs.svg?style=flat-square
+    :target: https://github.com/danbradham/fsfs/blob/master/LICENSE
+    :alt: License
+
+.. image:: https://img.shields.io/travis/danbradham/fsfs.svg?style=flat-square
+    :target: https://travis-ci.org/danbradham/fsfs
+    :alt: Travis
+
 fsfs
 ====
 Read from and write data to folders on your file system.

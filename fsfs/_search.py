@@ -416,4 +416,3 @@ def one_uuid(*args, **kwargs):
         return next(matches)
     except StopIteration:
         return
-

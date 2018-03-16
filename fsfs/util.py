@@ -41,7 +41,8 @@ def copy_file(src, dest, buffer_size=DEFAULT_BUFFER):
     '''Copy operations can be optimized by setting the buffer size for read
     operations and that's just what copy_file does. copy_file has a default
     buffer size of 256 KB, which increases the speed of file copying in most
-    cases. For smaller files the buffer size is reduced to the file size or a minimum of MINIMUM_BUFFER (1 KB).
+    cases. For smaller files the buffer size is reduced to the file size or a
+    minimum of MINIMUM_BUFFER (1 KB).
 
     See also:
         http://blogs.blumetech.com/blumetechs-tech-blog/2011/05/faster-python-file-copy.html
