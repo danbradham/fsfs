@@ -7,7 +7,8 @@ from fsfs import api, models, signals
 
 
 
-class RegistrationError(Exception): pass
+class RegistrationError(Exception):
+    pass
 
 
 class SimpleEntryFactory(object):
@@ -113,7 +114,6 @@ class EntryFactory(object):
         self._mtimes = {}
         self._cache_proxies = {}
 
-
         class EntryProxy(object):
             '''This proxy is what actually gets returned by the factory. The
             proxy looks up the Entry instance stored in the _cache and
@@ -127,12 +127,21 @@ class EntryFactory(object):
                 self._path = path
                 self.factory = factory
 
-            def obj(self):
-                self.factory._update_cache(self._path, self)
-                return self.factory._cache[self._path]
+            def __repr__(self):
+                return self.obj().__repr__()
+
+            def __str__(self):
+                return self.obj().__str__()
+
+            def __dir__(self):
+                return dir(self.obj())
 
             def __getattr__(self, attr):
                 return getattr(self.obj(), attr)
+
+            def obj(self):
+                self.factory._update_cache(self._path, self)
+                return self.factory._cache[self._path]
 
         self.EntryProxy = EntryProxy
 
@@ -236,7 +245,6 @@ class EntryFactory(object):
         if not os.path.isdir(path):
             return False
 
-        entry = self._cache[path]
         return os.path.getmtime(path) != self._mtimes.get(path, None)
 
     def _update_cache(self, path, proxy=None):

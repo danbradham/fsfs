@@ -16,8 +16,6 @@ __all__ = [
 ]
 
 import os
-import inspect
-from functools import wraps
 from scandir import walk, scandir
 from fsfs import util, api
 from fsfs._compat import izip
@@ -93,12 +91,17 @@ class Search(object):
         self._generator.close()
 
     def one(self):
+        '''Returns the first object yielded'''
+
         try:
             return self.next()
         except StopIteration:
             return None
 
     def clone(self, **kwargs):
+        '''Clone this Search object. Pass kwargs to override attributes on
+        the Search object.'''
+
         kwargs.setdefault('root', self.root)
         kwargs.setdefault('direction', self.direction)
         kwargs.setdefault('depth', self.depth)
@@ -109,15 +112,22 @@ class Search(object):
         return Search(**kwargs)
 
     def tags(self, *tags):
-        [api.validate_tag(tag) for tag in tags]
+        '''Retruns a new Search object yielding entities that match tags'''
+
+        for tag in tags:
+            api.validate_tag(tag)
+
         predicate = lambda e: all([tag in e.tags for tag in tags])
         return self.clone(predicates=self.predicates + [predicate])
 
     def uuid(self, uuid):
+        '''Returns a new Search object yielding entities that match uuid'''
+
         predicate = lambda e: uuid == e.uuid
         return self.clone(predicates=self.predicates + [predicate])
 
     def name(self, name, sep='/'):
+        '''Returns a new Search object yielding objects that match name'''
 
         if sep in name:
             name = name.strip(sep)
@@ -127,6 +137,11 @@ class Search(object):
         return self.clone(predicates=self.predicates + [predicate])
 
     def filter(self, predicate):
+        '''Returns a new Search object with a new filter predicate.
+
+        A predicate is a function that accepts an entity and returns True or
+        False'''
+
         return self.clone(predicates=self.predicates + [predicate])
 
 
@@ -205,7 +220,6 @@ def _search_tree_dn(root, depth=10, skip_root=False, level=0, visited=None):
         raise StopIteration
 
     entries = scandir(root)
-    only_data = True
 
     while True:
         try:
@@ -221,7 +235,6 @@ def _search_tree_dn(root, depth=10, skip_root=False, level=0, visited=None):
                     visited.append(api.get_entry(root))
                     yield visited
             else:
-                only_data = False
                 yield _search_tree_dn(
                     root + '/' + entry.name,
                     depth,
@@ -270,7 +283,7 @@ def search_tree(root, direction=DOWN, depth=10, skip_root=False):
 
 
 def select_from_tree(root, selector, sep='/', direction=DOWN,
-                      depth=10, skip_root=False):
+                     depth=10, skip_root=False):
     '''This method is used under the hood by the Search class, you shouldn't
     need to call it manually.
 
@@ -319,9 +332,9 @@ def select_from_tree(root, selector, sep='/', direction=DOWN,
                 for i, entry in enumerate(branch[b_i:]):
                     if part in entry.name:
                         b_i += i + 1
-                        break # Match Found
+                        break  # Match Found
                 else:
-                    break # Match Not Found
+                    break  # Match Not Found
             else:
                 # We made it through the for loop without encountering a break
                 # All parts were found

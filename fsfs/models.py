@@ -7,10 +7,7 @@ __all__ = [
 import os
 import shutil
 import errno
-import yaml
 import uuid
-from collections import defaultdict
-from functools import wraps
 from scandir import scandir
 from fsfs import api, util, lockfile, types, signals, _search
 
@@ -248,8 +245,8 @@ class EntryData(object):
         with self._lock:
             mtime = os.path.getmtime(self.file)
             needs_update = (
-                self._data is None
-                or self._data_mtime < mtime
+                self._data is None or
+                self._data_mtime < mtime
             )
 
             if needs_update:
@@ -340,7 +337,6 @@ class EntryData(object):
     def read_blob(self, key):
         data = self._read()
         data.setdefault('blobs', {})
-        blobs = data['blobs']
         blob_path = util.unipath(self.blobs_path, data['blobs'][key])
         return types.File(blob_path, mode='rb')
 
@@ -358,7 +354,6 @@ class EntryData(object):
     def read_file(self, key):
         data = self._read()
         data.setdefault('files', {})
-        files = data['files']
         file_path = util.unipath(self.files_path, data['files'][key])
         return types.File(file_path, mode='rb')
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
-from invoke import task, Failure
-from os.path import join, dirname
+from invoke import task, Failure, run
+from os.path import join, dirname, isdir
+import fsfs
 import shutil
 
 
@@ -37,7 +38,7 @@ def increment(major=False, minor=False, patch=True):
     '''Increment package version'''
 
     print('Incrementing package version by {}.{}.{}'.format(
-        int(major), int(minor), int(version)
+        int(major), int(minor), int(patch)
     ))
     import fsfs
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
@@ -61,7 +62,7 @@ def decrement(major=False, minor=False, patch=True):
     '''Decrement package version...'''
 
     print('Decrementing package version by {}.{}.{}'.format(
-        int(major), int(minor), int(version)
+        int(major), int(minor), int(patch)
     ))
     import fsfs
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
@@ -87,9 +88,9 @@ def build_docs(ctx):
     docs = join(dirname(__file__), 'docs')
 
     print('Removing old docs...')
-    if os.path.isdir(join(docs, 'html')):
+    if isdir(join(docs, 'html')):
         shutil.rmtree(join(docs, 'html'))
-    if os.path.isdir(join(docs, 'doctrees')):
+    if isdir(join(docs, 'doctrees')):
         shutil.rmtree(join(docs, 'doctrees'))
 
     print('Building new docs...')
@@ -167,4 +168,3 @@ def publish(ctx, tag=None, remote=None, branch=None, where=None):
     tag(ctx, tag)
     push(ctx, remote, branch)
     upload(ctx, where)
-
