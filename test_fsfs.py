@@ -7,7 +7,7 @@ import shutil
 import glob
 import time
 from random import choice, randint, sample
-from nose.tools import assert_raises, with_setup, make_decorator
+from nose.tools import assert_raises, with_setup, make_decorator, raises
 from functools import partial, wraps
 from tempfile import mkdtemp
 from fstrings import f
@@ -157,7 +157,7 @@ class ProjectFaker():
 
 @provide_tempdir
 def test_tag(tempdir):
-    '''tag and untag'''
+    '''Tag and untag'''
 
     fake = ProjectFaker(root=tempdir)
     asset_path = fake.asset_path()
@@ -179,7 +179,7 @@ def test_tag(tempdir):
 
 @provide_tempdir
 def test_search_down(tempdir):
-    '''search down'''
+    '''Search down'''
 
     fake = ProjectFaker(root=tempdir)
     project = fake.project()
@@ -233,7 +233,7 @@ def test_search_down(tempdir):
 
 @provide_tempdir
 def test_search_up(tempdir):
-    '''search up'''
+    '''Search up'''
 
     fake = ProjectFaker(root=tempdir)
     project = fake.project()
@@ -261,6 +261,53 @@ def test_search_up(tempdir):
 
     no_result = fsfs.search(shot_path, fsfs.UP).tags('unused').one()
     assert no_result is None
+
+
+@raises(OSError)
+@provide_tempdir
+def test_read_before_write_or_tag(tempdir):
+    '''Read before write or tag raises OSError'''
+
+    path = os.path.join(tempdir, 'thing')
+    fsfs.read(path)
+
+
+@raises(OSError)
+@provide_tempdir
+def test_entry_read_before_write_or_tag(tempdir):
+    '''Entry read before write or tag raises OSError'''
+
+    path = os.path.join(tempdir, 'thing')
+    entry = fsfs.get_entry(path)
+    entry.read()
+
+
+@provide_tempdir
+def test_read_after_write_or_tag(tempdir):
+    '''Read after write or tag'''
+
+    path = os.path.join(tempdir, 'thing1')
+    fsfs.write(path, key='value')
+    assert fsfs.read(path) == {'key': 'value'}
+
+    path = os.path.join(tempdir, 'thing2')
+    fsfs.tag(path, 'thingy')
+    assert fsfs.read(path) == {}
+
+
+@provide_tempdir
+def test_entry_read_after_write_or_tag(tempdir):
+    '''Entry read after write or tag'''
+
+    path = os.path.join(tempdir, 'thing1')
+    entry = fsfs.get_entry(path)
+    entry.write(key='value')
+    assert entry.read() == {'key': 'value'}
+
+    path = os.path.join(tempdir, 'thing2')
+    entry = fsfs.get_entry(path)
+    entry.tag('thingy')
+    assert entry.read() == {}
 
 
 @provide_tempdir
@@ -300,8 +347,6 @@ def test_read_write(tempdir):
 
     # Now ids are different, because our cached mtime is < the mtime on disk
     # causing read to return a new dict
-    print(id(fsfs.read(project_path)))
-    print(id(project_data))
     assert fsfs.read(project_path) is not project_data
 
 
