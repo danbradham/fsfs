@@ -9,9 +9,9 @@
             "os_name": "nt",
             "platform_machine": "AMD64",
             "platform_python_implementation": "CPython",
-            "platform_release": "7",
+            "platform_release": "10",
             "platform_system": "Windows",
-            "platform_version": "6.1.7601",
+            "platform_version": "10.0.16299",
             "python_full_version": "2.7.14",
             "python_version": "2.7",
             "sys_platform": "win32"
@@ -214,10 +214,10 @@
         },
         "pockets": {
             "hashes": [
-                "sha256:cc31deea2119ba642efb86a0fa4115658b137a107dd5a9e033d174f99e3db994",
-                "sha256:e4bfe67d24eff9f010b78b0e66028ac071ed2210cf24bd923ba6ff7a6f85b40b"
+                "sha256:2f0828f9373a4beeb12a93ce4fad0cb5665a61b6506a836a89b5adcd5108680a",
+                "sha256:40ac0936cde62b0e3ba02946ad4407648c95e4e3edae3659b21f6c9f7a2c9463"
             ],
-            "version": "==0.6.1"
+            "version": "==0.6.2"
         },
         "pygments": {
             "hashes": [

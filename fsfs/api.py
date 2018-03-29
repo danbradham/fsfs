@@ -32,6 +32,7 @@ __all__ = [
     'write_blob',
     'read_file',
     'write_file',
+    'delete',
     'search',
 ]
 
@@ -339,7 +340,7 @@ def delete(root, remove_root=False):
     '''
 
     entry = get_entry(root)
-    entry.delete(root, remove_root)
+    entry.delete(remove_root)
 
 
 def get_tags(root):

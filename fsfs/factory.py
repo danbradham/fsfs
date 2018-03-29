@@ -122,6 +122,11 @@ class EntryFactory(object):
             forward attribute lookup to an Entry type that matches it's tags.
             '''
 
+
+            @property
+            def __class__(self):
+                return self.factory.Entry
+
             def __init__(self, path, factory=self):
                 self._path = path
                 self.factory = factory

@@ -181,6 +181,9 @@ class EntryData(object):
     def _make_uuid_path(self, uuid):
         return util.unipath(self.path, 'uuid_' + uuid)
 
+    def _has_uuid(self):
+        return self.uuid_file and os.path.isfile(self.uuid_file)
+
     def _get_uuid(self, path):
         for entry in scandir(path):
             if entry.name.startswith('uuid_'):
@@ -224,7 +227,7 @@ class EntryData(object):
         self._new_uuid()
 
     def _init(self):
-        if self.uuid and not os.path.isfile(self.uuid_file):
+        if self._has_uuid():
             relink_uuid(self.parent)
 
         is_new = False
@@ -240,7 +243,10 @@ class EntryData(object):
     def _read(self):
         '''Ensure data directory is initialized, then read or update cache'''
 
-        self._init()
+        if self.parent.exists:
+            self._init()
+        else:
+            raise OSError('Entry does not exist: %s' % self.parent)
 
         with self._lock:
             mtime = os.path.getmtime(self.file)
