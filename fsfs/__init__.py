@@ -5,7 +5,7 @@ __title__ = 'fsfs'
 __author__ = 'Dan Bradham'
 __email__ = 'danielbradham@gmail.com'
 __url__ = 'http://github.com/fsfs.git'
-__version__ = '0.1.5'
+__version__ = '0.1.8'
 __license__ = 'MIT'
 __description__ = 'Tag filesystem locations and store metadata'
 

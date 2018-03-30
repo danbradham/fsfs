@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.1.5 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.1.8 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.5 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.8 documentation" href="index.html"/>
         <link rel="prev" title="Guide" href="guide.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.8
               </div>
             
           
@@ -539,6 +539,27 @@ return all key, value pairs.</li>
 <li><strong>root</strong> (<em>str</em>) – Directory to write to</li>
 <li><strong>key</strong> (<em>str</em>) – Key used to store file</li>
 <li><strong>file</strong> (<em>str</em>) – Full path to a file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.delete">
+<code class="descclassname">fsfs.api.</code><code class="descname">delete</code><span class="sig-paren">(</span><em>root</em>, <em>remove_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a directory’s metadata and tags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<em>str</em>) – Directory to remove metadata and tags from</li>
+<li><strong>remove_root</strong> (<em>bool</em>) – Delete the directory as well. Defaults to False.</li>
 </ul>
 </td>
 </tr>
@@ -2076,7 +2097,9 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="method">
 <dt id="fsfs._search.Search.clone">
 <code class="descname">clone</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.clone" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Clone this Search object. Pass kwargs to override attributes on
+the Search object.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs._search.Search.close">
@@ -2086,12 +2109,16 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="method">
 <dt id="fsfs._search.Search.filter">
 <code class="descname">filter</code><span class="sig-paren">(</span><em>predicate</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a new Search object with a new filter predicate.</p>
+<p>A predicate is a function that accepts an entity and returns True or
+False</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs._search.Search.name">
 <code class="descname">name</code><span class="sig-paren">(</span><em>name</em>, <em>sep='/'</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a new Search object yielding objects that match name</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs._search.Search.next">
@@ -2101,7 +2128,8 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="method">
 <dt id="fsfs._search.Search.one">
 <code class="descname">one</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.one" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the first object yielded</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs._search.Search.send">
@@ -2111,7 +2139,8 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="method">
 <dt id="fsfs._search.Search.tags">
 <code class="descname">tags</code><span class="sig-paren">(</span><em>*tags</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.tags" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retruns a new Search object yielding entities that match tags</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="fsfs._search.Search.throw">
@@ -2121,7 +2150,8 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <dl class="method">
 <dt id="fsfs._search.Search.uuid">
 <code class="descname">uuid</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search.uuid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a new Search object yielding entities that match uuid</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -2278,7 +2308,7 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.5',
+            VERSION:'0.1.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

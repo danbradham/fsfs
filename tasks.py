@@ -34,21 +34,19 @@ def get_tags():
 
 
 @task
-def increment(major=False, minor=False, patch=True):
+def increment(ctx, major=False, minor=False, patch=True):
     '''Increment package version'''
 
     import fsfs
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
 
+    version = '{}.{}.{}'
     if major:
-        major = str(int(cmajor) + 1)
-        version = major + '.0.0'
+        version = version.format(int(cmajor) + 1, 0, 0)
     elif minor:
-        minor = str(int(cminor) + 1)
-        version = cmajor + '.' + minor + '.0'
+        version = version.format(cmajor, int(cminor) + 1, 0)
     else:
-        patch = str(int(cpatch) + 1)
-        version = cmajor + '.' + cminor + '.' + patch
+        version = version.format(cmajor, cminor, int(cpatch) + 1)
 
     print('Incrementing package version by {}'.format(version))
     modify_about(__version__=version)
@@ -56,20 +54,18 @@ def increment(major=False, minor=False, patch=True):
 
 
 @task
-def decrement(major=False, minor=False, patch=True):
+def decrement(ctx, major=False, minor=False, patch=True):
     '''Decrement package version...'''
 
     cmajor, cminor, cpatch = fsfs.__version__.split('.')
 
+    version = '{}.{}.{}'
     if major:
-        major = str(int(cmajor) - 1)
-        version = major + '.0.0'
+        version = version.format(int(cmajor) - 1, 0, 0)
     elif minor:
-        minor = str(int(cminor) - 1)
-        version = cmajor + '.' + minor + '.0'
+        version = version.format(cmajor, int(cminor) - 1, 0)
     else:
-        patch = str(int(cpatch) - 1)
-        version = cmajor + '.' + cminor + '.' + patch
+        version = version.format(cmajor, cminor, int(cpatch) - 1)
 
     print('Decrementing package version by {}'.format(version))
     modify_about(__version__=version)
