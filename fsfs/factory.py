@@ -125,6 +125,7 @@ class EntryFactory(object):
 
             @property
             def __class__(self):
+                # force EntryProxy to work with isinstance(proxy, Entry)
                 return self.factory.Entry
 
             def __init__(self, path, factory=self):
