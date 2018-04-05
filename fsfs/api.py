@@ -40,10 +40,7 @@ import os
 import string
 from scandir import scandir
 from fsfs import util
-
-
-DOWN = 0
-UP = 1
+from fsfs.constants import DOWN, UP
 
 
 def get_policy():

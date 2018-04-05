@@ -20,10 +20,13 @@ from scandir import walk, scandir
 import errno
 from fsfs import util, api
 from fsfs._compat import izip
+from fsfs.constants import (
+    DOWN,
+    UP,
+    DEFAULT_SEARCH_DN_DEPTH,
+    DEFAULT_SEARCH_UP_DEPTH
+)
 
-
-DOWN = 0
-UP = 1
 IGNORE = (
     errno.EACCES,
     errno.ENOENT,
@@ -162,10 +165,8 @@ def safe_scandir(root):
 
 
 @util.regenerator
-def _search_dn(root, depth=2, skip_root=False, level=0, at_root=True):
-    '''Walk down a hierarchy yielding Entry objects. Reset the level each
-    time we find an Entry.
-    '''
+def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
+               level=0, at_root=True):
 
     if os.path.isdir(root + '/' + api.get_data_root()):
         level = 0
@@ -188,8 +189,7 @@ def _search_dn(root, depth=2, skip_root=False, level=0, at_root=True):
             )
 
 
-def _search_up(root, depth=10, skip_root=False):
-    '''Walk up a hierarchy yielding Entry objects.'''
+def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
 
     level = -1
     next_root = root
@@ -229,18 +229,18 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
 
     root = util.unipath(root)
     if direction == DOWN:
-        depth = depth or 2
+        depth = depth or DEFAULT_SEARCH_DN_DEPTH
         return _search_dn(root, depth, skip_root)
     elif direction == UP:
-        depth = depth or 10
+        depth = depth or DEFAULT_SEARCH_UP_DEPTH
         return _search_up(root, depth, skip_root)
     else:
         raise RuntimeError('Invalid direction: ' + str(direction))
 
 
 @util.regenerator
-def _search_tree_dn(root, depth=2, skip_root=False, level=0, at_root=True,
-                    visited=None):
+def _search_tree_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
+                    level=0, at_root=True, visited=None):
 
     if visited is None:
         visited = []
@@ -265,7 +265,7 @@ def _search_tree_dn(root, depth=2, skip_root=False, level=0, at_root=True,
             )
 
 
-def _search_tree_up(root, depth=10, skip_root=False):
+def _search_tree_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
 
     visited = []
 
@@ -296,10 +296,10 @@ def search_tree(root, direction=DOWN, depth=None, skip_root=False):
     '''Walks up or down a tree yielding lists containing all Entries '''
 
     if direction == DOWN:
-        depth = depth or 2
+        depth = depth or DEFAULT_SEARCH_DN_DEPTH
         return _search_tree_dn(util.unipath(root), depth, skip_root)
     elif direction == UP:
-        depth = depth or 10
+        depth = depth or DEFAULT_SEARCH_UP_DEPTH
         return _search_tree_up(util.unipath(root), depth, skip_root)
     else:
         raise RuntimeError('Invalid direction: ' + str(direction))
