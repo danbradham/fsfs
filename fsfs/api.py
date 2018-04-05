@@ -37,10 +37,8 @@ __all__ = [
 ]
 
 import os
-import json
 import string
-import errno
-from scandir import walk, scandir
+from scandir import scandir
 from fsfs import util
 
 
@@ -390,7 +388,7 @@ def untag(root, *tags):
     entry.untag(*tags)
 
 
-def search(root, direction=DOWN, depth=10, skip_root=False):
+def search(root, direction=DOWN, depth=None, skip_root=False):
     '''Returns a Search object that yields :class:`models.Entry` objects. The
     Search generator supports advanced query functionality similar to the
     Query objects found in many SQL libraries.
