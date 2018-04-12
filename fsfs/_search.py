@@ -168,7 +168,7 @@ def safe_scandir(root):
 
     while True:
         try:
-            yield gen.next()
+            yield next(gen)
         except OSError as e:
             if e.errno not in IGNORE:
                 raise
