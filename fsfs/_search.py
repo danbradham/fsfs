@@ -31,7 +31,8 @@ IGNORE = (
     errno.EACCES,
     errno.ENOENT,
     errno.EIO,
-    59  # WinError network access
+    errno.EPERM,
+    59,  # WinError network access
 )
 
 
@@ -156,12 +157,21 @@ class Search(object):
 
 
 def safe_scandir(root):
+    '''Silences permissions errors raised by scandir generator'''
+
     try:
-        return scandir(root)
+        gen = scandir(root)
     except OSError as e:
         if e.errno not in IGNORE:
             raise
-        return []
+        return
+
+    while True:
+        try:
+            yield gen.next()
+        except OSError as e:
+            if e.errno not in IGNORE:
+                raise
 
 
 @util.regenerator
@@ -179,6 +189,7 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
         raise StopIteration
 
     for dir_entry in safe_scandir(root):
+
         if dir_entry.is_dir() and dir_entry.name != api.get_data_root():
             yield _search_dn(
                 dir_entry.path,
@@ -254,6 +265,7 @@ def _search_tree_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
         raise StopIteration
 
     for dir_entry in safe_scandir(root):
+
         if dir_entry.is_dir() and dir_entry.name != api.get_data_root():
             yield _search_tree_dn(
                 dir_entry.path,
