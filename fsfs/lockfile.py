@@ -258,7 +258,7 @@ class LockFile(object):
                     'Timed out while trying to acquire lock...'
                 )
 
-            if self.expired:
+            if self.locked and self.expired:
                 self._acquire_expired_lock()
                 return
 
