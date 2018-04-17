@@ -165,6 +165,10 @@ def safe_scandir(root):
         if e.errno not in IGNORE:
             raise
         return
+    except TypeError as e:
+        # Mac OS allows users to create horrifying path names
+        if "os.scandir() doesn't support bytes path on Windows" in str(e):
+            return
 
     while True:
         try:
