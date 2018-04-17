@@ -245,22 +245,25 @@ def send(identifier, *args, **kwargs):
 
 
 class Channel(object):
-    '''A Channel which users can use to send messages to connected receivers.
+    '''A Channel used to send messages to connected receivers.
 
     In literal terms, a Channel is a registry of functions that get called
-    in the order they were connected to a Channel instance. Typically users
-    do not create Channel instances manually, they use the :func:`channel` to
-    create Channels in the active Band or use :meth:`Band.channel` to
-    explicitly create a Channel in a Band.
+    in the order they were connected to a Channel instance. Typically, users
+    do not create Channel instances manually, they use :func:`channel` factory
+    function to create Channels in the active Band or use :meth:`Band.channel`
+    to explicitly create a Channel in a Band.
 
     A Channel can be unbound (anonymous) or bound to an object. When messages
     are sent through an unbound Channel, they are broadcast to unbound and
     bound receivers for the Channel's identifier. When sent through a bound
-    Channel, messages are sent only to the bound Channel's receivers and any
-    receivers connected to the unbound Channel with the same identifier.
+    Channel, messages are sent to the bound Channel's receivers and receivers
+    connected to the unbound Channel with the same identifier.
 
     Channel objects are also descriptors. When used as a class attribute, the
-    Channel will become bound upon first access.
+    Channel will be bound when accessed from an instance. This is similar to
+    the way methods work, however, when accessing methods, you get a new
+    bound Method instance every time, when accessing channels, you will always
+    get the same bound Channel instance.
     '''
 
     def __init__(self, identifier, parent=None, band=None):

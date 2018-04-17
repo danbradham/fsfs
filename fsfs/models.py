@@ -109,7 +109,7 @@ class EntryData(object):
     def _set_path(self, path, uuid=None, uuid_file=None):
         self.path = path
         self.blobs_path = util.unipath(self.path, 'blobs')
-        self.files_path = util.unipath(self.path, 'files_path')
+        self.files_path = util.unipath(self.path, 'files')
         self.file = util.unipath(self.path, api.get_data_file())
 
         if not uuid or not uuid_file:
