@@ -14,6 +14,7 @@ sphinx-rtd-theme = "*"
 sphinxcontrib-napoleon = "*"
 nose = "*"
 invoke = "*"
+bands = "*"
 
 
 [packages]
@@ -26,3 +27,4 @@ scrim = "*"
 termcolor = "*"
 colorama = "*"
 six = "*"
+bands = "*"
