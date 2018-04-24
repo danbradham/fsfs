@@ -9,7 +9,8 @@ import shutil
 import errno
 import uuid
 from scandir import scandir
-from fsfs import api, util, lockfile, types, signals, _search
+from fsfs import api, util, lockfile, types, _search
+from fsfs.channels import band
 
 
 class EntryNotFoundError(Exception): pass
@@ -45,7 +46,7 @@ def relink_uuid(entry):
         exc = EntryNotFoundError(
             'Entry data directory no longer exists: ' + data.path
         )
-        signals.EntryMissing.send(entry, exc)
+        entry.missing.send(entry, exc)
         raise exc
 
     match = None
@@ -60,7 +61,7 @@ def relink_uuid(entry):
             exc = EntryNotFoundError(
                 'File system branch containing Entry no longer exists...'
             )
-            signals.EntryMissing.send(entry, exc)
+            entry.missing.send(entry, exc)
             raise exc
 
     match = _search.one_uuid(root, data.uuid, depth=level + 1)
@@ -77,18 +78,18 @@ def relink_uuid(entry):
         old_root = entry.path
         new_root, new_data_root, new_uuid_file = match
         entry._set_path(new_root, data.uuid, new_uuid_file)
-        signals.EntryRelinked.send(entry, old_root, new_root)
+        entry.relinked.send(entry, old_root, new_root)
     else:
         exc = EntryNotFoundError(
             'Could not locate Entry matching uuid: ' + data.uuid +
             '    Entry: ' + repr(entry)
         )
-        signals.EntryMissing.send(entry, exc)
+        entry.missing.send(entry, exc)
         raise exc
 
 
 class EntryData(object):
-    '''Interface to a directories metadata and tags.'''
+    '''Interface to a directory's metadata and tags.'''
 
     def __init__(self, parent, path):
         self.parent = parent
@@ -139,11 +140,11 @@ class EntryData(object):
     def __delitem__(self, key):
         data = self._read()
         del data[key]
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def __setitem__(self, key, value):
         self._write(**{key: value})
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def __iter__(self):
         return self._read().__iter__()
@@ -168,7 +169,7 @@ class EntryData(object):
 
     def update(self, **kwargs):
         self._write(**kwargs)
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def __eq__(self, other):
         self._read().__eq__(other)
@@ -223,7 +224,7 @@ class EntryData(object):
             util.touch(self.uuid_file)
 
         if is_new_uuid:
-            signals.EntryUUIDChanged.send(self.parent)
+            self.parent.uuid_changed.send(self.parent)
 
     def _init_uuid(self):
         if self.uuid:
@@ -244,7 +245,7 @@ class EntryData(object):
         self._init_uuid()
 
         if is_new:
-            signals.EntryCreated.send(self.parent)
+            self.parent.created.send(self.parent)
 
     def _read(self):
         '''Ensure data directory is initialized, then read or update cache'''
@@ -313,7 +314,7 @@ class EntryData(object):
             if not os.path.isfile(tag_path):
                 util.touch(tag_path)
 
-        signals.EntryTagged.send(self.parent, tags)
+        self.parent.tagged.send(self.parent, tags)
 
     def untag(self, *tags):
         for tag in tags:
@@ -322,7 +323,7 @@ class EntryData(object):
             if os.path.isfile(tag_path):
                 os.remove(tag_path)
 
-        signals.EntryUntagged.send(self.parent, tags)
+        self.parent.untagged.send(self.parent, tags)
 
     def read(self, *keys):
         data = self._read()
@@ -337,14 +338,14 @@ class EntryData(object):
 
     def write(self, replace=False, **data):
         self._write(replace, **data)
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def remove(self, *keys):
         data = self._read()
         for key in keys:
             data.pop(key, None)
         self._write(replace=True, **data)
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def read_blob(self, key):
         data = self._read()
@@ -361,7 +362,7 @@ class EntryData(object):
             f.write(data)
 
         self._write(**dict(blobs={key: blob_name}))
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def read_file(self, key):
         data = self._read()
@@ -378,7 +379,7 @@ class EntryData(object):
         util.copy_file(file, file_path)
 
         self._write(**dict(files={key: file_name}))
-        signals.EntryDataChanged.send(self.parent, dict(self._data))
+        self.parent.data_changed.send(self.parent, dict(self._data))
 
     def delete(self):
         try:
@@ -387,11 +388,22 @@ class EntryData(object):
             if e.errno != errno.EEXIST:
                 raise
 
-        signals.EntryDataDeleted.send(self.parent)
+        self.parent.data_deleted.send(self.parent)
 
 
 class Entry(object):
     '''Represents a directory with metadata and tags.'''
+
+    created = band.channel('entry.created')
+    moved = band.channel('entry.moved')
+    tagged = band.channel('entry.data.tagged')
+    untagged = band.channel('entry.data.untagged')
+    missing = band.channel('entry.missing')
+    relinked = band.channel('entry.relinked')
+    deleted = band.channel('entry.deleted')
+    data_changed = band.channel('entry.data.changed')
+    data_deleted = band.channel('entry.data.deleted')
+    uuid_changed = band.channel('entry.uuid.changed')
 
     def __init__(self, path):
         self.path = path
@@ -611,10 +623,10 @@ class Entry(object):
         # Update uuids and send EntryCreated signals
         new_entry = api.get_entry(dest)
         new_entry.data._new_uuid()
-        signals.EntryCreated.send(new_entry)
+        new_entry.created.send(new_entry)
         for child in new_entry.children():
             child.data._new_uuid()
-            signals.EntryCreated.send(child)
+            child.created.send(child)
         return new_entry
 
     def move(self, dest):
@@ -644,11 +656,11 @@ class Entry(object):
         old_path = self.path
         new_path = dest
         self._set_path(dest)  # Update this Entry's path
-        signals.EntryMoved.send(self, old_path, new_path)
+        self.moved.send(self, old_path, new_path)
         for child in self.children():
             new_child_path = child.path
             old_child_path = new_child_path.replace(new_path, old_path)
-            signals.EntryMoved.send(child, old_child_path, new_child_path)
+            child.moved.send(child, old_child_path, new_child_path)
 
     def delete(self, remove_root=False):
         '''Delete an entry
@@ -672,4 +684,4 @@ class Entry(object):
                 if e.errno != errno.EEXIST:
                     raise
 
-        signals.EntryDeleted.send(self)
+        self.deleted.send(self)

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Guide &mdash; fsfs 0.1.8 documentation</title>
+  <title>Guide &mdash; fsfs 0.1.16 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.8 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.16 documentation" href="index.html"/>
         <link rel="next" title="API Documentation" href="api.html"/>
         <link rel="prev" title="fsfs" href="index.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.16
               </div>
             
           
@@ -383,7 +383,7 @@ on the file system.</p>
 </div>
 <div class="section" id="signals">
 <h2>Signals<a class="headerlink" href="#signals" title="Permalink to this headline">¶</a></h2>
-<p><em>fsfs</em> emits the following signals.</p>
+<p><em>fsfs</em> uses the library <strong>bands</strong> to handle message passing.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="27%" />
@@ -391,7 +391,7 @@ on the file system.</p>
 <col width="40%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">signal</th>
+<tr class="row-odd"><th class="head">channel</th>
 <th class="head">signature</th>
 <th class="head">description</th>
 </tr>
@@ -441,16 +441,81 @@ sent before EntryDeleted</td>
 </tr>
 </tbody>
 </table>
-<p><cite>fsfs.EntryFactory</cite> and <cite>fsfs.SimpleEntryFactory</cite> uses these signals to keep
+<p><cite>fsfs.EntryFactory</cite> and <cite>fsfs.SimpleEntryFactory</cite> use these channels to keep
 their caches up-to-date.</p>
-<p>Use connect to subscribe a callable to any of the above signals.</p>
+<p>Use connect to receive messages sent on any of the above channels.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_created</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entry Created: &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fsfs</span><span class="o">.</span><span class="n">EntryCreated</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">on_entry_created</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For more information on <em>fsfs</em> signals visit the API documentation.</p>
+<p>Additionally each Entry has their own bound Channels that you can connect to.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">on_entry_data_changed</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">fsfs</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">data_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_entry_data_changed</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Channels are bound to shortened names on Entry models. Here is a full listing.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="35%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">identifier</th>
+<th class="head">unbound Channel</th>
+<th class="head">bound Channel</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>“entry.created”</td>
+<td>fsfs.EntryCreated</td>
+<td>Entry.created</td>
+</tr>
+<tr class="row-odd"><td>“entry.moved”</td>
+<td>fsfs.EntryMoved</td>
+<td>Entry.moved</td>
+</tr>
+<tr class="row-even"><td>“entry.tagged”</td>
+<td>fsfs.EntryTagged</td>
+<td>Entry.tagged</td>
+</tr>
+<tr class="row-odd"><td>“entry.untagged”</td>
+<td>fsfs.EntryUntagged</td>
+<td>Entry.untagged</td>
+</tr>
+<tr class="row-even"><td>“entry.missing”</td>
+<td>fsfs.EntryMissing</td>
+<td>Entry.missing</td>
+</tr>
+<tr class="row-odd"><td>“entry.relinked”</td>
+<td>fsfs.EntryRelinked</td>
+<td>Entry.relinked</td>
+</tr>
+<tr class="row-even"><td>“entry.deleted”</td>
+<td>fsfs.EntryDeleted</td>
+<td>Entry.deleted</td>
+</tr>
+<tr class="row-odd"><td>“entry.data.changed”</td>
+<td>fsfs.EntryDataChanged</td>
+<td>Entry.data_changed</td>
+</tr>
+<tr class="row-even"><td>“entry.data.deleted”</td>
+<td>fsfs.EntryDataDeleted</td>
+<td>Entry.data_deleted</td>
+</tr>
+<tr class="row-odd"><td>“entry.uuid.changed”</td>
+<td>fsfs.EntryUUIDChanged</td>
+<td>Entry.uuid_changed</td>
+</tr>
+</tbody>
+</table>
+<p>For more information on <em>fsfs</em> channels visit the API documentation.</p>
 </div>
 </div>
 
@@ -498,7 +563,7 @@ their caches up-to-date.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.8',
+            VERSION:'0.1.16',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

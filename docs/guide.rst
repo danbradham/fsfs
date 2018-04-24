@@ -234,10 +234,10 @@ on the file system.
 Signals
 -------
 
-*fsfs* emits the following signals.
+*fsfs* uses the library **bands** to handle message passing.
 
 +-----------------------+---------------------------+----------------------------------+
-| signal                | signature                 | description                      |
+| channel               | signature                 | description                      |
 +=======================+===========================+==================================+
 | fsfs.EntryCreated     | entry                     | When a new Entry is Created      |
 +-----------------------+---------------------------+----------------------------------+
@@ -262,10 +262,10 @@ Signals
 | fsfs.EntryUUIDChanged | entry                     | When an Entry's UUID changes     |
 +-----------------------+---------------------------+----------------------------------+
 
-`fsfs.EntryFactory` and `fsfs.SimpleEntryFactory` uses these signals to keep
+`fsfs.EntryFactory` and `fsfs.SimpleEntryFactory` use these channels to keep
 their caches up-to-date.
 
-Use connect to subscribe a callable to any of the above signals.
+Use connect to receive messages sent on any of the above channels.
 
 .. code-block:: python
 
@@ -274,4 +274,42 @@ Use connect to subscribe a callable to any of the above signals.
     >>> fsfs.EntryCreated.connect(on_entry_created)
     >>> fsfs.EntryCreated.disconnect(on_entry_created)
 
-For more information on *fsfs* signals visit the API documentation.
+Additionally each Entry has their own bound Channels that you can connect to.
+
+.. code-block:: python
+
+    >>> def on_entry_data_changed(entry, data):
+    ...     print(data['value'])
+    >>> entry = fsfs.search('.').one()
+    >>> entry.data_changed.connect(on_entry_data_changed)
+    >>> entry.write(value=10)
+    10
+
+Channels are bound to shortened names on Entry models. Here is a full listing.
+
++----------------------+-----------------------+--------------------+
+| identifier           | unbound Channel       | bound Channel      |
++======================+=======================+====================+
+| "entry.created"      | fsfs.EntryCreated     | Entry.created      |
++----------------------+-----------------------+--------------------+
+| "entry.moved"        | fsfs.EntryMoved       | Entry.moved        |
++----------------------+-----------------------+--------------------+
+| "entry.tagged"       | fsfs.EntryTagged      | Entry.tagged       |
++----------------------+-----------------------+--------------------+
+| "entry.untagged"     | fsfs.EntryUntagged    | Entry.untagged     |
++----------------------+-----------------------+--------------------+
+| "entry.missing"      | fsfs.EntryMissing     | Entry.missing      |
++----------------------+-----------------------+--------------------+
+| "entry.relinked"     | fsfs.EntryRelinked    | Entry.relinked     |
++----------------------+-----------------------+--------------------+
+| "entry.deleted"      | fsfs.EntryDeleted     | Entry.deleted      |
++----------------------+-----------------------+--------------------+
+| "entry.data.changed" | fsfs.EntryDataChanged | Entry.data_changed |
++----------------------+-----------------------+--------------------+
+| "entry.data.deleted" | fsfs.EntryDataDeleted | Entry.data_deleted |
++----------------------+-----------------------+--------------------+
+| "entry.uuid.changed" | fsfs.EntryUUIDChanged | Entry.uuid_changed |
++----------------------+-----------------------+--------------------+
+
+
+For more information on *fsfs* channels visit the API documentation.

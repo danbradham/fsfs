@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; fsfs 0.1.8 documentation</title>
+  <title>Index &mdash; fsfs 0.1.16 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.8 documentation" href="index.html"/> 
+    <link rel="top" title="fsfs 0.1.16 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.16
               </div>
             
           
@@ -212,10 +212,10 @@
         <li><a href="api.html#fsfs.signal.Signal.clear">(fsfs.signal.Signal method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#fsfs._search.Search.clone">clone() (fsfs._search.Search method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#fsfs._search.Search.close">close() (fsfs._search.Search method)</a>
 </li>
       <li><a href="api.html#fsfs.types.File.closed">closed (fsfs.types.File attribute)</a>
@@ -234,13 +234,19 @@
 </li>
       <li><a href="api.html#fsfs.util.copy_tree">copy_tree() (in module fsfs.util)</a>
 </li>
+      <li><a href="api.html#fsfs.models.Entry.created">created (fsfs.models.Entry attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#fsfs.models.Entry.data_changed">data_changed (fsfs.models.Entry attribute)</a>
+</li>
       <li><a href="api.html#fsfs.policy.FsFsPolicy.data_decoder">data_decoder (fsfs.policy.FsFsPolicy attribute)</a>
+</li>
+      <li><a href="api.html#fsfs.models.Entry.data_deleted">data_deleted (fsfs.models.Entry attribute)</a>
 </li>
       <li><a href="api.html#fsfs.policy.FsFsPolicy.data_encoder">data_encoder (fsfs.policy.FsFsPolicy attribute)</a>
 </li>
@@ -250,10 +256,10 @@
 </li>
       <li><a href="api.html#fsfs.api.decode_data">decode_data() (in module fsfs.api)</a>
 </li>
-      <li><a href="api.html#fsfs.policy.DefaultDecoder">DefaultDecoder() (in module fsfs.policy)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#fsfs.policy.DefaultDecoder">DefaultDecoder() (in module fsfs.policy)</a>
+</li>
       <li><a href="api.html#fsfs.models.Entry.delete">delete() (fsfs.models.Entry method)</a>
 
       <ul>
@@ -262,6 +268,8 @@
         <li><a href="api.html#fsfs.api.delete">(in module fsfs.api)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#fsfs.models.Entry.deleted">deleted (fsfs.models.Entry attribute)</a>
+</li>
       <li><a href="api.html#fsfs.signal.Channel.disconnect">disconnect() (fsfs.signal.Channel method)</a>
 
       <ul>
@@ -282,11 +290,31 @@
 </li>
       <li><a href="api.html#fsfs.policy.FsFsPolicy.entry_factory">entry_factory (fsfs.policy.FsFsPolicy attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#fsfs.signals.EntryCreated">EntryCreated (in module fsfs.signals)</a>
+</li>
       <li><a href="api.html#fsfs.models.EntryData">EntryData (class in fsfs.models)</a>
 </li>
+      <li><a href="api.html#fsfs.signals.EntryDataChanged">EntryDataChanged (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryDataDeleted">EntryDataDeleted (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryDeleted">EntryDeleted (in module fsfs.signals)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#fsfs.factory.EntryFactory">EntryFactory (class in fsfs.factory)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryMissing">EntryMissing (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryMoved">EntryMoved (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryRelinked">EntryRelinked (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryTagged">EntryTagged (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryUntagged">EntryUntagged (in module fsfs.signals)</a>
+</li>
+      <li><a href="api.html#fsfs.signals.EntryUUIDChanged">EntryUUIDChanged (in module fsfs.signals)</a>
 </li>
       <li><a href="api.html#fsfs.models.Entry.exists">exists (fsfs.models.Entry attribute)</a>
 </li>
@@ -438,11 +466,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#fsfs.api.make_tag_path">make_tag_path() (in module fsfs.api)</a>
 </li>
+      <li><a href="api.html#fsfs.models.Entry.missing">missing (fsfs.models.Entry attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#fsfs.models.Entry.move">move() (fsfs.models.Entry method)</a>
 </li>
       <li><a href="api.html#fsfs.util.move_tree">move_tree() (in module fsfs.util)</a>
+</li>
+      <li><a href="api.html#fsfs.models.Entry.moved">moved (fsfs.models.Entry attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -543,6 +575,8 @@
       <li><a href="api.html#fsfs.factory.RegistrationError">RegistrationError</a>
 </li>
       <li><a href="api.html#fsfs.lockfile.LockFile.release">release() (fsfs.lockfile.LockFile method)</a>
+</li>
+      <li><a href="api.html#fsfs.models.Entry.relinked">relinked (fsfs.models.Entry attribute)</a>
 </li>
       <li><a href="api.html#fsfs.models.Entry.remove">remove() (fsfs.models.Entry method)</a>
 
@@ -674,16 +708,18 @@
         <li><a href="api.html#fsfs.api.tag">(in module fsfs.api)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#fsfs.models.Entry.tagged">tagged (fsfs.models.Entry attribute)</a>
+</li>
       <li><a href="api.html#fsfs.models.Entry.tags">tags (fsfs.models.Entry attribute)</a>
 
       <ul>
         <li><a href="api.html#fsfs.models.EntryData.tags">(fsfs.models.EntryData attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#fsfs._search.Search.tags">tags() (fsfs._search.Search method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#fsfs._search.Search.tags">tags() (fsfs._search.Search method)</a>
+</li>
       <li><a href="api.html#fsfs.factory.EntryFactory.teardown">teardown() (fsfs.factory.EntryFactory method)</a>
 
       <ul>
@@ -718,6 +754,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#fsfs.models.Entry.untagged">untagged (fsfs.models.Entry attribute)</a>
+</li>
       <li><a href="api.html#fsfs.models.EntryData.update">update() (fsfs.models.EntryData method)</a>
 </li>
       <li><a href="api.html#fsfs.util.update_dict">update_dict() (in module fsfs.util)</a>
@@ -725,6 +763,8 @@
       <li><a href="api.html#fsfs.models.Entry.uuid">uuid (fsfs.models.Entry attribute)</a>
 </li>
       <li><a href="api.html#fsfs._search.Search.uuid">uuid() (fsfs._search.Search method)</a>
+</li>
+      <li><a href="api.html#fsfs.models.Entry.uuid_changed">uuid_changed (fsfs.models.Entry attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -817,7 +857,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.8',
+            VERSION:'0.1.16',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

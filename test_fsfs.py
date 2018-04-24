@@ -392,6 +392,7 @@ def test_entryfactory(tempdir):
 
     # No tag == default entry
     assert type(entry) == CustomFactory.EntryProxy
+    print(type(entry.obj()))
     assert type(entry.obj()) == CustomFactory.Entry
 
     # Add project tag, now we get a Project instance

@@ -15,5 +15,4 @@ from fsfs.policy import *
 from fsfs.util import *
 from fsfs.types import *
 from fsfs.factory import *
-from fsfs.signals import *
-from fsfs import signal
+from fsfs.channels import *

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 __all__ = ['RegistrationError', 'SimpleEntryFactory', 'EntryFactory']
 import os
 from collections import defaultdict
-from fsfs import api, models, signals
+from fsfs import api, models, channels
 
 
 class RegistrationError(Exception):
@@ -24,26 +24,26 @@ class SimpleEntryFactory(object):
         return self._cache[path]
 
     def setup(self):
-        '''Connects this factory to all necessary signals. Called when this
+        '''Connects this factory to all necessary channels. Called when this
         factory is set as the policy's entry_factory using
         :meth:`fsfs.set_entry_factory`
         '''
 
-        signals.EntryMoved.connect(self.on_entry_relinked_or_moved)
-        signals.EntryMissing.connect(self.on_entry_missing)
-        signals.EntryRelinked.connect(self.on_entry_relinked_or_moved)
-        signals.EntryDeleted.connect(self.on_entry_deleted)
+        channels.EntryMoved.connect(self.on_entry_relinked_or_moved)
+        channels.EntryMissing.connect(self.on_entry_missing)
+        channels.EntryRelinked.connect(self.on_entry_relinked_or_moved)
+        channels.EntryDeleted.connect(self.on_entry_deleted)
 
     def teardown(self):
-        '''Disconnects this factory to all necessary signals. Called when
+        '''Disconnects this factory to all necessary channels. Called when
         another factory is set as the policy's entry_factory using
         :meth:`fsfs.set_entry_factory`
         '''
 
-        signals.EntryMoved.disconnect(self.on_entry_relinked_or_moved)
-        signals.EntryMissing.disconnect(self.on_entry_missing)
-        signals.EntryRelinked.disconnect(self.on_entry_relinked_or_moved)
-        signals.EntryDeleted.disconnect(self.on_entry_deleted)
+        channels.EntryMoved.disconnect(self.on_entry_relinked_or_moved)
+        channels.EntryMissing.disconnect(self.on_entry_missing)
+        channels.EntryRelinked.disconnect(self.on_entry_relinked_or_moved)
+        channels.EntryDeleted.disconnect(self.on_entry_deleted)
         self._cache.clear()
 
     def on_entry_relinked_or_moved(self, entry, old_path, new_path):
@@ -122,7 +122,6 @@ class EntryFactory(object):
             forward attribute lookup to an Entry type that matches it's tags.
             '''
 
-
             @property
             def __class__(self):
                 # force EntryProxy to work with isinstance(proxy, Entry)
@@ -178,30 +177,30 @@ class EntryFactory(object):
         return self.Entry
 
     def setup(self):
-        '''Connects this factory to all necessary signals. Called when this
+        '''Connects this factory to all necessary channels. Called when this
         factory is set as the policy's entry_factory using
         :meth:`fsfs.set_entry_factory`
         '''
 
-        signals.EntryTagged.connect(self.on_entry_tagged)
-        signals.EntryUntagged.connect(self.on_entry_untagged)
-        signals.EntryMoved.connect(self.on_entry_relinked_or_moved)
-        signals.EntryMissing.connect(self.on_entry_missing)
-        signals.EntryRelinked.connect(self.on_entry_relinked_or_moved)
-        signals.EntryDeleted.connect(self.on_entry_deleted)
+        channels.EntryTagged.connect(self.on_entry_tagged)
+        channels.EntryUntagged.connect(self.on_entry_untagged)
+        channels.EntryMoved.connect(self.on_entry_relinked_or_moved)
+        channels.EntryMissing.connect(self.on_entry_missing)
+        channels.EntryRelinked.connect(self.on_entry_relinked_or_moved)
+        channels.EntryDeleted.connect(self.on_entry_deleted)
 
     def teardown(self):
-        '''Disconnects this factory to all necessary signals. Called when
+        '''Disconnects this factory to all necessary channels. Called when
         another factory is set as the policy's entry_factory using
         :meth:`fsfs.set_entry_factory`
         '''
 
-        signals.EntryTagged.disconnect(self.on_entry_tagged)
-        signals.EntryUntagged.disconnect(self.on_entry_untagged)
-        signals.EntryMoved.disconnect(self.on_entry_relinked_or_moved)
-        signals.EntryMissing.disconnect(self.on_entry_missing)
-        signals.EntryRelinked.disconnect(self.on_entry_relinked_or_moved)
-        signals.EntryDeleted.disconnect(self.on_entry_deleted)
+        channels.EntryTagged.disconnect(self.on_entry_tagged)
+        channels.EntryUntagged.disconnect(self.on_entry_untagged)
+        channels.EntryMoved.disconnect(self.on_entry_relinked_or_moved)
+        channels.EntryMissing.disconnect(self.on_entry_missing)
+        channels.EntryRelinked.disconnect(self.on_entry_relinked_or_moved)
+        channels.EntryDeleted.disconnect(self.on_entry_deleted)
         self._cache.clear()
         self._cache_proxies.clear()
         self._mtimes.clear()
@@ -239,6 +238,7 @@ class EntryFactory(object):
 
     def _pop_cache_path(self, path):
         '''Removes the specified path from all caches'''
+
 
         return (
             self._cache.pop(path, None),

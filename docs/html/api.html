@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.1.8 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.1.16 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.8 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.1.16 documentation" href="index.html"/>
         <link rel="prev" title="Guide" href="guide.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.16
               </div>
             
           
@@ -572,7 +572,7 @@ return all key, value pairs.</li>
 
 <dl class="function">
 <dt id="fsfs.api.search">
-<code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs.api.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a Search object that yields <code class="xref py py-class docutils literal notranslate"><span class="pre">models.Entry</span></code> objects. The
 Search generator supports advanced query functionality similar to the
 Query objects found in many SQL libraries.</p>
@@ -653,7 +653,7 @@ Query objects found in many SQL libraries.</p>
 <dl class="method">
 <dt id="fsfs.factory.SimpleEntryFactory.setup">
 <code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connects this factory to all necessary signals. Called when this
+<dd><p>Connects this factory to all necessary channels. Called when this
 factory is set as the policy’s entry_factory using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
@@ -661,7 +661,7 @@ factory is set as the policy’s entry_factory using
 <dl class="method">
 <dt id="fsfs.factory.SimpleEntryFactory.teardown">
 <code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.SimpleEntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disconnects this factory to all necessary signals. Called when
+<dd><p>Disconnects this factory to all necessary channels. Called when
 another factory is set as the policy’s entry_factory using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
@@ -739,7 +739,7 @@ additional methods.</p>
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.setup">
 <code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connects this factory to all necessary signals. Called when this
+<dd><p>Connects this factory to all necessary channels. Called when this
 factory is set as the policy’s entry_factory using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
@@ -747,7 +747,7 @@ factory is set as the policy’s entry_factory using
 <dl class="method">
 <dt id="fsfs.factory.EntryFactory.teardown">
 <code class="descname">teardown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.factory.EntryFactory.teardown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disconnects this factory to all necessary signals. Called when
+<dd><p>Disconnects this factory to all necessary channels. Called when
 another factory is set as the policy’s entry_factory using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">fsfs.set_entry_factory()</span></code></p>
 </dd></dl>
@@ -992,6 +992,69 @@ will be removed.</p>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="fsfs.models.Entry.created">
+<code class="descname">created</code><a class="headerlink" href="#fsfs.models.Entry.created" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.data_changed">
+<code class="descname">data_changed</code><a class="headerlink" href="#fsfs.models.Entry.data_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.data_deleted">
+<code class="descname">data_deleted</code><a class="headerlink" href="#fsfs.models.Entry.data_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fsfs.models.Entry.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>remove_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.delete" title="Permalink to this definition">¶</a></dt>
@@ -1008,9 +1071,51 @@ just the data directory that marks this as an Entry</td>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="fsfs.models.Entry.deleted">
+<code class="descname">deleted</code><a class="headerlink" href="#fsfs.models.Entry.deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="fsfs.models.Entry.exists">
 <code class="descname">exists</code><a class="headerlink" href="#fsfs.models.Entry.exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>An Entry exists when it’s path exists and it’s data path exists</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.missing">
+<code class="descname">missing</code><a class="headerlink" href="#fsfs.models.Entry.missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1029,6 +1134,27 @@ will be removed.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.moved">
+<code class="descname">moved</code><a class="headerlink" href="#fsfs.models.Entry.moved" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1120,6 +1246,27 @@ key and not a dict</td>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="fsfs.models.Entry.relinked">
+<code class="descname">relinked</code><a class="headerlink" href="#fsfs.models.Entry.relinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fsfs.models.Entry.remove">
 <code class="descname">remove</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.Entry.remove" title="Permalink to this definition">¶</a></dt>
@@ -1149,6 +1296,27 @@ key and not a dict</td>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="fsfs.models.Entry.tagged">
+<code class="descname">tagged</code><a class="headerlink" href="#fsfs.models.Entry.tagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="fsfs.models.Entry.tags">
 <code class="descname">tags</code><a class="headerlink" href="#fsfs.models.Entry.tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of this Entry’s tags</p>
@@ -1169,9 +1337,51 @@ key and not a dict</td>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="fsfs.models.Entry.untagged">
+<code class="descname">untagged</code><a class="headerlink" href="#fsfs.models.Entry.untagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="fsfs.models.Entry.uuid">
 <code class="descname">uuid</code><a class="headerlink" href="#fsfs.models.Entry.uuid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry’s UUID stored in a filename in the data dir uuid_*</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.models.Entry.uuid_changed">
+<code class="descname">uuid_changed</code><a class="headerlink" href="#fsfs.models.Entry.uuid_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1234,7 +1444,7 @@ the “files” subdirectory. You can then get a handle to the file via
 <dt id="fsfs.models.EntryData">
 <em class="property">class </em><code class="descclassname">fsfs.models.</code><code class="descname">EntryData</code><span class="sig-paren">(</span><em>parent</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Interface to a directories metadata and tags.</p>
+<p>Interface to a directory’s metadata and tags.</p>
 <dl class="method">
 <dt id="fsfs.models.EntryData.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.models.EntryData.delete" title="Permalink to this definition">¶</a></dt>
@@ -1891,6 +2101,216 @@ themselves, instead they should get them from a channel using the
 </div>
 <div class="section" id="module-fsfs.signals">
 <span id="fsfs-signals-module"></span><h2>fsfs.signals module<a class="headerlink" href="#module-fsfs.signals" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="fsfs.signals.EntryCreated">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryCreated</code><a class="headerlink" href="#fsfs.signals.EntryCreated" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryMoved">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryMoved</code><a class="headerlink" href="#fsfs.signals.EntryMoved" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryTagged">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryTagged</code><a class="headerlink" href="#fsfs.signals.EntryTagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryUntagged">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryUntagged</code><a class="headerlink" href="#fsfs.signals.EntryUntagged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryMissing">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryMissing</code><a class="headerlink" href="#fsfs.signals.EntryMissing" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryRelinked">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryRelinked</code><a class="headerlink" href="#fsfs.signals.EntryRelinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryDeleted">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDeleted</code><a class="headerlink" href="#fsfs.signals.EntryDeleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryDataChanged">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDataChanged</code><a class="headerlink" href="#fsfs.signals.EntryDataChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryDataDeleted">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDataDeleted</code><a class="headerlink" href="#fsfs.signals.EntryDataDeleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fsfs.signals.EntryUUIDChanged">
+<code class="descclassname">fsfs.signals.</code><code class="descname">EntryUUIDChanged</code><a class="headerlink" href="#fsfs.signals.EntryUUIDChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Channel used to send messages to connected receivers.</p>
+<p>In literal terms, a Channel is a registry of functions that get called
+in the order they were connected to a Channel instance. Typically, users
+do not create Channel instances manually, they use <code class="xref py py-func docutils literal notranslate"><span class="pre">channel()</span></code> factory
+function to create Channels in the active Band or use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Band.channel()</span></code>
+to explicitly create a Channel in a Band.</p>
+<p>A Channel can be unbound (anonymous) or bound to an object. When messages
+are sent through an unbound Channel, they are broadcast to unbound and
+bound receivers for the Channel’s identifier. When sent through a bound
+Channel, messages are sent to the bound Channel’s receivers and receivers
+connected to the unbound Channel with the same identifier.</p>
+<p>Channel objects are also descriptors. When used as a class attribute, the
+Channel will be bound when accessed from an instance. This is similar to
+the way methods work, however, when accessing methods, you get a new
+bound Method instance every time, when accessing channels, you will always
+get the same bound Channel instance.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-fsfs.types">
 <span id="fsfs-types-module"></span><h2>fsfs.types module<a class="headerlink" href="#module-fsfs.types" title="Permalink to this headline">¶</a></h2>
@@ -2092,7 +2512,7 @@ without requiring the yield from syntax of Python 3.3+.</p>
 <p>Low-level Search API</p>
 <dl class="class">
 <dt id="fsfs._search.Search">
-<em class="property">class </em><code class="descclassname">fsfs._search.</code><code class="descname">Search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em>, <em>predicates=None</em>, <em>selector=None</em>, <em>sep=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fsfs._search.</code><code class="descname">Search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em>, <em>predicates=None</em>, <em>selector=None</em>, <em>sep=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.Search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fsfs._search.Search.clone">
@@ -2157,7 +2577,7 @@ False</p>
 
 <dl class="function">
 <dt id="fsfs._search.search">
-<code class="descclassname">fsfs._search.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs._search.</code><code class="descname">search</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search a root directory yielding Entry objects. You can specify a
 direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2184,7 +2604,7 @@ direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.</p>
 
 <dl class="function">
 <dt id="fsfs._search.search_tree">
-<code class="descclassname">fsfs._search.</code><code class="descname">search_tree</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_tree" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs._search.</code><code class="descname">search_tree</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Walks up or down a tree yielding lists containing all Entries</p>
 </dd></dl>
 
@@ -2231,7 +2651,7 @@ to lookup missing entries.</p>
 
 <dl class="function">
 <dt id="fsfs._search.select_from_tree">
-<code class="descclassname">fsfs._search.</code><code class="descname">select_from_tree</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>direction=0</em>, <em>depth=10</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.select_from_tree" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs._search.</code><code class="descname">select_from_tree</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.select_from_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is used under the hood by the Search class, you shouldn’t
 need to call it manually.</p>
 <p>Walk tree up or down yielding entries that match the selector.
@@ -2308,7 +2728,7 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.8',
+            VERSION:'0.1.16',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
