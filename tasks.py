@@ -111,9 +111,9 @@ def tag(ctx, tag=None):
 
     tag = tag or fsfs.__version__
     if tag in get_tags():
-        raise Failure('Tag already exists...')
+        print('Overwriting tag', tag)
 
-    ctx.run('git tag ' + tag)
+    ctx.run('git tag --force' + tag)
 
 
 @task
