@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 from invoke import task, Failure, run
-from os.path import join, dirname, isdir
+from os.path import join, dirname, isdir, exists
 import fsfs
 import shutil
 
@@ -105,15 +105,15 @@ def commit(ctx, message):
     ctx.run('git commit -m {!r}'.format(message))
 
 
-@task
-def tag(ctx, tag=None):
+@task('tag')
+def _tag(ctx, tag=None):
     '''Tag current commit'''
 
     tag = tag or fsfs.__version__
     if tag in get_tags():
         print('Overwriting tag', tag)
 
-    ctx.run('git tag --force' + tag)
+    ctx.run('git tag --force ' + tag)
 
 
 @task
@@ -147,10 +147,10 @@ def build(ctx):
 @task
 def cleanup(ctx):
     '''Remove build and dist directories'''
-    if isdir('build'):
+    if exists('build'):
         shutil.rmtree('build')
-    if isdir('dist'):
-        shutil.rmtree('build')
+    if exists('dist'):
+        shutil.rmtree('dist')
 
 
 @task
@@ -166,7 +166,7 @@ def draft(ctx, tag=None, remote=None, branch=None):
 
     tests(ctx)
     if tag:
-        tag(ctx, tag)
+        _tag(ctx, tag)
     push(ctx, remote, branch)
 
 
@@ -175,8 +175,11 @@ def publish(ctx, tag=None, remote=None, branch=None, where=None):
     '''Test, Tag, Push and Upload Changes...'''
 
     tests(ctx)
-    tag(ctx, tag)
+    _tag(ctx, tag)
     push(ctx, remote, branch)
-    build(ctx)
-    upload(ctx, where)
-    cleanup(ctx)
+
+    try:
+        build(ctx)
+        upload(ctx, where)
+    finally:
+        cleanup(ctx)
