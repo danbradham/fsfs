@@ -122,7 +122,8 @@ def push(ctx, remote=None, branch=None):
     remote = remote or 'origin'
     branch = branch or 'master'
 
-    ctx.run('git push --tags {} {}'.format(remote, branch))
+    ctx.run('git push {} {}'.format(remote, branch))
+    ctx.run('git push --force --tags {} {}'.format(remote, branch))
 
 
 @task
@@ -136,9 +137,27 @@ def tests(ctx):
 
 
 @task
+def build(ctx):
+    '''Run python setup.py sdist bdist_wheel'''
+
+    cleanup(ctx)
+    ctx.run('python setup.py sdist bdist_wheel')
+
+
+@task
+def cleanup(ctx):
+    '''Remove build and dist directories'''
+    if isdir('build'):
+        shutil.rmtree('build')
+    if isdir('dist'):
+        shutil.rmtree('build')
+
+
+@task
 def upload(ctx, where=None):
     '''uploading package...not implemented'''
-    pass
+
+    ctx.run('twine upload dist/*')
 
 
 @task
@@ -158,4 +177,6 @@ def publish(ctx, tag=None, remote=None, branch=None, where=None):
     tests(ctx)
     tag(ctx, tag)
     push(ctx, remote, branch)
+    build(ctx)
     upload(ctx, where)
+    cleanup(ctx)

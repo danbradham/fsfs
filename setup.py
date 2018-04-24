@@ -1,26 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-import sys
-import shutil
-from subprocess import check_call
 from setuptools import setup, find_packages
-
-
-if sys.argv[-1] == 'cheeseit!':
-    try:
-        check_call('nosetests -v --with-doctests --doctest-extension=.rst')
-        check_call('python setup.py sdist bdist_wheel')
-        check_call('twine upload dist/*')
-    finally:
-        shutil.rmtree('dist')
-        sys.exit()
-elif sys.argv[-1] == 'testit!':
-    try:
-        check_call('nosetests -v --with-doctests --doctest-extension=.rst')
-        check_call('python setup.py sdist bdist_wheel upload -r pypitest')
-    finally:
-        shutil.rmtree('dist')
-        sys.exit()
 
 
 def get_info(pyfile):
@@ -36,6 +16,7 @@ def get_info(pyfile):
 
 
 info = get_info('./fsfs/__init__.py')
+
 
 with open('README.rst', 'r') as f:
     long_description = f.read()

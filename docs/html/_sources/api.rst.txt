@@ -41,18 +41,10 @@ fsfs\.policy module
     :undoc-members:
     :show-inheritance:
 
-fsfs\.signal module
--------------------
-
-.. automodule:: fsfs.signal
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-fsfs\.signals module
+fsfs\.channels module
 --------------------
 
-.. automodule:: fsfs.signals
+.. automodule:: fsfs.channels
     :members:
     :undoc-members:
     :show-inheritance:

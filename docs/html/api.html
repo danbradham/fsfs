@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.1.16 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.2.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.1.16 documentation" href="index.html"/>
+    <link rel="top" title="fsfs 0.2.0 documentation" href="index.html"/>
         <link rel="prev" title="Guide" href="guide.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.16
+                0.2.0
               </div>
             
           
@@ -98,8 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.lockfile">fsfs.lockfile module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.models">fsfs.models module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.policy">fsfs.policy module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.signal">fsfs.signal module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-fsfs.signals">fsfs.signals module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fsfs-channels-module">fsfs.channels module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.types">fsfs.types module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs.util">fsfs.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-fsfs._search">fsfs._search module</a></li>
@@ -1685,425 +1684,11 @@ and produce the corresponding Python object.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-fsfs.signal">
-<span id="fsfs-signal-module"></span><h2>fsfs.signal module<a class="headerlink" href="#module-fsfs.signal" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="fsfs.signal.Channel">
-<em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Channel</code><span class="sig-paren">(</span><em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Manages and sends signals by string identifier. Supports fuzzy signal
-subscriptions using fnmatch with <em>. So you could connect to “new.</em>” to
-subscribe to all signals that start with “new.”.</p>
-<p class="rubric">Examples</p>
-<p>Basic subscription:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;HI&#39;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
-<span class="go">[&#39;HI&#39;]</span>
-</pre></div>
-</div>
-<p>Fuzzy subscription:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;foo.*&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">foo_subscriber</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;FOO&#39;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;foo.bar&#39;</span><span class="p">)</span>
-<span class="go">[&#39;FOO&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;foo.baz&#39;</span><span class="p">)</span>
-<span class="go">[&#39;FOO&#39;]</span>
-</pre></div>
-</div>
-<p>Use a Signal alias:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_signal</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_signal</span><span class="o">.</span><span class="n">route</span><span class="p">()</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">my_subscriber</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;HI&#39;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_signal</span><span class="p">()</span>
-<span class="go">[&#39;HI&#39;]</span>
-</pre></div>
-</div>
-<dl class="method">
-<dt id="fsfs.signal.Channel.chain">
-<code class="descname">chain</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.chain" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chain a signals subscribers. The first subscriber will be passed
-args and kwargs. Then each successive subscriber will be passed the
-return value of the previous subscriber. Unlike <a class="reference internal" href="#fsfs.signal.send" title="fsfs.signal.send"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send()</span></code></a> this
-returns one value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal to send</li>
-<li><strong>*args</strong> – args to send</li>
-<li><strong>**kwargs</strong> – kwargs to send</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Final value returned from last subscriber</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><em>identifier=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disconnect subscribers from one or all signals</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>str</em>) – If passed clear subscribers for just this signal</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<p>Clear all signals’ subscribers:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Clear one signal’s subscribers:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>priority=0</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connect an object to a signal. Subscribers are ordered by priority.
-New subscribers are inserted after existing subscribers with the same
-priority.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – Signal identifier</li>
-<li><strong>obj</strong> (<em>callable</em>) – Object to connect to signal</li>
-<li><strong>priority</strong> (<em>int</em>) – priority of obj</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disconnect obj from signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal to connect obj to</li>
-<li><strong>obj</strong> (<em>callable</em>) – callable obj to connect to signal</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Forwards signals to another channel</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to forward to</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.route">
-<code class="descname">route</code><span class="sig-paren">(</span><em>identifier</em>, <em>priority=0</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.route" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connect an obj to a signal via a decoration. Only works on functions
-and callable class instances at the moment.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – Signal identifier</li>
-<li><strong>priority</strong> (<em>int</em>) – obj priority</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@channel</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">subscriber</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">pass</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">channel</span><span class="o">.</span><span class="n">subscribers</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.send">
-<code class="descname">send</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.send" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send a signal. Calls each subscriber with args and kwargs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal to send out</li>
-<li><strong>*args</strong> – args to send</li>
-<li><strong>**kwargs</strong> – kwargs to send</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">contains results in order</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.signal">
-<code class="descname">signal</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> alias that forwards all calls to this signal
-channel. Multiple calls to <a class="reference internal" href="#fsfs.signal.Channel.signal" title="fsfs.signal.Channel.signal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">signal()</span></code></a> with the same identifier will
-return the same <a class="reference internal" href="#fsfs.signal.Signal" title="fsfs.signal.Signal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signal</span></code></a> instance.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="fsfs.signal.Channel.signals">
-<code class="descname">signals</code><a class="headerlink" href="#fsfs.signal.Channel.signals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dict containing all signal aliases.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.subscribers">
-<code class="descname">subscribers</code><span class="sig-paren">(</span><em>identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.subscribers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all subscribers in order of priority for a specific signal.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>str</em>) – Signal identifier</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">subscribers</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Channel.unforward">
-<code class="descname">unforward</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Channel.unforward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stops forwarding signals to another channel</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to stop forwarding signals to</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="fsfs.signal.Signal">
-<em class="property">class </em><code class="descclassname">fsfs.signal.</code><code class="descname">Signal</code><span class="sig-paren">(</span><em>identifier</em>, <em>channel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Alias for a Signal identifier. Forwards all calls to a parent channel
-sending the aliases identifier with it. Users should not instance Signal
-themselves, instead they should get them from a channel using the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">signal()</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="s1">&#39;my.signal&#39;</span><span class="p">)</span> 
-<span class="go">Signal(channel=..., identifier=&#39;my.signal&#39;)</span>
-</pre></div>
-</div>
-<dl class="method">
-<dt id="fsfs.signal.Signal.chain">
-<code class="descname">chain</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.chain" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.clear" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>obj</em>, <em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.connect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><em>obj</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.route">
-<code class="descname">route</code><span class="sig-paren">(</span><em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.route" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.send">
-<code class="descname">send</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.send" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="fsfs.signal.Signal.subscribers">
-<code class="descname">subscribers</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.Signal.subscribers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.channel">
-<code class="descclassname">fsfs.signal.</code><code class="descname">channel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context manager to temporarily set signal channel</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.get_channel">
-<code class="descclassname">fsfs.signal.</code><code class="descname">get_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.get_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns global channel</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.set_channel">
-<code class="descclassname">fsfs.signal.</code><code class="descname">set_channel</code><span class="sig-paren">(</span><em>channel</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets global channel to channel</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.set_channel_to_default">
-<code class="descclassname">fsfs.signal.</code><code class="descname">set_channel_to_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.set_channel_to_default" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets global channel to _default_channel</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.chain">
-<code class="descclassname">fsfs.signal.</code><code class="descname">chain</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.chain" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chain signal subscribers on global channel</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
-<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.route">
-<code class="descclassname">fsfs.signal.</code><code class="descname">route</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.route" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connect function to signal via decorator</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
-<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.send">
-<code class="descclassname">fsfs.signal.</code><code class="descname">send</code><span class="sig-paren">(</span><em>identifier</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.send" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send signal on global channel</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
-<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.connect">
-<code class="descclassname">fsfs.signal.</code><code class="descname">connect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>priority=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connect function to signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
-<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
-<li><strong>priority</strong> (<em>int</em>) – Priority of subscriber</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="fsfs.signal.disconnect">
-<code class="descclassname">fsfs.signal.</code><code class="descname">disconnect</code><span class="sig-paren">(</span><em>identifier</em>, <em>obj</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.signal.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disconnect function to signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifier</strong> (<em>str</em>) – signal identifier</li>
-<li><strong>channel</strong> (<a class="reference internal" href="#fsfs.signal.Channel" title="fsfs.signal.Channel"><em>Channel</em></a>) – Channel to send on, defaults to global channel</li>
-<li><strong>priority</strong> (<em>int</em>) – Priority of subscriber</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-fsfs.signals">
-<span id="fsfs-signals-module"></span><h2>fsfs.signals module<a class="headerlink" href="#module-fsfs.signals" title="Permalink to this headline">¶</a></h2>
-<dl class="attribute">
-<dt id="fsfs.signals.EntryCreated">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryCreated</code><a class="headerlink" href="#fsfs.signals.EntryCreated" title="Permalink to this definition">¶</a></dt>
+<div class="section" id="fsfs-channels-module">
+<h2>fsfs.channels module<a class="headerlink" href="#fsfs-channels-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-fsfs.channels"></span><dl class="attribute">
+<dt id="fsfs.channels.EntryCreated">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryCreated</code><a class="headerlink" href="#fsfs.channels.EntryCreated" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2123,8 +1708,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryMoved">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryMoved</code><a class="headerlink" href="#fsfs.signals.EntryMoved" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryMoved">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryMoved</code><a class="headerlink" href="#fsfs.channels.EntryMoved" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2144,8 +1729,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryTagged">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryTagged</code><a class="headerlink" href="#fsfs.signals.EntryTagged" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryTagged">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryTagged</code><a class="headerlink" href="#fsfs.channels.EntryTagged" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2165,8 +1750,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryUntagged">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryUntagged</code><a class="headerlink" href="#fsfs.signals.EntryUntagged" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryUntagged">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryUntagged</code><a class="headerlink" href="#fsfs.channels.EntryUntagged" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2186,8 +1771,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryMissing">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryMissing</code><a class="headerlink" href="#fsfs.signals.EntryMissing" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryMissing">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryMissing</code><a class="headerlink" href="#fsfs.channels.EntryMissing" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2207,8 +1792,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryRelinked">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryRelinked</code><a class="headerlink" href="#fsfs.signals.EntryRelinked" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryRelinked">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryRelinked</code><a class="headerlink" href="#fsfs.channels.EntryRelinked" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2228,8 +1813,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryDeleted">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDeleted</code><a class="headerlink" href="#fsfs.signals.EntryDeleted" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryDeleted">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryDeleted</code><a class="headerlink" href="#fsfs.channels.EntryDeleted" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2249,8 +1834,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryDataChanged">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDataChanged</code><a class="headerlink" href="#fsfs.signals.EntryDataChanged" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryDataChanged">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryDataChanged</code><a class="headerlink" href="#fsfs.channels.EntryDataChanged" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2270,8 +1855,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryDataDeleted">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryDataDeleted</code><a class="headerlink" href="#fsfs.signals.EntryDataDeleted" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryDataDeleted">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryDataDeleted</code><a class="headerlink" href="#fsfs.channels.EntryDataDeleted" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2291,8 +1876,8 @@ get the same bound Channel instance.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fsfs.signals.EntryUUIDChanged">
-<code class="descclassname">fsfs.signals.</code><code class="descname">EntryUUIDChanged</code><a class="headerlink" href="#fsfs.signals.EntryUUIDChanged" title="Permalink to this definition">¶</a></dt>
+<dt id="fsfs.channels.EntryUUIDChanged">
+<code class="descclassname">fsfs.channels.</code><code class="descname">EntryUUIDChanged</code><a class="headerlink" href="#fsfs.channels.EntryUUIDChanged" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Channel used to send messages to connected receivers.</p>
 <p>In literal terms, a Channel is a registry of functions that get called
 in the order they were connected to a Channel instance. Typically, users
@@ -2728,7 +2313,7 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.16',
+            VERSION:'0.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
