@@ -34,6 +34,7 @@ __all__ = [
     'write_file',
     'delete',
     'search',
+    'get_tree',
 ]
 
 import os
@@ -426,3 +427,16 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
 
     from fsfs._search import Search
     return Search(root, direction, depth, skip_root)
+
+
+def get_tree(root, data_root, tree):
+    '''Get Entries under the root directory as a tree structure.'''
+
+    if os.path.isdir(root + '/' + data_root):
+        tree = tree.setdefault(get_entry(root).name, {})
+
+    for item in scandir(root):
+        if item.name == data_root:
+            continue
+        if item.is_dir():
+            get_tree(item.path, data_root, tree)
