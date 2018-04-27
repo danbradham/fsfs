@@ -9,7 +9,6 @@ __all__ = [
     'UP',
     'Search',
     'search',
-    'search_tree',
     'search_uuid',
     'one_uuid',
     'select_from_tree',
@@ -19,7 +18,6 @@ import os
 from scandir import walk, scandir
 import errno
 from fsfs import util, api
-from fsfs._compat import izip
 from fsfs.constants import (
     DOWN,
     UP,
@@ -180,9 +178,9 @@ def safe_scandir(root):
 
 @util.regenerator
 def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
-               level=0, at_root=True):
+               level=0, at_root=True, data_root=None):
 
-    if os.path.isdir(root + '/' + api.get_data_root()):
+    if os.path.isdir(root + '/' + data_root):
         level = 0
         if skip_root and at_root:
             pass
@@ -194,17 +192,19 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
 
     for dir_entry in safe_scandir(root):
 
-        if dir_entry.is_dir() and dir_entry.name != api.get_data_root():
+        if dir_entry.is_dir() and dir_entry.name != data_root:
             yield _search_dn(
                 dir_entry.path,
                 depth,
                 skip_root,
                 level + 1,
-                False
+                False,
+                data_root
             )
 
 
-def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
+def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
+               data_root=None):
 
     level = -1
     next_root = root
@@ -220,7 +220,7 @@ def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
             next_root = os.path.dirname(root)
             continue
 
-        if os.path.isdir(root + '/' + api.get_data_root()):
+        if os.path.isdir(root + '/' + data_root):
             yield api.get_entry(root)
 
         next_root = os.path.dirname(root)
@@ -243,47 +243,46 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
     '''
 
     root = util.unipath(root)
+    data_root = api.get_data_root()
     if direction == DOWN:
         depth = depth or DEFAULT_SEARCH_DN_DEPTH
-        return _search_dn(root, depth, skip_root)
+        return _search_dn(root, depth, skip_root, data_root=data_root)
     elif direction == UP:
         depth = depth or DEFAULT_SEARCH_UP_DEPTH
-        return _search_up(root, depth, skip_root)
+        return _search_up(root, depth, skip_root, data_root=data_root)
     else:
         raise RuntimeError('Invalid direction: ' + str(direction))
 
 
 @util.regenerator
-def _search_tree_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
-                    level=0, at_root=True, visited=None):
+def _select_tree_dn(root, selector, data_root, depth, level=0):
 
-    if visited is None:
-        visited = []
-
-    if os.path.isdir(root + '/' + api.get_data_root()):
+    if os.path.isdir(root + '/' + data_root):
         level = 0
-        visited.append(api.get_entry(util.unipath(root)))
-        yield visited
+        sel = selector[0]
+        if sel in os.path.basename(root):
+            selector.pop(0)
+        if not selector:
+            yield api.get_entry(util.unipath(root))
+            raise StopIteration
 
     if level == depth:
         raise StopIteration
 
-    for dir_entry in safe_scandir(root):
-
-        if dir_entry.is_dir() and dir_entry.name != api.get_data_root():
-            yield _search_tree_dn(
-                dir_entry.path,
+    for item in safe_scandir(root):
+        if item.name == data_root:
+            continue
+        if item.is_dir():
+            yield _select_tree_dn(
+                item.path,
+                list(selector),
+                data_root,
                 depth,
-                skip_root,
-                level + 1,
-                False,
-                list(visited)
+                level + 1
             )
 
 
-def _search_tree_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
-
-    visited = []
+def _select_tree_up(root, selector, data_root, depth, level=0):
 
     level = -1
     next_root = root
@@ -292,37 +291,25 @@ def _search_tree_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False):
         root = next_root
         level += 1
 
-        if depth and level > depth:
+        if level > depth:
             break
 
-        if skip_root and level == 0:
-            next_root = os.path.dirname(root)
-            continue
-
-        if os.path.isdir(root + '/' + api.get_data_root()):
-            visited.append(api.get_entry(root))
-            yield visited[::-1]
+        if os.path.isdir(root + '/' + data_root):
+            level = 0
+            sel = selector[-1]
+            if sel in os.path.basename(root):
+                selector.pop()
+            if not selector:
+                yield api.get_entry(root)
+                raise StopIteration
 
         next_root = os.path.dirname(root)
         if next_root == root:
             break
 
 
-def search_tree(root, direction=DOWN, depth=None, skip_root=False):
-    '''Walks up or down a tree yielding lists containing all Entries '''
-
-    if direction == DOWN:
-        depth = depth or DEFAULT_SEARCH_DN_DEPTH
-        return _search_tree_dn(util.unipath(root), depth, skip_root)
-    elif direction == UP:
-        depth = depth or DEFAULT_SEARCH_UP_DEPTH
-        return _search_tree_up(util.unipath(root), depth, skip_root)
-    else:
-        raise RuntimeError('Invalid direction: ' + str(direction))
-
-
 def select_from_tree(root, selector, sep='/', direction=DOWN,
-                     depth=None, skip_root=False):
+                     depth=None, skip_root=False, data_root=None):
     '''This method is used under the hood by the Search class, you shouldn't
     need to call it manually.
 
@@ -343,42 +330,19 @@ def select_from_tree(root, selector, sep='/', direction=DOWN,
     Returns:
         generator: yielding :class:`models.Entry` matches
     '''
-    parts = selector.split(sep)
-    num_parts = len(parts)
 
-    for branch in search_tree(root, direction, depth, skip_root):
-        num_branch_parts = len(branch)
+    selector = selector.split(sep)
+    root = util.unipath(root)
+    data_root = data_root or api.get_data_root()
 
-        if num_parts > num_branch_parts:
-            continue
-
-        elif num_parts == num_branch_parts:
-
-            for part, entry in izip(parts, branch):
-                if part not in entry.name:
-                    break
-            else:
-                yield entry
-
-        else:
-            # num_parts < num_branch_parts
-            # Make sure all select parts are in the branch and
-            # make sure the last part matches the last elem in branch
-
-            entry = None
-            b_i = 0
-            for part in parts:
-                for i, entry in enumerate(branch[b_i:]):
-                    if part in entry.name:
-                        b_i += i + 1
-                        break  # Match Found
-                else:
-                    break  # Match Not Found
-            else:
-                # We made it through the for loop without encountering a break
-                # All parts were found
-                if entry is branch[-1]:
-                    yield entry
+    if direction == DOWN:
+        depth = depth or DEFAULT_SEARCH_DN_DEPTH
+        return _select_tree_dn(root, selector, data_root, depth)
+    elif direction == UP:
+        depth = depth or DEFAULT_SEARCH_UP_DEPTH
+        return _select_tree_up(root, selector, data_root, depth)
+    else:
+        raise RuntimeError('Invalid direction: ' + str(direction))
 
 
 def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
@@ -434,7 +398,7 @@ def search_uuid(root, uuid, direction=DOWN, depth=0, skip_root=False):
                 continue
 
             data_root = root + '/' + api.get_data_root()
-            uuid_path = root + '/' + api.get_data_root() + 'uuid_' + uuid
+            uuid_path = root + '/' + api.get_data_root() + '/' + 'uuid_' + uuid
             if os.path.isfile(uuid_path):
                 yield root, data_root, uuid_file
 
