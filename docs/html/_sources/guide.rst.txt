@@ -127,7 +127,9 @@ use partial names to cast a broader net.
     'blue_monster'
 
     >>> entries = fsfs.search('.').name('super/monster')
-    >>> [e.name for e in entries]
+    >>> results = [e.name for e in entries]
+    >>> results.sort()
+    >>> results
     ['blue_monster', 'green_monster']
 
 Pass the sep keyword to use a custom separator.
@@ -135,7 +137,9 @@ Pass the sep keyword to use a custom separator.
 .. code-block:: console
 
     >>> entries = fsfs.search('.').name('super|monster', sep='|')
-    >>> [e.name for e in entries]
+    >>> results = [e.name for e in entries]
+    >>> results.sort()
+    >>> results
     ['blue_monster', 'green_monster']
 
 Customizing *fsfs*
