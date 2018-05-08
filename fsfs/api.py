@@ -41,6 +41,7 @@ __all__ = [
 
 import os
 import string
+from glob import glob
 from scandir import scandir
 from fsfs import util
 from fsfs.constants import DOWN, UP, DEFAULT_SELECTOR_SEP
@@ -479,4 +480,4 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
                 break
 
     if matches:
-        return api.get_entry(util.unipath(matches[-1]))
+        return get_entry(util.unipath(matches[-1]))
