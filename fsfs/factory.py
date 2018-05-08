@@ -222,7 +222,13 @@ class EntryFactory(object):
         proxy._path = new_path
         tags = api.get_tags(new_path)
         entry_type = self.type_for_tags(tags)
-        self._cache[new_path] = entry_type(new_path)
+        new_entry = entry_type(new_path)
+
+        # Transfer receivers to new Entry
+        channels.transfer_receivers(entry, new_entry)
+
+        # Update cache
+        self._cache[new_path] = new_entry
         self._cache_proxies[new_path] = proxy._path
         self._mtimes[new_path] = os.path.getmtime(new_path)
 
@@ -264,6 +270,10 @@ class EntryFactory(object):
             self._cache[path] = entry_type(path)
 
         elif not type(self._cache[path]) is entry_type:
+
+            old_entry = self._cache[path]
+            new_entry = entry_type(path)
+            channels.transfer_receivers(old_entry, new_entry)
             self._cache[path] = entry_type(path)
 
         if path not in self._cache_proxies:
