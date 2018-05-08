@@ -15,6 +15,7 @@ sphinxcontrib-napoleon = "*"
 nose = "*"
 invoke = "*"
 bands = "*"
+twine = "*"
 
 
 [packages]

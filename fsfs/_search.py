@@ -33,7 +33,7 @@ IGNORE = (
     errno.EIO,
     errno.EPERM,
     59,  # WinError network access
-    64,  # WinError network access
+    errno.EINVAL,  # WinError network access
 )
 
 
@@ -176,6 +176,7 @@ def safe_scandir(root):
             yield next(gen)
         except OSError as e:
             if e.errno not in IGNORE:
+                print(e, e.errno)
                 raise
 
 
