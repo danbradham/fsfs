@@ -4,6 +4,7 @@ from __future__ import print_function, absolute_import
 __all__ = [
     'DOWN',
     'UP',
+    'DEFAULT_SELECTOR_SEP',
     'get_policy',
     'set_policy',
     'set_default_policy',
@@ -35,13 +36,14 @@ __all__ = [
     'delete',
     'search',
     'get_tree',
+    'quick_select',
 ]
 
 import os
 import string
 from scandir import scandir
 from fsfs import util
-from fsfs.constants import DOWN, UP
+from fsfs.constants import DOWN, UP, DEFAULT_SELECTOR_SEP
 
 
 def get_policy():
@@ -432,11 +434,49 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
 def get_tree(root, data_root, tree):
     '''Get Entries under the root directory as a tree structure.'''
 
+    from fsfs._search import safe_scandir
+
     if os.path.isdir(root + '/' + data_root):
         tree = tree.setdefault(get_entry(root).name, {})
 
-    for item in scandir(root):
+    for item in safe_scandir(root):
         if item.name == data_root:
             continue
         if item.is_dir():
             get_tree(item.path, data_root, tree)
+
+
+def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
+                 first_depth=2, rest_depth=4):
+    '''Use this method to quickly find one Entry using a selector string.
+    Unlike search, this method returns one Entry, not a generator yielding
+    all matches.
+
+    Arguments:
+        root: Directory to search within
+        selector: List of partial names to select from tree
+        sep: Separator used to split selector into parts
+        first_depth: Max depth of first selector
+        rest_depth: Max depth to search for the rest of the selectors
+    '''
+
+    parts = selector.split(sep)
+    depth = first_depth
+    matches = []
+
+    while parts:
+        if matches:
+            root = matches[-1]
+
+        part = parts.pop(0)
+        for i in range(depth):
+            pattern = '%s/%s/*%s*/.data' % (root, ('*/' * i), part)
+            entries = glob(pattern)
+            if entries:
+                match = min(entries, key=len)[:-6]
+                matches.append(match)
+                depth = rest_depth
+                break
+
+    if matches:
+        return api.get_entry(util.unipath(matches[-1]))

@@ -12,6 +12,7 @@ __all__ = [
     'search_uuid',
     'one_uuid',
     'select_from_tree',
+    'safe_scandir'
 ]
 
 import os
@@ -22,7 +23,8 @@ from fsfs.constants import (
     DOWN,
     UP,
     DEFAULT_SEARCH_DN_DEPTH,
-    DEFAULT_SEARCH_UP_DEPTH
+    DEFAULT_SEARCH_UP_DEPTH,
+    DEFAULT_SELECTOR_SEP,
 )
 
 IGNORE = (
@@ -31,6 +33,7 @@ IGNORE = (
     errno.EIO,
     errno.EPERM,
     59,  # WinError network access
+    64,  # WinError network access
 )
 
 
@@ -135,7 +138,7 @@ class Search(object):
         predicate = lambda e: uuid == e.uuid
         return self.clone(predicates=self.predicates + [predicate])
 
-    def name(self, name, sep='/'):
+    def name(self, name, sep=DEFAULT_SELECTOR_SEP):
         '''Returns a new Search object yielding objects that match name'''
 
         if sep in name:
@@ -180,7 +183,12 @@ def safe_scandir(root):
 def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
                level=0, at_root=True, data_root=None):
 
-    if os.path.isdir(root + '/' + data_root):
+    dirs = {
+        e.name: e.path
+        for e in safe_scandir(root) if e.is_dir()
+    }
+
+    if dirs.pop(data_root, None):
         level = 0
         if skip_root and at_root:
             pass
@@ -190,17 +198,16 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
     if level == depth:
         raise StopIteration
 
-    for dir_entry in safe_scandir(root):
+    for dir in dirs.values():
 
-        if dir_entry.is_dir() and dir_entry.name != data_root:
-            yield _search_dn(
-                dir_entry.path,
-                depth,
-                skip_root,
-                level + 1,
-                False,
-                data_root
-            )
+        yield _search_dn(
+            dir,
+            depth,
+            skip_root,
+            level + 1,
+            False,
+            data_root
+        )
 
 
 def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
@@ -257,7 +264,12 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
 @util.regenerator
 def _select_tree_dn(root, selector, data_root, depth, level=0):
 
-    if os.path.isdir(root + '/' + data_root):
+    dirs = {
+        e.name: e.path
+        for e in safe_scandir(root) if e.is_dir()
+    }
+
+    if dirs.pop(data_root, None):
         level = 0
         sel = selector[0]
         if sel in os.path.basename(root):
@@ -269,17 +281,14 @@ def _select_tree_dn(root, selector, data_root, depth, level=0):
     if level == depth:
         raise StopIteration
 
-    for item in safe_scandir(root):
-        if item.name == data_root:
-            continue
-        if item.is_dir():
-            yield _select_tree_dn(
-                item.path,
-                list(selector),
-                data_root,
-                depth,
-                level + 1
-            )
+    for dir in dirs.values():
+        yield _select_tree_dn(
+            dir,
+            list(selector),
+            data_root,
+            depth,
+            level + 1
+        )
 
 
 def _select_tree_up(root, selector, data_root, depth, level=0):
@@ -308,7 +317,7 @@ def _select_tree_up(root, selector, data_root, depth, level=0):
             break
 
 
-def select_from_tree(root, selector, sep='/', direction=DOWN,
+def select_from_tree(root, selector, sep=DEFAULT_SELECTOR_SEP, direction=DOWN,
                      depth=None, skip_root=False, data_root=None):
     '''This method is used under the hood by the Search class, you shouldn't
     need to call it manually.

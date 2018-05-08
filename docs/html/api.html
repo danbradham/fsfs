@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; fsfs 0.2.0 documentation</title>
+  <title>API Documentation &mdash; fsfs 0.2.2 documentation</title>
   
 
   
@@ -25,25 +25,18 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fsfs 0.2.0 documentation" href="index.html"/>
-        <link rel="prev" title="Guide" href="guide.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Guide" href="guide.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -65,7 +58,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.2
               </div>
             
           
@@ -115,7 +108,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">fsfs</a>
@@ -123,9 +116,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -615,6 +609,35 @@ Query objects found in many SQL libraries.</p>
 <span class="n">search</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s1">&#39;entry_name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tags</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.get_tree">
+<code class="descclassname">fsfs.api.</code><code class="descname">get_tree</code><span class="sig-paren">(</span><em>root</em>, <em>data_root</em>, <em>tree</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.get_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Entries under the root directory as a tree structure.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fsfs.api.quick_select">
+<code class="descclassname">fsfs.api.</code><code class="descname">quick_select</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>first_depth=2</em>, <em>rest_depth=4</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs.api.quick_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to quickly find one Entry using a selector string.
+Unlike search, this method returns one Entry, not a generator yielding
+all matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root</strong> – Directory to search within</li>
+<li><strong>selector</strong> – List of partial names to select from tree</li>
+<li><strong>sep</strong> – Separator used to split selector into parts</li>
+<li><strong>first_depth</strong> – Max depth of first selector</li>
+<li><strong>rest_depth</strong> – Max depth to search for the rest of the selectors</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -2188,12 +2211,6 @@ direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="fsfs._search.search_tree">
-<code class="descclassname">fsfs._search.</code><code class="descname">search_tree</code><span class="sig-paren">(</span><em>root</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Walks up or down a tree yielding lists containing all Entries</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="fsfs._search.search_uuid">
 <code class="descclassname">fsfs._search.</code><code class="descname">search_uuid</code><span class="sig-paren">(</span><em>root</em>, <em>uuid</em>, <em>direction=0</em>, <em>depth=0</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.search_uuid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Like search but finds a uuid file. This is a low-level function used
@@ -2236,7 +2253,7 @@ to lookup missing entries.</p>
 
 <dl class="function">
 <dt id="fsfs._search.select_from_tree">
-<code class="descclassname">fsfs._search.</code><code class="descname">select_from_tree</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.select_from_tree" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fsfs._search.</code><code class="descname">select_from_tree</code><span class="sig-paren">(</span><em>root</em>, <em>selector</em>, <em>sep='/'</em>, <em>direction=0</em>, <em>depth=None</em>, <em>skip_root=False</em>, <em>data_root=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.select_from_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is used under the hood by the Search class, you shouldn’t
 need to call it manually.</p>
 <p>Walk tree up or down yielding entries that match the selector.
@@ -2268,14 +2285,18 @@ keyword argument <cite>sep</cite>.</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="fsfs._search.safe_scandir">
+<code class="descclassname">fsfs._search.</code><code class="descname">safe_scandir</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="headerlink" href="#fsfs._search.safe_scandir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Silences permissions errors raised by scandir generator</p>
+</dd></dl>
+
 </div>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -2295,7 +2316,7 @@ keyword argument <cite>sep</cite>.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -2313,7 +2334,8 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.2.0',
+            VERSION:'0.2.2',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -2331,14 +2353,13 @@ keyword argument <cite>sep</cite>.</p>
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
