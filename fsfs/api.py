@@ -448,7 +448,7 @@ def get_tree(root, data_root, tree):
 
 
 def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
-                 first_depth=2, rest_depth=4):
+                 first_depth=2, rest_depth=4, skip_root=False):
     '''Use this method to quickly find one Entry using a selector string.
     Unlike search, this method returns one Entry, not a generator yielding
     all matches.
@@ -461,7 +461,11 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
         rest_depth: Max depth to search for the rest of the selectors
     '''
 
+    if skip_root:
+        root = util.unipath(root, '*')
+
     parts = selector.split(sep)
+    count = len(parts)
     depth = first_depth
     matches = []
 
@@ -470,14 +474,23 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
             root = matches[-1]
 
         part = parts.pop(0)
+
+        # glob recursively until we find a match
+        # root/*, root/*/* ...
         for i in range(depth):
-            pattern = '%s/%s/*%s*/.data' % (root, ('*/' * i), part)
+            pattern = util.unipath(
+                root,
+                '*/' * i,
+                '*' + part + '*',
+                get_data_root()
+            )
             entries = glob(pattern)
             if entries:
                 match = min(entries, key=len)[:-6]
                 matches.append(match)
                 depth = rest_depth
                 break
+        else:
+            return
 
-    if matches:
-        return get_entry(util.unipath(matches[-1]))
+    return get_entry(util.unipath(matches[-1]))
