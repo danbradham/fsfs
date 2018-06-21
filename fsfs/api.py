@@ -389,7 +389,7 @@ def untag(root, *tags):
     entry.untag(*tags)
 
 
-def search(root, direction=DOWN, depth=None, skip_root=False):
+def search(root, direction=DOWN, depth=None, levels=None, skip_root=False):
     '''Returns a Search object that yields :class:`models.Entry` objects. The
     Search generator supports advanced query functionality similar to the
     Query objects found in many SQL libraries.
@@ -397,7 +397,8 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
     Arguments:
         root (str): Directory to search
         direction (int): Direction to search (fsfs.UP or fsfs.DOWN)
-        depth (int): Maximum depth of search
+        depth (int): Maximum directory depth to search between entries
+        levels (int): Number of child entries deep to traverse
         skip_root (bool): Skip search in root directory
 
     Examples:
@@ -429,7 +430,7 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
     '''
 
     from fsfs._search import Search
-    return Search(root, direction, depth, skip_root)
+    return Search(root, direction, depth, levels, skip_root)
 
 
 def get_tree(root, data_root, tree):
@@ -448,7 +449,7 @@ def get_tree(root, data_root, tree):
 
 
 def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
-                 first_depth=2, rest_depth=4, skip_root=False):
+                 first_depth=2, depth=4, skip_root=False):
     '''Use this method to quickly find one Entry using a selector string.
     Unlike search, this method returns one Entry, not a generator yielding
     all matches.
@@ -457,15 +458,14 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
         root: Directory to search within
         selector: List of partial names to select from tree
         sep: Separator used to split selector into parts
-        first_depth: Max depth of first selector
-        rest_depth: Max depth to search for the rest of the selectors
+        first_depth: Max directoy depth of first selector
+        depth: Max directory depth to search for the rest of the selectors
     '''
 
     if skip_root:
         root = util.unipath(root, '*')
 
     parts = selector.split(sep)
-    count = len(parts)
     depth = first_depth
     matches = []
 
@@ -488,7 +488,7 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
             if entries:
                 match = min(entries, key=len)[:-6]
                 matches.append(match)
-                depth = rest_depth
+                depth = depth
                 break
         else:
             return

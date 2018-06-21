@@ -10,6 +10,7 @@ import errno
 import uuid
 from scandir import scandir
 from fsfs import api, util, lockfile, types, _search
+from fsfs.constants import UP
 from fsfs.channels import band
 
 
@@ -534,52 +535,45 @@ class Entry(object):
 
         self.data.write_file(key, file)
 
-    def parents(self, *tags):
-        '''Walks up the directory tree yielding Entry objects. If tags are
-        provided, only Entry's matching those keys will be yieled
+    def parents(self, **kwargs):
+        '''Walks up the directory tree yielding Entry objects.
 
         Arguments:
-            *tags
+            **kwargs: search keyword arguments
 
         Returns:
-            generator: Entry objects
+            Search generator yielding Entry objects
         '''
-        g = api.search(self.path, direction=api.UP, skip_root=True)
-        if tags:
-            g = g.tags(*tags)
-        return g
 
-    def parent(self, *tags):
+        kwargs.setdefault('root', self.path)
+        kwargs.setdefault('direction', UP)
+        kwargs.setdefault('skip_root', True)
+        return api.search(**kwargs)
+
+    def parent(self, **kwargs):
         '''Walks up the directory tree returning the first Entry object found.
-        If tags are provided, only an Entry matching those keys will be
-        returned.
-
-        Arguments:
-            *tags
 
         Returns:
             Entry: parent of this Entry
         '''
 
-        g = api.search(self.path, direction=api.UP, skip_root=True)
-        if tags:
-            g = g.tags(*tags)
-        return g.one()
+        kwargs.setdefault('root', self.path)
+        kwargs.setdefault('direction', UP)
+        kwargs.setdefault('skip_root', True)
+        return api.search(**kwargs).one()
 
-    def children(self, *tags):
-        '''Walks down the directory tree yielding Entry objects. If tags are
-        provided, only Entry's matching those keys will be yieled
+    def children(self, **kwargs):
+        '''Walks down the directory tree yielding Entry objects.
 
         Arguments:
-            *tags
+            **kwargs: search keyword arguments
 
         Returns:
-            generator: Entry objects
+            Search generator yielding Entry objects
         '''
-        g = api.search(self.path, skip_root=True)
-        if tags:
-            g = g.tags(*tags)
-        return g
+        kwargs.setdefault('root', self.path)
+        kwargs.setdefault('skip_root', True)
+        return api.search(**kwargs)
 
     @property
     def exists(self):

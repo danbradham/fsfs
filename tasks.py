@@ -175,7 +175,8 @@ def publish(ctx, tag=None, remote=None, branch=None, where=None):
     '''Test, Tag, Push and Upload Changes...'''
 
     tests(ctx)
-    _tag(ctx, tag)
+    if tag:
+        _tag(ctx, tag)
     push(ctx, remote, branch)
 
     try:

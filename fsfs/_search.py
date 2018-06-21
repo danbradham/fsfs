@@ -24,6 +24,8 @@ from fsfs.constants import (
     UP,
     DEFAULT_SEARCH_DN_DEPTH,
     DEFAULT_SEARCH_UP_DEPTH,
+    DEFAULT_SEARCH_DN_LEVELS,
+    DEFAULT_SEARCH_UP_LEVELS,
     DEFAULT_SELECTOR_SEP,
 )
 
@@ -44,6 +46,7 @@ class Search(object):
         root,
         direction=DOWN,
         depth=None,
+        levels=None,
         skip_root=False,
         predicates=None,
         selector=None,
@@ -53,6 +56,7 @@ class Search(object):
         self.root = root
         self.direction = direction
         self.depth = depth
+        self.levels = levels
         self.skip_root = skip_root
         self.predicates = predicates or []
         self.selector = selector
@@ -74,6 +78,7 @@ class Search(object):
                 self.root,
                 self.direction,
                 self.depth,
+                self.levels,
                 self.skip_root
             )
 
@@ -117,6 +122,7 @@ class Search(object):
         kwargs.setdefault('root', self.root)
         kwargs.setdefault('direction', self.direction)
         kwargs.setdefault('depth', self.depth)
+        kwargs.setdefault('levels', self.levels)
         kwargs.setdefault('skip_root', self.skip_root)
         kwargs.setdefault('predicates', self.predicates)
         kwargs.setdefault('selector', self.selector)
@@ -181,8 +187,9 @@ def safe_scandir(root):
 
 
 @util.regenerator
-def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
-               level=0, at_root=True, data_root=None):
+def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, gap=0,
+               levels=DEFAULT_SEARCH_DN_LEVELS, level=0,
+               skip_root=False, at_root=True, data_root=None):
 
     dirs = {
         e.name: e.path
@@ -190,13 +197,12 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
     }
 
     if dirs.pop(data_root, None):
-        level = 0
-        if skip_root and at_root:
-            pass
-        else:
+        gap = 0
+        if not (skip_root and at_root):
+            level += 1
             yield api.get_entry(util.unipath(root))
 
-    if level == depth:
+    if gap == depth or level == levels:
         raise StopIteration
 
     for dir in dirs.values():
@@ -204,14 +210,16 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, skip_root=False,
         yield _search_dn(
             dir,
             depth,
+            gap + 1,
+            levels,
+            level,
             skip_root,
-            level + 1,
             False,
             data_root
         )
 
 
-def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
+def _search_up(root, levels=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
                data_root=None):
 
     level = -1
@@ -221,7 +229,7 @@ def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
         root = next_root
         level += 1
 
-        if depth and level > depth:
+        if levels and level > levels:
             break
 
         if skip_root and level == 0:
@@ -236,7 +244,7 @@ def _search_up(root, depth=DEFAULT_SEARCH_UP_DEPTH, skip_root=False,
             break
 
 
-def search(root, direction=DOWN, depth=None, skip_root=False):
+def search(root, direction=DOWN, depth=None, levels=None, skip_root=False):
     '''Search a root directory yielding Entry objects. You can specify a
     direction to search (fsfs.UP or fsfs.DOWN) and a maximum search depth.
 
@@ -250,20 +258,24 @@ def search(root, direction=DOWN, depth=None, skip_root=False):
         generator: yielding :class:`models.Entry` matches
     '''
 
-    root = util.unipath(root)
-    data_root = api.get_data_root()
+    kwargs = dict(
+        root=util.unipath(root),
+        data_root=api.get_data_root(),
+        skip_root=skip_root
+    )
     if direction == DOWN:
-        depth = depth or DEFAULT_SEARCH_DN_DEPTH
-        return _search_dn(root, depth, skip_root, data_root=data_root)
+        kwargs['depth'] = depth or DEFAULT_SEARCH_DN_DEPTH
+        kwargs['levels'] = levels or DEFAULT_SEARCH_DN_LEVELS
+        return _search_dn(**kwargs)
     elif direction == UP:
-        depth = depth or DEFAULT_SEARCH_UP_DEPTH
-        return _search_up(root, depth, skip_root, data_root=data_root)
+        kwargs['levels'] = levels or DEFAULT_SEARCH_UP_LEVELS
+        return _search_up(**kwargs)
     else:
         raise RuntimeError('Invalid direction: ' + str(direction))
 
 
 @util.regenerator
-def _select_tree_dn(root, selector, data_root, depth, level=0):
+def _select_tree_dn(root, selector, data_root, depth, gap=0):
 
     dirs = {
         e.name: e.path
@@ -271,7 +283,7 @@ def _select_tree_dn(root, selector, data_root, depth, level=0):
     }
 
     if dirs.pop(data_root, None):
-        level = 0
+        gap = 0
         sel = selector[0]
         if sel in os.path.basename(root):
             selector.pop(0)
@@ -279,7 +291,7 @@ def _select_tree_dn(root, selector, data_root, depth, level=0):
             yield api.get_entry(util.unipath(root))
             raise StopIteration
 
-    if level == depth:
+    if gap == depth:
         raise StopIteration
 
     for dir in dirs.values():
@@ -288,7 +300,7 @@ def _select_tree_dn(root, selector, data_root, depth, level=0):
             list(selector),
             data_root,
             depth,
-            level + 1
+            gap + 1
         )
 
 
