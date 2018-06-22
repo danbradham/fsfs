@@ -202,7 +202,7 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, gap=0,
             level += 1
             yield api.get_entry(util.unipath(root))
 
-    if gap == depth or level == levels:
+    if gap == depth or (levels and level == levels):
         raise StopIteration
 
     for dir in dirs.values():
