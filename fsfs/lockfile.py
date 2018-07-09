@@ -190,9 +190,14 @@ class LockFile(object):
 
     def _start_pump(self):
         '''Start the pump thread'''
+        if self._pump_.started:
+            return
 
-        if not self._pump_.started:
-            self._pump_.start()
+        self._pump_.start()
+
+        # Wait for pump thread to start
+        while not self._pump_.started:
+            time.sleep(0.01)
 
     def _touch(self):
         '''Touch the lock file, updates the files mtime'''
