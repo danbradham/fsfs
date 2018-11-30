@@ -155,7 +155,7 @@ def cleanup(ctx):
 
 @task
 def upload(ctx, where=None):
-    '''uploading package...not implemented'''
+    '''uploading package'''
 
     ctx.run('twine upload dist/*')
 
