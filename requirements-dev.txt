@@ -1,0 +1,8 @@
+bands
+click
+fstrings
+invoke
+nose
+scandir
+sphinx-rtd-theme
+pyyaml

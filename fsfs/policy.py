@@ -118,7 +118,7 @@ JsonEncoder = partial(
 # Used as Default when pyyaml is available
 try:
     import yaml
-    YamlDecoder = yaml.load
+    YamlDecoder = yaml.safe_load
     YamlEncoder = partial(
         yaml.safe_dump,
         default_flow_style=False

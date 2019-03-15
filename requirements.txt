@@ -1,0 +1,5 @@
+bands
+click
+fstrings
+scandir
+pyyaml
