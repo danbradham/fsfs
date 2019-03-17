@@ -59,7 +59,6 @@ class SimpleEntryFactory(object):
 
     def on_entry_deleted(self, entry):
         '''Removes entry from cache when it's deleted...'''
-        print(entry)
         self._cache.pop(entry.path)
 
 
@@ -269,7 +268,7 @@ class EntryFactory(object):
         if path not in self._cache:
             self._cache[path] = entry_type(path)
 
-        elif not type(self._cache[path]) is entry_type:
+        elif type(self._cache[path]) is not entry_type:
 
             old_entry = self._cache[path]
             new_entry = entry_type(path)

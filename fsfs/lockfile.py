@@ -306,7 +306,7 @@ class LockFile(object):
 
 @contextmanager
 def lockfile(path, timeout=0):
-    '''LockFile contextmanager, for when you only need to acquire a lock one.
+    '''LockFile contextmanager, for when you only need to acquire a lock once.
 
     Arguments:
         path (str): path to the lockfile

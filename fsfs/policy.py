@@ -51,6 +51,7 @@ class FsFsPolicy(object):
         data_root=None,
         data_file=None,
         entry_factory=None,
+        id_generator=None
     ):
         self._data_encoder = data_encoder
         self._data_decoder = data_decoder
@@ -58,6 +59,7 @@ class FsFsPolicy(object):
         self._data_file = data_file
         self._entry_factory = entry_factory
         self._setup_entry_factory(entry_factory)
+        self._id_generator = id_generator
 
     def set_data_encoder(self, data_encoder):
         self._data_encoder = data_encoder
@@ -103,6 +105,12 @@ class FsFsPolicy(object):
     def get_entry_factory(self):
         return self._entry_factory
 
+    def get_id_generator(self):
+        return self._id_generator
+
+    def set_id_generator(self, func):
+        self._id_generator = func
+
 
 # Json Encoder / Decoder
 import json
@@ -131,6 +139,10 @@ except ImportError:
     DefaultDecoder = JsonDecoder
     DefaultEncoder = JsonEncoder
 
+# Default ID Generator
+import uuid
+DefaultIdGenerator = lambda: uuid.uuid4().hex
+
 # Default Data Paths
 DefaultRoot = '.data'
 DefaultFile = 'data'
@@ -145,5 +157,6 @@ DefaultPolicy = FsFsPolicy(
     data_root=DefaultRoot,
     data_file=DefaultFile,
     entry_factory=DefaultFactory,
+    id_generator=DefaultIdGenerator
 )
 _global_policy = DefaultPolicy

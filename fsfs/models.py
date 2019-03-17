@@ -39,7 +39,7 @@ def relink_uuid(entry):
             data.uuid, data.uuid_file = uuid_info
             return
         # uuid file deleted
-        data._new_uuid()
+        data._set_uuid()
         return
 
     if os.path.isdir(entry.path):
@@ -208,11 +208,14 @@ class EntryData(object):
                 self.uuid_file = entry.path
                 return True
 
-    def _new_uuid(self):
+    def _set_uuid(self, _id=None):
         '''Use this at your own risk. UUID is used for Entry rediscovery.
         If you change it other processes will become out of sync.
         '''
 
+        # If this Entry already has a uuid it means we are
+        # creating a new one in which case we will emit the
+        # uuid_changed event.
         is_new_uuid = bool(self.uuid)
 
         with self._lock:
@@ -220,7 +223,7 @@ class EntryData(object):
             if self.uuid_file and os.path.isfile(self.uuid_file):
                 os.remove(self.uuid_file)
 
-            self.uuid = str(uuid.uuid4())
+            self.uuid = _id or api.generate_id()
             self.uuid_file = self._make_uuid_path(self.uuid)
             util.touch(self.uuid_file)
 
@@ -232,7 +235,7 @@ class EntryData(object):
             return
         if self._find_uuid():
             return
-        self._new_uuid()
+        self._set_uuid()
 
     def _init(self):
         if self._requires_relink():
@@ -409,7 +412,10 @@ class Entry(object):
     def __init__(self, path):
         self.path = path
         self.name = os.path.basename(path)
-        self.data = EntryData(self, util.unipath(path, api.get_data_root()))
+        self.data = EntryData(
+            self,
+            util.unipath(path, api.get_data_root())
+        )
 
     def __repr__(self):
         return '<fsfs.Entry>(name={name}, path={path})'.format(**self.__dict__)
@@ -433,6 +439,17 @@ class Entry(object):
         '''Entry's UUID stored in a filename in the data dir uuid_*'''
 
         return self.data.uuid
+
+    @uuid.setter
+    def uuid(self, _id):
+        '''Set this Entry's uuid.
+
+        .. warning:: This will invalidate other users cache. You really only
+        want to set this at the moment of Entry creation, and hope that nobody
+        holds this Entry in their cache.
+        '''
+
+        return self.data._set_uuid(_id)
 
     @property
     def tags(self):
@@ -616,10 +633,10 @@ class Entry(object):
 
         # Update uuids and send EntryCreated signals
         new_entry = api.get_entry(dest)
-        new_entry.data._new_uuid()
+        new_entry.data._set_uuid()
         new_entry.created.send(new_entry)
         for child in new_entry.children():
-            child.data._new_uuid()
+            child.data._set_uuid()
             child.created.send(child)
         return new_entry
 
@@ -665,6 +682,10 @@ class Entry(object):
         '''
 
         self.data.delete()
+        self.data = EntryData(
+            self,
+            util.unipath(self.path, api.get_data_root())
+        )
 
         if remove_root:
             # Delete children depth-first making sure we send all

@@ -21,6 +21,9 @@ __all__ = [
     'get_entry_factory',
     'set_entry_factory',
     'get_entry',
+    'get_id_generator',
+    'set_id_generator',
+    'generate_id',
     'InvalidTag',
     'validate_tag',
     'make_tag_path',
@@ -186,6 +189,29 @@ def decode_data(data):
     '''
 
     return get_data_decoder()(data)
+
+
+def set_id_generator(func):
+    '''Set the global policy's id_generator function. This is used to create
+    unique id's for Entries.
+
+    Expects a callable that returns a string. For example the default
+    id_generator is `lambda: uuid.uuid4().hex`.
+    '''
+
+    get_policy().set_id_generator(func)
+
+
+def get_id_generator():
+    '''Get the global policy's id_generator function.'''
+
+    return get_policy().get_id_generator()
+
+
+def generate_id():
+    '''Uses the global policy's id_generator to create a new unique id.'''
+
+    return get_id_generator()()
 
 
 class InvalidTag(Exception): pass
@@ -488,7 +514,6 @@ def quick_select(root, selector, sep=DEFAULT_SELECTOR_SEP,
             if entries:
                 match = min(entries, key=len)[:-6]
                 matches.append(match)
-                depth = depth
                 break
         else:
             return

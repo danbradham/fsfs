@@ -545,3 +545,44 @@ def test_new_uuid_after_copy(tempdir):
     assert new_entry.path == dest_path
     assert new_entry.uuid != entry.uuid
     assert len(glob.glob(new_entry.data.path + '/uuid_*')) == 1
+
+
+@provide_tempdir
+def test_id_generator(tempdir):
+    '''Custom id generator'''
+
+    def make_id(count=[0]):
+        _id = str(count[0])
+        count[0] += 1
+        return _id
+
+    fsfs.set_id_generator(make_id)
+
+    generated = []
+    for i in range(10):
+        e = fsfs.get_entry(util.unipath(tempdir, 'entry_' + str(i)))
+        e.tag('generic')
+        generated.append(e)
+
+    for i, e in enumerate(generated):
+        assert e.uuid == str(i)
+
+    fsfs.set_default_policy()
+
+
+@provide_tempdir
+def test_custom_uuid(tempdir):
+    '''Assign custom uuid using Entry.uuid setter'''
+
+    path = util.unipath(tempdir, 'entry')
+
+    entry = fsfs.get_entry(path)
+    entry.tag('generic')
+
+    old_uuid = entry.uuid
+    new_uuid = 'custom_uuid'
+
+    entry.uuid = new_uuid
+
+    assert entry.uuid != old_uuid
+    assert entry.uuid == new_uuid
