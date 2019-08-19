@@ -113,7 +113,7 @@ class Search(object):
         try:
             return self.next()
         except StopIteration:
-            return None
+            return
 
     def clone(self, **kwargs):
         '''Clone this Search object. Pass kwargs to override attributes on
@@ -184,6 +184,8 @@ def safe_scandir(root):
             if e.errno not in IGNORE:
                 print(e, e.errno)
                 raise
+        except StopIteration:
+            return
 
 
 @util.regenerator
