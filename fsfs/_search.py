@@ -205,7 +205,7 @@ def _search_dn(root, depth=DEFAULT_SEARCH_DN_DEPTH, gap=0,
             yield api.get_entry(util.unipath(root))
 
     if gap == depth or (levels and level == levels):
-        raise StopIteration
+        return
 
     for dir in dirs.values():
 
@@ -291,10 +291,10 @@ def _select_tree_dn(root, selector, data_root, depth, gap=0):
             selector.pop(0)
         if not selector:
             yield api.get_entry(util.unipath(root))
-            raise StopIteration
+            return
 
     if gap == depth:
-        raise StopIteration
+        return
 
     for dir in dirs.values():
         yield _select_tree_dn(
@@ -325,7 +325,7 @@ def _select_tree_up(root, selector, data_root, depth, level=0):
                 selector.pop()
             if not selector:
                 yield api.get_entry(root)
-                raise StopIteration
+                return
 
         next_root = os.path.dirname(root)
         if next_root == root:
