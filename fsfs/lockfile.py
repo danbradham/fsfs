@@ -208,10 +208,15 @@ class LockFile(object):
     def _time_since_modified(self):
         '''Return the total seconds since the specified file was modified'''
 
-        return (
-            datetime.now() -
-            datetime.fromtimestamp(os.path.getmtime(self.path))
-        ).total_seconds()
+        try:
+            return (
+                datetime.now() -
+                datetime.fromtimestamp(os.path.getmtime(self.path))
+            ).total_seconds()
+        except OSError as e:
+            print('Lockfile access denied - retrying...')
+            print(str(e))
+            return -1
 
     def _acquire_expired_lock(self):
         '''Attempt to acquire an expired lock'''
