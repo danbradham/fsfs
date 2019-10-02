@@ -259,26 +259,25 @@ class EntryData(object):
         else:
             raise OSError('Entry data does not exist: %s' % self.parent)
 
-        with self._lock:
-            mtime = os.path.getmtime(self.file)
-            needs_update = (
-                self._data is None or
-                self._data_mtime < mtime
-            )
+        mtime = os.path.getmtime(self.file)
+        needs_update = (
+            self._data is None or
+            self._data_mtime < mtime
+        )
 
-            if needs_update:
+        if needs_update:
 
-                with open(self.file, 'r') as f:
-                    raw_data = f.read()
+            with open(self.file, 'r') as f:
+                raw_data = f.read()
 
-                if not raw_data:
-                    self._data = {}
-                else:
-                    self._data = api.decode_data(raw_data)
+            if not raw_data:
+                self._data = {}
+            else:
+                self._data = api.decode_data(raw_data)
 
-                self._data_mtime = mtime
+            self._data_mtime = mtime
 
-            return self._data
+        return self._data
 
     def _write(self, replace=False, **data):
         '''Ensure data directory is initialized, then write updated data'''
