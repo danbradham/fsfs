@@ -135,14 +135,7 @@ def push(ctx, remote=None, branch=None):
 def tests(ctx):
     '''Run test suite'''
 
-    docs = join(dirname(__file__), 'docs')
-    ctx.run('nosetests -v --with-doctest --doctest-extension=rst')
-
-    if PY37: # 3.7 doctests are brrrroken
-        return
-
-    with ctx.cd(docs):
-        ctx.run('nosetests -v --with-doctest --doctest-extension=rst')
+    ctx.run('nosetests -v')
 
 
 @task
