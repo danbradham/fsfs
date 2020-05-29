@@ -125,7 +125,7 @@ JsonEncoder = partial(
 # Yaml Encoder / Decoder
 # Used as Default when pyyaml is available
 try:
-    import yaml
+    from fsfs.vendor import yaml
     YamlDecoder = yaml.safe_load
     YamlEncoder = partial(
         yaml.safe_dump,

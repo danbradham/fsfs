@@ -31,7 +31,12 @@ setup(
     author_email=info['email'],
     description=info['description'],
     long_description=long_description,
-    install_requires=['click', 'fstrings', 'scandir', 'pyyaml', 'bands'],
+    install_requires=[
+        'click',
+        'fstrings',
+        'scandir',
+        'bands'
+    ],
     packages=find_packages(),
     package_data={
         '': ['LICENSE', 'README.rst'],
